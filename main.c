@@ -6,30 +6,40 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/09 10:47:33 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/09 14:03:56 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./header/minishell.h"
 
-void    minishell_loop(void)
+void minishell_loop(char **env)
 {
-    char *line;
-    
+    char    *line;
+    t_cmd   *cmd;
+
     while (1)
-   {
-    line = readline("minishell$: ");
-    if (!line)
     {
-        printf("exit\n");
-        break;
+        line = readline("minishell$: ");
+        if (!line)
+        {
+            write(1, "exit\n", 5);
+            break;
+        }
+        if (*line)
+            add_history(line);
+
+        // ⬇️ PARSING
+        cmd = parse_line(line, env);
+       /*
+        if (cmd)
+        {
+            // ⬇️ ESECUZIONE
+            execute_cmd(cmd, env);
+            free_cmd(cmd);
+        }
+        */
+        free(line);
     }
-    if (*line)
-        add_history(line);
-    
-    printf("Comando ricevuto: %s\n", line);
-    free(line);
-   } 
 }
 
 int main(int argc, char **argv, char**envp)
@@ -47,7 +57,7 @@ int main(int argc, char **argv, char**envp)
         printf("%s\n", my_env[i]);
         i++;
     }
-    minishell_loop();
+    minishell_loop(my_env);
     /*
     free_envp(my_env);
     rl_clear_history(); // libera la history

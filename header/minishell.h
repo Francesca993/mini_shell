@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:38:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/09 11:00:20 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/09 14:05:05 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 #include <readline/readline.h> // readline – Lettura interattiva da terminale
 #include <readline/history.h>  // add_history, rl_clear_history, rl_on_new_line,
                                // rl_replace_line, rl_redisplay – Cronologia e manipolazione linea input
+
 #include "envp.h"
+#include "parser.h"
 
 #endif
