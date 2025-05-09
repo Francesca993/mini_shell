@@ -1,0 +1,13 @@
+minishell/
+├── Libft
+├── Makefile
+├── main.c
+├── header
+|      ├── minishell.h
+|      └──envp.h
+├── parser/
+├── executor/
+├── builtins/
+├── utils/
+├── signals/
+└── env/
