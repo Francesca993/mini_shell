@@ -6,7 +6,7 @@
 #    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/18 11:58:42 by francesca         #+#    #+#              #
-#    Updated: 2025/04/18 12:16:04 by francesca        ###   ########.fr        #
+#    Updated: 2025/05/13 15:00:35 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,21 +75,21 @@ OBJS := $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 # === Custom rule for colorized compilation === #
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 	@mkdir -p $(OBJS_DIR)
-	@echo "$(BLUE)Compiling $<...$(RESET)"
+	@echo "$(BLUE)Compiling Libft $<...$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "$(GREEN)Creating $(NAME)...$(RESET)"
+	@echo "$(GREEN)Creating Libft$(NAME)...$(RESET)"
 	@ar rcs $(NAME) $(OBJS)
 
 clean:
-	@echo "$(RED)Cleaning object files...$(RESET)"
+	@echo "$(RED)Cleaning Libft object files...$(RESET)"
 	@$(RM) -r $(OBJS_DIR)
 
 fclean: clean
-	@echo "$(RED)Removing $(NAME)...$(RESET)"
+	@echo "$(RED)Removing Libft$(NAME)...$(RESET)"
 	@$(RM) $(NAME)
 
 re: fclean all
