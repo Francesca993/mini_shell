@@ -5,30 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/09 13:58:19 by francesca        ###   ########.fr       */
+/*   Created: 2025/05/13 12:03:26 by francesca         #+#    #+#             */
+/*   Updated: 2025/05/13 12:14:31 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/parser.h"
 
-/*
-Lexer: Cosa deve fare esattamente
-1. Ignora spazi fuori dalle quote
-Gli spazi separano i token solo se non sono dentro '...' o "...".
-2. Riconosce metacaratteri
-Pipe |
-Redirezioni: <, >, <<, >>
-3. Gestisce quote aperte/chiuse
-'...': tutto dentro è un token singolo, senza espansioni.
-"...": tutto dentro è un token singolo, ma $VAR va gestito dopo.
-🔧 Strategia per implementare il lexer
-Scorri il buffer (line) da sinistra verso destra con un indice.
-Quando trovi:
-Spazio: chiudi il token se non sei dentro le quote.
-Quote: entra/esci dal contesto quote.
-Metacarattere: chiudi token precedente, poi crea token singolo per |, >, >>, ecc.
-Costruisci un token alla volta e salvalo in una lista o array dinamico.
-*/
 
-parse_line(line);
+int lexer(char *line, char ***tokens_out, t_token_type **types_out)
+{
+    int i = 0;
+    int start;
+    int len;
+    int capacity = INITIAL_CAPACITY;
+    int count = 0;
+    char **tokens = (char **)ft_calloc(capacity, sizeof(char*));
+    t_token_type *types = ft_calloc(capacity, sizeof(t_token_type));
+
+}

@@ -1,0 +1,58 @@
+✅ PIANO DI LAVORO IN 3 FASI
+
+🔹 FASE 1: LEXER
+Input: stringa da readline
+Output:
+
+char **tokens: ["cat", "<", "file", "|", "grep", "hello", ">", "out.txt"]
+int *types: [WORD, REDIR_IN, WORD, PIPE, WORD, WORD, REDIR_OUT, WORD]
+🧠 Lexer fa:
+
+separazione per spazio e metacaratteri
+riconoscimento quote
+assegnazione tipo
+🔹 FASE 2: PARSER
+Input: tokens[] + types[]
+Output: t_cmd **pipeline
+
+🧠 Parser fa:
+
+divide i token in blocchi separati da PIPE
+costruisce args[]
+se trova <, <<, >, >>, salva in infile, outfile, ecc.
+🔹 FASE 3: EXECUTOR
+Riceve t_cmd **pipeline
+Esegue in ordine:
+
+fork, dup, redirezioni, execve, built-in
+
+✅ ESEMPIO VISIVO
+
+Input:
+
+cat < input.txt | grep error >> out.txt
+Lexer:
+tokens = ["cat", "<", "input.txt", "|", "grep", "error", ">>", "out.txt"];
+types  = [ WORD, REDIR_IN, WORD, PIPE, WORD, WORD, APPEND, WORD ];
+Parser crea:
+pipeline[0]:
+  args = ["cat"]
+  infile = "input.txt"
+  outfile = NULL
+
+pipeline[1]:
+  args = ["grep", "error"]
+  infile = (riceve da pipe)
+  outfile = "out.txt"
+  append = 1
+✅ SEMPLICE DA INTERPRETARE PER L'EXECUTOR
+
+for (i = 0; pipeline[i]; i++) {
+    execute_cmd(pipeline[i]);
+}
+📦 In sintesi: la strada ottimale
+
+Fase	Input	Output	Funzione
+1. Lexer	line	tokens[] + types[]	lexer()
+2. Parser	tokens/types	t_cmd **pipeline	parse_line()
+3. Exec	pipeline	esecuzione	execute_cmds()
