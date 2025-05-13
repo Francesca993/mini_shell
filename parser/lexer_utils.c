@@ -6,10 +6,17 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/13 12:33:03 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/13 14:28:31 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../header/parser.h"
+
+int ft_isspace(char c)
+{
+    return (c == ' ' || c == '\t' || c == '\n'
+        || c == '\v' || c == '\f' || c == '\r');
+}
 /*
 Controlla se un carattere è un metacarattere della shell, ovvero uno di:
 '|' (pipe)
@@ -24,7 +31,7 @@ is_metachar('<');   // → 1
 is_metachar('a');   // → 0
 is_metachar(' ');   // → 0
 */
-static int  is_metachar(char c)
+int  is_metachar(char c)
 {
     return (c == '|' || c == '<' || c == '>');
 }
@@ -75,7 +82,7 @@ int count_token(const char *line)
             // Avanza finché:
 			// - sei dentro quote
 			// - oppure non incontri spazio o metacarattere
-            while (line[i] &&(quote || !is_metachar(line[i]) && !ft_isspace(line[i])))
+            while (line[i] && (quote || (!is_metachar(line[i]) && !ft_isspace(line[i]))))
             {
                 // Se trovi una quote aperta (solo se non sei già dentro un'altra quote)
                 if((line[i] == '\'' || line[i] == '"') && !quote)
@@ -87,5 +94,87 @@ int count_token(const char *line)
         }
     }
     return (count);
+}
+
+/*
+Legge da line[i]
+Riconosce >, >>, <, <<
+Scrive nella posizione tokens[*count] e types[*count]
+Incrementa *count e restituisce la nuova posizione i
+*/
+int handle_redirection(const char *line, int i, char **tokens, t_token_type *types, int *count)
+{
+    /*
+    char c;
+	c = line[i];
+	i++;
+    */
+    char c = line[i++];
+    if (line[i] == c) // >> o <<
+    {
+        tokens[*count] = ft_substr(line, i - 1, 2);
+		if (c == '>')
+			types[*count] = APPEND;
+		else
+			types[*count] = HEREDOC;
+		i++;
+    }
+    else
+	{
+		tokens[*count] = ft_substr(line, i - 1, 1);
+		if (c == '>')
+			types[*count] = REDIR_OUT;
+		else
+			types[*count] = REDIR_IN;
+	}
+	(*count)++;
+	return (i);
+}
+
+#include "parser.h"
+
+int handle_word(const char *line, int i, char **tokens, t_token_type *types, int *count)
+{
+	int start = i;
+	char quote = 0;
+
+	while (line[i] && (quote || (!is_metachar(line[i]) && !ft_isspace(line[i]))))
+	{
+		if ((line[i] == '\'' || line[i] == '"') && !quote)
+			quote = line[i];
+		else if (line[i] == quote)
+			quote = 0;
+		i++;
+	}
+	tokens[*count] = ft_substr(line, start, i - start);
+	types[*count] = WORD;
+	(*count)++;
+	return (i);
+}
+
+void    fill_tokens(char *line, char **tokens, t_token_type *types)
+{
+    int i = 0;
+    int count = 0;
+    while (line[i])
+    {
+        while (ft_isspace(line[i]))
+            i++;
+        if (!line[i])
+            break;
+        // --- PIPE
+        if(line[i] == '|')
+        {
+            tokens[count] = ft_strdup("|");
+            types[count++] = PIPE;
+            i++;
+        }
+        // --- REDIREZIONI
+        else if (line[i] == '<' || line[i] == '>')
+            i = handle_redirection(line, i, tokens, types, &count);
+        // --- WORD o QUOTED STRING
+        else
+            i = handle_word(line, i, tokens, types, &count);
+    }
 }
 

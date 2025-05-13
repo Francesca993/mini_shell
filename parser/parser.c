@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/13 12:07:18 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/13 12:37:19 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 // types_out → array parallelo di t_token_type
 // ==============================
 */
-
-
 
 void print_tokens(char **tokens, t_token_type *types)
 {

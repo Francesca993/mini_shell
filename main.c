@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/09 14:03:56 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/13 14:25:07 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void minishell_loop(char **env)
 {
     char    *line;
-    t_cmd   *cmd;
+    t_cmd   **comands;
 
     while (1)
     {
@@ -29,7 +29,7 @@ void minishell_loop(char **env)
             add_history(line);
 
         // ⬇️ PARSING
-        cmd = parse_line(line, env);
+        comands = parse_line(line, env);
        /*
         if (cmd)
         {
@@ -38,6 +38,8 @@ void minishell_loop(char **env)
             free_cmd(cmd);
         }
         */
+       if (comands)
+            free(comands);
         free(line);
     }
 }

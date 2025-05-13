@@ -6,7 +6,7 @@
 #    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/05/09 11:12:48 by francesca        ###   ########.fr        #
+#    Updated: 2025/05/13 14:22:28 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,9 @@ CFLAGS = -Wall -Wextra -Werror -Iheader
 
 SRC 	= 	main.c \
 			env/init_env.c \
+			parser/lexer_utils.c \
+			parser/lexer.c \
+			parser/parser.c \
 			
 OBJ = $(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/13 12:07:29 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/13 14:19:24 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,15 @@ typedef struct s_cmd {
 // ==============================
 // Ritorna: numero token, oppure -1 in caso di errore (quote non chiuse ecc.)
 int     lexer(char *line, char ***tokens_out, t_token_type **types_out);
+
+// ==============================
+// LEXER UTILS
+// ==============================
+int     is_metachar(char c); //Cerca metacaratteri
+int     count_token(const char *line); //Conta il numero di token presenti nella linea di input.
+int     handle_redirection(const char *line, int i, char **tokens, t_token_type *types, int *count);
+void    fill_tokens(char *line, char **tokens, t_token_type *types);
+int     handle_word(const char *line, int i, char **tokens, t_token_type *types, int *count);
 
 // ==============================
 // PARSER
