@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/13 12:37:19 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/13 22:30:06 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_cmd   **parse_line(char *line, char **env)
     if (ntokens == -1)
     {
         fprintf(stderr, "Lexer error\n");
+        g_exit_status = 2;
         return NULL;
     }
     
@@ -73,6 +74,7 @@ t_cmd   **parse_line(char *line, char **env)
     print_tokens(tokens, types);
     // Parser non implementato ancora, ritorna NULL
     // In seguito: return build_pipeline(tokens, types);
+    //occhio a liberare memoria solo se fill_token ha successo o rischi double free
     for (int i = 0; tokens[i]; i++)
         free(tokens[i]);
     free(tokens);

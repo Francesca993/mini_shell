@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/13 14:19:24 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/13 22:23:52 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ int     lexer(char *line, char ***tokens_out, t_token_type **types_out);
 int     is_metachar(char c); //Cerca metacaratteri
 int     count_token(const char *line); //Conta il numero di token presenti nella linea di input.
 int     handle_redirection(const char *line, int i, char **tokens, t_token_type *types, int *count);
-void    fill_tokens(char *line, char **tokens, t_token_type *types);
+int     fill_tokens(char *line, char **tokens, t_token_type *types);
 int     handle_word(const char *line, int i, char **tokens, t_token_type *types, int *count);
+void    free_partial_tokens(char **tokens, t_token_type *types, int count);
+void    exit_shell(int code, const char *msg);
+
 
 // ==============================
 // PARSER

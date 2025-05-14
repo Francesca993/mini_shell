@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/13 14:28:31 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/13 22:23:19 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,13 +146,15 @@ int handle_word(const char *line, int i, char **tokens, t_token_type *types, int
 			quote = 0;
 		i++;
 	}
+    if (quote)
+		return (-1); // errore: quote non chiusa
 	tokens[*count] = ft_substr(line, start, i - start);
 	types[*count] = WORD;
 	(*count)++;
 	return (i);
 }
 
-void    fill_tokens(char *line, char **tokens, t_token_type *types)
+int    fill_tokens(char *line, char **tokens, t_token_type *types)
 {
     int i = 0;
     int count = 0;
@@ -174,7 +176,12 @@ void    fill_tokens(char *line, char **tokens, t_token_type *types)
             i = handle_redirection(line, i, tokens, types, &count);
         // --- WORD o QUOTED STRING
         else
+        {
             i = handle_word(line, i, tokens, types, &count);
+            if (i == -1)
+				return -1;  // errore da handle_word (es. quote non chiusa)
+        }
     }
+    return (count);
 }
 

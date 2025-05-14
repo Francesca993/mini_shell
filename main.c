@@ -6,11 +6,13 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/13 14:25:07 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/13 22:20:50 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./header/minishell.h"
+
+int g_exit_status = 0;
 
 void minishell_loop(char **env)
 {
@@ -30,6 +32,12 @@ void minishell_loop(char **env)
 
         // ⬇️ PARSING
         comands = parse_line(line, env);
+        if (!comands)
+        {
+            // lexer ha già stampato l’errore, salta solo l'esecuzione
+            free(line);
+            continue;
+        }
        /*
         if (cmd)
         {
@@ -53,12 +61,15 @@ int main(int argc, char **argv, char**envp)
     char **my_env;
     
     my_env = copy_env(envp);
+    /*
     int i = 0;
+    stampa env copiato
     while (my_env[i])
     {
         printf("%s\n", my_env[i]);
         i++;
     }
+    */
     minishell_loop(my_env);
     /*
     free_envp(my_env);
