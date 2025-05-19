@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/19 09:06:22 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/19 09:54:38 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void    exit_shell(int code, const char *msg); // Esce dal programma con codice 
 // ==============================
 // BUILD PIPELINE
 // ==============================
-t_pipeline *build_pipeline(char **tokens, t_token_type *types, int n_tokens);
+t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens);
 void free_pipeline(t_pipeline *pipeline);
 
 // ==============================
