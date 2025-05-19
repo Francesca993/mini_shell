@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/13 22:30:06 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/19 09:01:08 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,16 @@ void print_tokens(char **tokens, t_token_type *types)
 // Riceve la line da readline
 // La passa al lexer()
 // Ottiene tokens[] e types[]
-// (Per ora) stampa solo i risultati del lexer, senza ancora costruire t_cmd
+// (Per ora) stampa solo i risultati del lexer, senza ancora costruire t_pipeline
 */
-t_cmd   **parse_line(char *line, char **env)
+t_pipeline   *parse_line(char *line, char **env)
 {
     (void)env; // Per ora lo ignoriamo
     
     char **tokens = NULL;
     t_token_type *types = NULL;
     int ntokens;
+    t_pipeline *pipeline;
 
     ntokens = lexer(line, &tokens, &types);
     if (ntokens == -1)
@@ -69,18 +70,17 @@ t_cmd   **parse_line(char *line, char **env)
         g_exit_status = 2;
         return NULL;
     }
-    
     // Debug temporaneo
     print_tokens(tokens, types);
-    // Parser non implementato ancora, ritorna NULL
-    // In seguito: return build_pipeline(tokens, types);
-    //occhio a liberare memoria solo se fill_token ha successo o rischi double free
-    for (int i = 0; tokens[i]; i++)
-        free(tokens[i]);
-    free(tokens);
-    free(types);
-
-    return NULL;
+     // ✅ Costruisce la pipeline da tokens e types
+    pipeline = build_pipeline(tokens, types, ntokens);
+    if (!pipeline)
+    {
+         fprintf(stderr, "Parser error\n");
+         g_exit_status = 2;
+         return NULL;
+    }
+    return (pipeline);
     
 }
 

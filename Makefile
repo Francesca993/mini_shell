@@ -6,7 +6,7 @@
 #    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/05/13 15:00:06 by francesca        ###   ########.fr        #
+#    Updated: 2025/05/19 09:02:16 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,9 @@ SRC =	main.c \
 		env/init_env.c \
 		parser/lexer_utils.c \
 		parser/lexer.c \
-		parser/parser.c
+		parser/parser.c \
+		parser/build_pipeline.c \
+		parser/utils.c \
 
 # === Object files ===
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

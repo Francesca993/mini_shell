@@ -6,17 +6,57 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 22:23:22 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/13 22:30:36 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/19 09:07:32 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/parser.h"
+#include <readline/readline.h>
+#include <readline/history.h>
+
+void free_pipeline(t_pipeline *pipeline)
+{
+    if (!pipeline)
+        return;
+
+    for (int i = 0; i < pipeline->n_cmds; i++)
+    {
+        t_cmd *cmd = pipeline->cmds[i];
+        if (!cmd)
+            continue;
+
+        if (cmd->args)
+        {
+            for (int j = 0; cmd->args[j]; j++)
+                free(cmd->args[j]);
+            free(cmd->args);
+        }
+
+        free(cmd->infile);
+        free(cmd->outfile);
+        free(cmd);
+    }
+
+    free(pipeline->cmds);
+
+    if (pipeline->tokens)
+    {
+        for (int i = 0; i < pipeline->n_tokens; i++)
+            free(pipeline->tokens[i]);
+        free(pipeline->tokens);
+    }
+
+    free(pipeline->types);
+    free(pipeline);
+}
+
 
 //libera solo i token allocati fino a count.
 void free_partial_tokens(char **tokens, t_token_type *types, int count)
 {
 	if (!tokens || !types)
         return;
+	(void)count;
 
     for (int i = 0; tokens[i]; i++)
         free(tokens[i]);
@@ -31,6 +71,6 @@ void exit_shell(int code, const char *msg)
 		write(STDERR_FILENO, "\n", 1);
 	}
 	g_exit_status = code;
-	rl_clear_history(); // opzionale, ma buona pratica
+	clear_history(); // opzionale, ma buona pratica
 	exit(code);
 }

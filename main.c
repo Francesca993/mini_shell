@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/13 22:20:50 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/19 09:08:50 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int g_exit_status = 0;
 void minishell_loop(char **env)
 {
     char    *line;
-    t_cmd   **comands;
+    t_pipeline   *pipeline = NULL;
 
     while (1)
     {
@@ -31,12 +31,11 @@ void minishell_loop(char **env)
             add_history(line);
 
         // ⬇️ PARSING
-        comands = parse_line(line, env);
-        if (!comands)
+        pipeline = parse_line(line, env);
+        if (!pipeline)
         {
             // lexer ha già stampato l’errore, salta solo l'esecuzione
-            free(line);
-            continue;
+            free_pipeline(pipeline);
         }
        /*
         if (cmd)
@@ -46,8 +45,8 @@ void minishell_loop(char **env)
             free_cmd(cmd);
         }
         */
-       if (comands)
-            free(comands);
+       if (pipeline)
+            free_pipeline(pipeline);
         free(line);
     }
 }
