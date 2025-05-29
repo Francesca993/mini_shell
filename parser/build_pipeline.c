@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/29 09:21:24 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/29 09:37:54 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,15 +149,15 @@ void populate_comands(t_pipeline *pipeline)
 {
     int i = 0;
     int cmd_idx = 0;
-    for (int j = i; j < pipeline->n_tokens && pipeline->types[j] != PIPE; j++) 
-    {
-        printf("[TOKEN DEBUG] j=%d, type=%d, token='%s'\n", j, pipeline->types[j], pipeline->tokens[j]);
-    }    
+    // for (int j = i; j < pipeline->n_tokens && pipeline->types[j] != PIPE; j++) 
+    // {
+    //     printf("[TOKEN DEBUG] j=%d, type=%d, token='%s'\n", j, pipeline->types[j], pipeline->tokens[j]);
+    // }    
 
     while (i < pipeline->n_tokens)
     {
         int n_args = count_args_for_cmds(pipeline->types, i, pipeline->n_tokens);
-        printf("[DEBUG] cmd_idx=%d, i=%d, n_args=%d\n", cmd_idx, i, n_args);
+        // printf("[DEBUG] cmd_idx=%d, i=%d, n_args=%d\n", cmd_idx, i, n_args);
 
         // Alloca nuovo comando
         t_cmd *cmd = ft_calloc(1, sizeof(t_cmd));

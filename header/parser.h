@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/20 10:21:48 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/29 09:48:19 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "minishell.h"
 
-#define INITIAL_CAPACITY 16
+// #define INITIAL_CAPACITY 16
 // ==============================
 // ENUM: tipi di token riconosciuti dal lexer
 // ==============================
