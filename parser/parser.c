@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/19 09:01:08 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/29 09:17:04 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,49 @@ void print_tokens(char **tokens, t_token_type *types)
     }
     printf("==============\n");
 }
+void print_pipeline(t_pipeline *pipeline)
+{
+    printf("=== PIPELINE ===\n");
+
+    for (int i = 0; i < pipeline->n_cmds; i++)
+    {
+        t_cmd *cmd = pipeline->cmds[i];
+        if (!cmd)
+        {
+            printf("Command %d: (null)\n", i + 1);
+            continue;
+        }
+
+        printf("Command %d:\n", i + 1);
+
+        // Protezione args
+        printf("  args: ");
+        if (cmd->args)
+        {
+            for (int j = 0; cmd->args[j]; j++)
+                printf("[%s] ", cmd->args[j]);
+            printf("\n");
+        }
+        else
+        {
+            printf("(none)\n");
+        }
+
+        if (cmd->infile)
+            printf("  infile: %s (%s)\n", cmd->infile, cmd->heredoc ? "HEREDOC" : "REDIR_IN");
+        if (cmd->outfile)
+            printf("  outfile: %s (%s)\n", cmd->outfile, cmd->append ? "APPEND" : "REDIR_OUT");
+
+        if (cmd->pipe)
+            printf("  pipe: yes\n");
+
+        printf("------------------------\n");
+    }
+
+    printf("=== END OF PIPELINE ===\n");
+}
+
+
 /*
 // Riceve la line da readline
 // La passa al lexer()
@@ -80,6 +123,7 @@ t_pipeline   *parse_line(char *line, char **env)
          g_exit_status = 2;
          return NULL;
     }
+    print_pipeline(pipeline);
     return (pipeline);
     
 }

@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/19 09:54:38 by francesca        ###   ########.fr       */
+/*   Updated: 2025/05/20 10:21:48 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void    exit_shell(int code, const char *msg); // Esce dal programma con codice 
 // ==============================
 t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens);
 void free_pipeline(t_pipeline *pipeline);
+void populate_comands(t_pipeline *pipeline); //Popola i comandi della pipeline
 
 // ==============================
 // PARSER
@@ -92,6 +93,6 @@ t_pipeline   *parse_line(char *line, char **env); // Costruisce array di comandi
 // DEBUG
 // ==============================
 void    print_tokens(char **tokens, t_token_type *types);
-void    print_pipeline(t_cmd **pipeline);
+void    print_pipeline(t_pipeline *pipeline);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/05/19 09:02:16 by francesca        ###   ########.fr        #
+#    Updated: 2025/05/22 23:00:59 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME	= minishell
 
 # === Compiler settings ===
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -Iheader
+CFLAGS	= -Wall -Wextra -Werror -Iheader -g
 
 # === Libraries ===
 LIBFT_DIR = Libft
