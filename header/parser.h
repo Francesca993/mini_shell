@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/29 09:48:19 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/04 16:10:01 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void populate_comands(t_pipeline *pipeline); //Popola i comandi della pipeline
 // ==============================
 // PARSER
 // ==============================
-t_pipeline   *parse_line(char *line, char **env); // Costruisce array di comandi separati da pipe
+t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline); // Costruisce array di comandi separati da pipe
 
 // ==============================
 // DEBUG

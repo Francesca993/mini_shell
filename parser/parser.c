@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/04 09:10:06 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/04 16:10:31 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,13 @@ void print_pipeline(t_pipeline *pipeline)
  * - Puntatore a una `t_pipeline` allocata dinamicamente
  * - NULL in caso di errore (lexer o parser)
  */
-t_pipeline   *parse_line(char *line, char **env)
+t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
 {
     (void)env; // Per ora lo ignoriamo
     
     char **tokens = NULL;
     t_token_type *types = NULL;
     int ntokens;
-    t_pipeline *pipeline;
 
     ntokens = lexer(line, &tokens, &types);
     if (ntokens == -1)

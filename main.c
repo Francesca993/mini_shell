@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/19 09:08:50 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/04 16:09:39 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void minishell_loop(char **env)
             add_history(line);
 
         // ⬇️ PARSING
-        pipeline = parse_line(line, env);
+        pipeline = parse_line(line, env, pipeline);
         if (!pipeline)
         {
             // lexer ha già stampato l’errore, salta solo l'esecuzione
