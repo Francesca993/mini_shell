@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/04 16:10:01 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/04 16:16:28 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void    exit_shell(int code, const char *msg); // Esce dal programma con codice 
 // ==============================
 // BUILD PIPELINE
 // ==============================
-t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens);
+t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens, t_pipeline *pipeline);
 void free_pipeline(t_pipeline *pipeline);
 void populate_comands(t_pipeline *pipeline); //Popola i comandi della pipeline
 

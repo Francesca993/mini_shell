@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/04 09:04:35 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/04 16:16:09 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int count_cmds(char ** tokens)
  * - Puntatore alla `t_pipeline` allocata e popolata.
  * - NULL in caso di errore di allocazione.
  */
-t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens)
+t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens, t_pipeline *pipeline)
 {
     int num_cmds;
 
@@ -55,12 +55,6 @@ t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens)
     // printf("num_cmds: %d\n", num_cmds);
 
     // Allocazione array di puntatori a comandi
-    t_pipeline *pipeline = ft_calloc(1, sizeof(t_pipeline));
-    if (!pipeline)
-    {
-        free_pipeline(pipeline);
-        return NULL; // errore allocazione
-    }
     pipeline->cmds = ft_calloc(num_cmds + 1, sizeof(t_cmd *));
     pipeline->types = types;
     pipeline->tokens = tokens;

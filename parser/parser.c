@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/04 16:10:31 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/04 16:15:41 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,10 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
     // Debug temporaneo
     print_tokens(tokens, types);
      // ✅ Costruisce la pipeline da tokens e types
-    pipeline = build_pipeline(tokens, types, ntokens);
+    pipeline = ft_calloc(1, sizeof(t_pipeline));
+    if (!pipeline)
+        return(free_pipeline(pipeline), NULL);
+    pipeline = build_pipeline(tokens, types, ntokens, pipeline);
     if (!pipeline)
     {
          fprintf(stderr, "Parser error\n");
