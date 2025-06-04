@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/29 09:37:54 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/04 07:58:51 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens)
     // Allocazione array di puntatori a comandi
     t_pipeline *pipeline = ft_calloc(1, sizeof(t_pipeline));
     if (!pipeline)
+    {
+        free_pipeline(pipeline);
         return NULL; // errore allocazione
+    }
     pipeline->cmds = ft_calloc(num_cmds + 1, sizeof(t_cmd *));
     pipeline->types = types;
     pipeline->tokens = tokens;
