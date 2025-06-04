@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/04 09:08:00 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/04 16:31:02 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
  * - 1 se il carattere è uno spazio
  * - 0 altrimenti
  */
-int ft_isspace(char c)
+int	ft_isspace(char c)
 {
-    return (c == ' ' || c == '\t' || c == '\n'
-        || c == '\v' || c == '\f' || c == '\r');
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r');
 }
 /*
  * Verifica se un carattere è un metacarattere della shell.
@@ -42,9 +42,9 @@ int ft_isspace(char c)
  * - 1 se il carattere è un metacarattere
  * - 0 altrimenti
  */
-int  is_metachar(char c)
+int	is_metachar(char c)
 {
-    return (c == '|' || c == '<' || c == '>');
+	return (c == '|' || c == '<' || c == '>');
 }
 
 /*
@@ -56,62 +56,69 @@ int  is_metachar(char c)
  *
  * Gestisce anche le quote:
  *   - quote singole e doppie vengono considerate parte del token
- *   - se una quote non viene chiusa, il lexer si interrompe (resta in uno stato errato)
+ *   - se una quote non viene chiusa,
+	il lexer si interrompe (resta in uno stato errato)
  *
  * Ritorna:
  * - Numero totale di token nella linea
  */
-int count_token(const char *line)
+int	count_token(const char *line)
 {
-    int i;
-    int count;
-    int quote;
-    count = 0;       // numero di token trovati
-    quote = 0;       // stato quote attivo (' o "), 0 se non dentro quote
-    i = 0;
-    while(line[i])
-    {
-        // Salta spazi iniziali
-        while(ft_isspace(line[i]))
-            i++;
-        // Fine stringa dopo spazi
-        if (!line[i])
-            break;
-        // === METACARATTERI ===
+	int	i;
+	int	count;
+	int	quote;
 
-        // Pipe: è sempre un token singolo
-        if (line[i] == '|')
-        {
-            count++;
-            i++;
-        }
-        // Redirezioni: può essere singolo (< >) o doppio (<< >>)
-        else if (line[i] == '<' || line[i] == '>')
-        {
-            i++;
-            if (line[i] == line[i -1])// >> o <<
-                i++;
-            count++; //un solo token per qualsiasi redirezione
-        }
-        // === PAROLA / ARGOMENTO / QUOTED TOKEN ===
-        else
-        {
-            count++;  // inizia un nuovo token
-            // Avanza finché:
+	count = 0; // numero di token trovati
+	quote = 0; // stato quote attivo (' o "), 0 se non dentro quote
+	i = 0;
+	while (line[i])
+	{
+		if (line[0] == '|')
+		{
+			g_exit_status = 1;
+			return (exit_shell(g_exit_status, "parse error near `|'"), - 1);
+		}
+		// Salta spazi iniziali
+		while (ft_isspace(line[i]))
+			i++;
+		// Fine stringa dopo spazi
+		if (!line[i])
+			break ;
+		// === METACARATTERI ===
+		// Pipe: è sempre un token singolo
+		if (line[i] == '|')
+		{
+			count++;
+			i++;
+		}
+		// Redirezioni: può essere singolo (< >) o doppio (<< >>)
+		else if (line[i] == '<' || line[i] == '>')
+		{
+			i++;
+			if (line[i] == line[i - 1]) // >> o <<
+				i++;
+			count++; //un solo token per qualsiasi redirezione
+		}
+		// === PAROLA / ARGOMENTO / QUOTED TOKEN ===
+		else
+		{
+			count++; // inizia un nuovo token
+			// Avanza finché:
 			// - sei dentro quote
 			// - oppure non incontri spazio o metacarattere
-            while (line[i] && (quote || (!is_metachar(line[i]) && !ft_isspace(line[i]))))
-            {
-                // Se trovi una quote aperta (solo se non sei già dentro un'altra quote)
-                if((line[i] == '\'' || line[i] == '"') && !quote)
-                    quote = line[i];  // entra nella quote
+			while (line[i] && (quote || (!is_metachar(line[i])
+						&& !ft_isspace(line[i]))))
+			{
+				// Se trovi una quote aperta (solo se non sei già dentro un'altra quote)
+				if ((line[i] == '\'' || line[i] == '"') && !quote)
+					quote = line[i]; // entra nella quote
 				else if (line[i] == quote)
 					quote = 0; // chiudi quote
 				i++;
-            }
-        }
-    }
-    return (count);
+			}
+		}
+	}
+	return (count);
 }
 
 /*
@@ -134,24 +141,26 @@ int count_token(const char *line)
  * Ritorna:
  * - Nuova posizione `i` dopo aver letto il token di redirezione
  */
-int handle_redirection(const char *line, int i, char **tokens, t_token_type *types, int *count)
+int	handle_redirection(const char *line, int i, char **tokens,
+		t_token_type *types, int *count)
 {
-    /*
-    char c;
+	char	c;
+
+	/*
 	c = line[i];
 	i++;
     */
-    char c = line[i++];
-    if (line[i] == c) // >> o <<
-    {
-        tokens[*count] = ft_substr(line, i - 1, 2);
+	c = line[i++];
+	if (line[i] == c) // >> o <<
+	{
+		tokens[*count] = ft_substr(line, i - 1, 2);
 		if (c == '>')
 			types[*count] = APPEND;
 		else
 			types[*count] = HEREDOC;
 		i++;
-    }
-    else
+	}
+	else
 	{
 		tokens[*count] = ft_substr(line, i - 1, 1);
 		if (c == '>')
@@ -185,12 +194,16 @@ int handle_redirection(const char *line, int i, char **tokens, t_token_type *typ
  * - Nuovo indice i dopo il token
  * - -1 in caso di errore (quote non chiusa)
  */
-int handle_word(const char *line, int i, char **tokens, t_token_type *types, int *count)
+int	handle_word(const char *line, int i, char **tokens, t_token_type *types,
+		int *count)
 {
-	int start = i;
-	char quote = 0;
+	int		start;
+	char	quote;
 
-	while (line[i] && (quote || (!is_metachar(line[i]) && !ft_isspace(line[i]))))
+	start = i;
+	quote = 0;
+	while (line[i] && (quote || (!is_metachar(line[i])
+				&& !ft_isspace(line[i]))))
 	{
 		if ((line[i] == '\'' || line[i] == '"') && !quote)
 			quote = line[i];
@@ -198,7 +211,7 @@ int handle_word(const char *line, int i, char **tokens, t_token_type *types, int
 			quote = 0;
 		i++;
 	}
-    if (quote)
+	if (quote)
 		return (-1); // errore: quote non chiusa
 	tokens[*count] = ft_substr(line, start, i - start);
 	types[*count] = WORD;
@@ -224,34 +237,36 @@ int handle_word(const char *line, int i, char **tokens, t_token_type *types, int
  * - Numero di token trovati
  * - -1 se c'è un errore (quote non chiusa, da `handle_word`)
  */
-int    fill_tokens(char *line, char **tokens, t_token_type *types)
+int	fill_tokens(char *line, char **tokens, t_token_type *types)
 {
-    int i = 0;
-    int count = 0;
-    while (line[i])
-    {
-        while (ft_isspace(line[i]))
-            i++;
-        if (!line[i])
-            break;
-        // --- PIPE
-        if(line[i] == '|')
-        {
-            tokens[count] = ft_strdup("|");
-            types[count++] = PIPE;
-            i++;
-        }
-        // --- REDIREZIONI
-        else if (line[i] == '<' || line[i] == '>')
-            i = handle_redirection(line, i, tokens, types, &count);
-        // --- WORD o QUOTED STRING
-        else
-        {
-            i = handle_word(line, i, tokens, types, &count);
-            if (i == -1)
-				return -1;  // errore da handle_word (es. quote non chiusa)
-        }
-    }
-    return (count);
-}
+	int	i;
+	int	count;
 
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		while (ft_isspace(line[i]))
+			i++;
+		if (!line[i])
+			break ;
+		// --- PIPE
+		if (line[i] == '|')
+		{
+			tokens[count] = ft_strdup("|");
+			types[count++] = PIPE;
+			i++;
+		}
+		// --- REDIREZIONI
+		else if (line[i] == '<' || line[i] == '>')
+			i = handle_redirection(line, i, tokens, types, &count);
+		// --- WORD o QUOTED STRING
+		else
+		{
+			i = handle_word(line, i, tokens, types, &count);
+			if (i == -1)
+				return (-1); // errore da handle_word (es. quote non chiusa)
+		}
+	}
+	return (count);
+}
