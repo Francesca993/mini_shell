@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/29 09:17:04 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/04 09:10:06 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,9 @@
 
 /*
 // ==============================
-// Obiettivi del lexer
-// ==============================
-// Divide la riga (line) in token:
-// parole (comandi e argomenti)
-// metacaratteri: |, <, >, >>, <<
-// gestisce correttamente '...' e "..."
-// Ritorna:
-// tokens_out → array di stringhe (terminato da NULL)
-// types_out → array parallelo di t_token_type
+// DEBUG
 // ==============================
 */
-
 void print_tokens(char **tokens, t_token_type *types)
 {
     int i = 0;
@@ -92,11 +83,26 @@ void print_pipeline(t_pipeline *pipeline)
 
 
 /*
-// Riceve la line da readline
-// La passa al lexer()
-// Ottiene tokens[] e types[]
-// (Per ora) stampa solo i risultati del lexer, senza ancora costruire t_pipeline
-*/
+ * Funzione principale del parser: riceve una linea di input e la converte
+ * in una struttura `t_pipeline`, pronta per l'esecuzione.
+ *
+ * Flusso:
+ * 1. Chiama `lexer()` per suddividere la linea in token e tipi.
+ * 2. Se il lexer fallisce (es. quote non chiusa), stampa un errore e termina.
+ * 3. Stampa i token generati (solo per debug).
+ * 4. Chiama `build_pipeline()` per costruire la struttura `t_pipeline`,
+ *    che conterrà i comandi, le redirezioni, le pipe, ecc.
+ * 5. Se la costruzione fallisce, stampa un errore e termina.
+ * 6. Stampa la pipeline risultante (debug) e la restituisce.
+ *
+ * Parametri:
+ * - line: linea di input da analizzare
+ * - env: ambiente (ignorato per ora)
+ *
+ * Ritorna:
+ * - Puntatore a una `t_pipeline` allocata dinamicamente
+ * - NULL in caso di errore (lexer o parser)
+ */
 t_pipeline   *parse_line(char *line, char **env)
 {
     (void)env; // Per ora lo ignoriamo

@@ -6,42 +6,60 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/13 22:23:19 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/04 09:08:00 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/parser.h"
 
+/*
+ * Verifica se un carattere è uno spazio bianco valido.
+ * Sono considerati spazi:
+ *   - spazio ' '
+ *   - tabulazione '\t'
+ *   - newline '\n'
+ *   - vertical tab '\v'
+ *   - form feed '\f'
+ *   - carriage return '\r'
+ *
+ * Ritorna:
+ * - 1 se il carattere è uno spazio
+ * - 0 altrimenti
+ */
 int ft_isspace(char c)
 {
     return (c == ' ' || c == '\t' || c == '\n'
         || c == '\v' || c == '\f' || c == '\r');
 }
 /*
-Controlla se un carattere è un metacarattere della shell, ovvero uno di:
-'|' (pipe)
-'<' (redirezione input)
-'>' (redirezione output)
-ritorna
-1 (cioè true) se c è uno dei tre simboli sopra
-0 (cioè false) se c è qualunque altro carattere
-is_metachar('|');   // → 1
-is_metachar('>');   // → 1
-is_metachar('<');   // → 1
-is_metachar('a');   // → 0
-is_metachar(' ');   // → 0
-*/
+ * Verifica se un carattere è un metacarattere della shell.
+ * Sono considerati metacaratteri:
+ *   - '|': pipe
+ *   - '<': redirezione input
+ *   - '>': redirezione output
+ *
+ * Ritorna:
+ * - 1 se il carattere è un metacarattere
+ * - 0 altrimenti
+ */
 int  is_metachar(char c)
 {
     return (c == '|' || c == '<' || c == '>');
 }
 
 /*
- * Conta il numero di token presenti nella linea di input.
- * I token possono essere:
- *   - parole (comandi o argomenti)
+ * Conta quanti token sono presenti nella linea di input.
+ * I token includono:
+ *   - parole (comandi, argomenti)
  *   - redirezioni (<, >, <<, >>)
  *   - pipe (|)
+ *
+ * Gestisce anche le quote:
+ *   - quote singole e doppie vengono considerate parte del token
+ *   - se una quote non viene chiusa, il lexer si interrompe (resta in uno stato errato)
+ *
+ * Ritorna:
+ * - Numero totale di token nella linea
  */
 int count_token(const char *line)
 {
@@ -97,11 +115,25 @@ int count_token(const char *line)
 }
 
 /*
-Legge da line[i]
-Riconosce >, >>, <, <<
-Scrive nella posizione tokens[*count] e types[*count]
-Incrementa *count e restituisce la nuova posizione i
-*/
+ * Gestisce la creazione di un token di redirezione a partire da `line[i]`.
+ * Riconosce:
+ *   - '>'     → REDIR_OUT
+ *   - '>>'    → APPEND
+ *   - '<'     → REDIR_IN
+ *   - '<<'    → HEREDOC
+ *
+ * Scrive il token corrispondente in `tokens[*count]` e aggiorna il tipo.
+ *
+ * Parametri:
+ * - line: linea originale
+ * - i: indice corrente nella linea
+ * - tokens: array dei token
+ * - types: array dei tipi di token
+ * - count: indice del token corrente (passato per riferimento)
+ *
+ * Ritorna:
+ * - Nuova posizione `i` dopo aver letto il token di redirezione
+ */
 int handle_redirection(const char *line, int i, char **tokens, t_token_type *types, int *count)
 {
     /*
@@ -131,8 +163,28 @@ int handle_redirection(const char *line, int i, char **tokens, t_token_type *typ
 	return (i);
 }
 
-#include "parser.h"
-
+/*
+ * Gestisce un token di tipo WORD o stringa tra quote.
+ *
+ * Un token è considerato una parola finché:
+ *   - non è un metacarattere
+ *   - non è uno spazio
+ *   - oppure finché si è dentro a delle quote (singole o doppie)
+ *
+ * Se viene trovata una quote non chiusa, ritorna -1 per segnalare errore.
+ * In caso contrario, salva il token e aggiorna `types[*count]`.
+ *
+ * Parametri:
+ * - line: linea di input
+ * - i: indice iniziale
+ * - tokens: array di stringhe da riempire
+ * - types: array parallelo dei tipi
+ * - count: puntatore al numero corrente di token
+ *
+ * Ritorna:
+ * - Nuovo indice i dopo il token
+ * - -1 in caso di errore (quote non chiusa)
+ */
 int handle_word(const char *line, int i, char **tokens, t_token_type *types, int *count)
 {
 	int start = i;
@@ -154,6 +206,24 @@ int handle_word(const char *line, int i, char **tokens, t_token_type *types, int
 	return (i);
 }
 
+/*
+ * Scorre l'intera linea di input e popola gli array `tokens` e `types`.
+ * Utilizza `handle_redirection()` e `handle_word()` per costruire i token.
+ *
+ * Token riconosciuti:
+ *   - PIPE (|): copiato direttamente
+ *   - REDIREZIONI (<, >, <<, >>): gestite con `handle_redirection()`
+ *   - WORD: parole generiche, gestite con `handle_word()`
+ *
+ * Parametri:
+ * - line: stringa da analizzare
+ * - tokens: array dove salvare i token estratti
+ * - types: array parallelo con i tipi di token
+ *
+ * Ritorna:
+ * - Numero di token trovati
+ * - -1 se c'è un errore (quote non chiusa, da `handle_word`)
+ */
 int    fill_tokens(char *line, char **tokens, t_token_type *types)
 {
     int i = 0;

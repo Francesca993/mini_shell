@@ -6,20 +6,20 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/04 07:58:51 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/04 09:04:35 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/parser.h"
 
 /*
-* Conta i comandi
-// count_cmds()
-// Conta solo i comandi → 1 + numero di pipe
-// Nell’esempio sopra: 2 comandi:
-// echo hello
-// grep test > out.txt
-*/
+ * Conta quanti comandi sono presenti nella linea, basandosi sulle pipe (|).
+ * Ogni pipe separa due comandi, quindi il numero totale è 1 + numero di pipe.
+ *
+ * Esempio:
+ * Input: echo hello | grep test > out.txt
+ * Ritorna: 2
+ */
 static int count_cmds(char ** tokens)
 {
     int count = 1; // almeno un comando esiste
@@ -35,22 +35,18 @@ static int count_cmds(char ** tokens)
 }
 
 /*
-* Costruire un array di t_cmd* (uno per ogni comando separato da pipe) a partire dai token e dai loro tipi.
-* Scorre i tokens e types
-* Ogni volta che incontra una PIPE o la fine, chiude il comando corrente
-* Riempie la struttura t_cmd con:
-* args: array dinamico di stringhe
-* infile, outfile, append, heredoc (se ci sono redirezioni)
-*
-Conta i comandi
-Alloca il pipeline
-Per ogni t_cmd, popola:
-args: solo WORD
-infile, outfile, append, heredoc: da redirezioni
-Gestisce le pipe come separatori
-Gestisce errori di allocazione
-*/
-
+ * Costruisce la struttura `t_pipeline` a partire dai token e dai loro tipi.
+ *
+ * Passaggi:
+ * 1. Conta quanti comandi ci sono (basato sulle pipe).
+ * 2. Alloca la struttura `t_pipeline` e l'array di comandi `t_cmd**`.
+ * 3. Assegna token, tipi, e dimensioni totali alla pipeline.
+ * 4. Chiama `populate_comands()` per popolare ogni `t_cmd` all'interno della pipeline.
+ *
+ * Ritorna:
+ * - Puntatore alla `t_pipeline` allocata e popolata.
+ * - NULL in caso di errore di allocazione.
+ */
 t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens)
 {
     int num_cmds;
@@ -78,12 +74,22 @@ t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens)
 
     return (pipeline);
 }
+
 /*
-Cosa fa:
-Parte da types[start]
-Conta solo i WORD
-Si ferma quando trova una PIPE o fine array (types[i] == 0)
-*/
+ * Conta quanti token di tipo WORD appartengono a un singolo comando.
+ * Serve per allocare correttamente `cmd->args`.
+ *
+ * Scorre i token a partire da `start` fino a una PIPE o fine input.
+ * Salta i token che sono parte di redirezioni (cioè token successivi a <, >, >>, <<).
+ *
+ * Parametri:
+ * - types: array di tipi dei token.
+ * - start: indice da cui iniziare a contare.
+ * - n_tokens: numero totale di token.
+ *
+ * Ritorna:
+ * - Numero di argomenti (WORD) per il comando corrente.
+ */
 static int count_args_for_cmds(t_token_type *types, int start, int n_tokens)
 {
     int count = 0;
@@ -106,12 +112,6 @@ static int count_args_for_cmds(t_token_type *types, int start, int n_tokens)
     return count;
 }
 
-
-// Ogni t_cmd ha:
-// args (comando e argomenti)
-// infile, outfile
-// append, heredoc
-
 /*
 Dal PDF:
 
@@ -128,26 +128,21 @@ Oppure sono in quote doppie e contengono $
 */
 
 /*
-
-Riceve tokens, types, n_tokens, pipeline
-Per ogni comando (tra PIPE):
-Conta quanti WORD ci sono (usando count_args_for_cmds)
-Alloca t_cmd
-Alloca args correttamente
-Riempie args, infile, outfile, redir_in, append, ecc.
-Inserisce t_cmd in pipeline->cmds[cmd_idx++]
-// Ogni t_cmd ha:
-// args (comando e argomenti)
-// infile, outfile
-// append, heredoc
-populate_cmds deve:
-Contare quanti WORD ci sono fino alla prossima PIPE
-Allocare il t_cmd
-Allocare cmd->args con la dimensione esatta
-Copiare i token (WORD) dentro args con ft_strdup
-Gestire eventuali redirezioni (<, >, >>, <<)
-Passare al comando successivo se trova PIPE
-*/
+ * Popola l'array di comandi `pipeline->cmds` analizzando token e tipi.
+ *
+ * Per ogni comando:
+ * - Conta i WORD per allocare `cmd->args`.
+ * - Alloca e riempie la struttura `t_cmd`:
+ *   - `args[]`: solo token di tipo WORD (duplicati con `ft_strdup`).
+ *   - Redirezioni:
+ *     - <    → `infile`, `redir_in`
+ *     - >    → `outfile`, `redir_out`
+ *     - >>   → `outfile`, `append`
+ *     - <<   → `infile`, `heredoc`
+ * - Se è presente una PIPE, imposta `cmd->pipe = 1` e passa al prossimo comando.
+ *
+ * Nota: termina se termina l'array di token.
+ */
 void populate_comands(t_pipeline *pipeline)
 {
     int i = 0;
