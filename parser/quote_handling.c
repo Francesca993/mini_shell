@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quote_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:43:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 10:58:31 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 19:24:51 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/quotehandling.h"
-
+#include "../header/minishell.h"
 /*
 Dal PDF:
 
@@ -28,7 +27,7 @@ Oppure sono in quote doppie e contengono $
 */
 
 
-char    *remove_single_quote(const char *str)
+char    *remove_quotes(const char *str) // gestisce sia virgole singole che doppie 
 {
     int     len;
     int     i;
@@ -44,7 +43,7 @@ char    *remove_single_quote(const char *str)
         return NULL;
     while (str[i])
     {
-        if (str[i] != '\'') // rimuovi solo virgolette singole
+        if (str[i] != '\'' || str[i] != '"') 
         {
             res[j++] = str[i];
         }
@@ -64,7 +63,7 @@ void    expand_single_quotes(t_cmd *cmd)
     {
         if (ft_strchr(cmd->args[i], '\'')) // solo se contiene '
         {
-            new_str = remove_single_quote(cmd->args[i]);
+            new_str = remove_quotes(cmd->args[i]);
             free(cmd->args[i]);
             printf("%s\n", new_str);
             cmd->args[i] = new_str;
@@ -73,7 +72,28 @@ void    expand_single_quotes(t_cmd *cmd)
     }
     
 }
-
+static void    expand_double_quotes(t_cmd *cmd)
+{
+    int i;
+    i = 0;
+    char   *new_str;
+    //char *expanded;
+    
+    while (cmd->args && cmd->args[i])
+    {
+        if (ft_strchr(cmd->args[i], '"'))
+        {
+            new_str = remove_quotes(cmd->args[i]);
+            //expanded = expand_var(new_str);
+            //free(new_str);
+            free(cmd->args[i]);
+            printf("%s\n", new_str);
+            cmd->args[i] = new_str;
+            //cmd->args[i] = expanded; da sostituire a riga 91 quando expand_var è pronta
+        }
+        i++;
+    }
+}
 /*
 * Scorre tutti i comandi della pipeline e se trova le sigle quote lancia expand_single_quote
 *che rimuove le quote come la shell in quanto gli errori sono già gestiti prima
@@ -96,7 +116,13 @@ void    expand_quotes(t_pipeline *pipeline)
             }
         }
         if (pipeline->cmds[i]->quote_double)
-            expand_double_quotes(pipeline->cmds[i]);  // espande variabili, backslash ecc.
+            expand_double_quotes(pipeline->cmds[i]);
+             int j = 0;
+            while (pipeline->cmds[i]->args[j])
+            {
+                printf("debug dopo expande_double quote: %s\n", pipeline->cmds[i]->args[j]);
+                j++;
+            }  // espande variabili, backslash ecc.
         i++;
     }
 }
@@ -122,5 +148,6 @@ void find_quotes(t_pipeline *pipeline)
         }
         i++;
     }
+    expand_quotes(pipeline);
     
 }
