@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   build_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 09:41:15 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 16:24:01 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/parser.h"
+#include "../header/minishell.h"
 
 /*
  * Conta quanti comandi sono presenti nella linea, basandosi sulle pipe (|).
@@ -66,7 +66,6 @@ t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens, t
 
     populate_comands(pipeline);
     find_quotes(pipeline);
-    expand_quotes(pipeline);
     return (pipeline);
 }
 

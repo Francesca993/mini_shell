@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:03:26 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 07:19:22 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 16:25:34 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/parser.h"
+#include "../header/minishell.h"
 
 /*
  * Funzione principale del lexer: analizza una linea di input e produce
