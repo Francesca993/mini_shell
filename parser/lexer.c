@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:03:26 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/04 09:08:52 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 07:19:22 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ int lexer(char *line, char ***tokens_out, t_token_type **types_out)
 	filled = fill_tokens(line, tokens, types);
 	if (filled == -1)
 	{
-		fprintf(stderr, "syntax error: unclosed quote\n");
-		g_exit_status = 2;
+		exit_shell(2, "syntax error: unclosed quote\n");
+		// fprintf(stderr, "syntax error: unclosed quote\n");
+		// g_exit_status = 2;
 		free_partial_tokens(tokens, types, n_tokens);
-		return -1;
+		return (-1);
 	}
 	*tokens_out = tokens;
 	*types_out = types;

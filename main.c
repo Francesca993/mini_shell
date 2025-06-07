@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/04 16:09:39 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/07 07:23:11 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,7 @@ int main(int argc, char **argv, char**envp)
     }
     */
     minishell_loop(my_env);
-    /*
     free_envp(my_env);
     rl_clear_history(); // libera la history
-    */
     return (0);
 }
