@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 08:01:20 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 08:55:32 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSER_H
 
 # include "minishell.h"
+#include "quotehandling.h"
 
 // #define INITIAL_CAPACITY 16
 // ==============================

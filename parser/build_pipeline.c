@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/04 16:16:09 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/07 09:03:09 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens, t
     // printf("%d\n", pipeline->n_tokens);
 
     populate_comands(pipeline);
-
+    find_quotes(pipeline);
     return (pipeline);
 }
 

@@ -6,7 +6,7 @@
 #    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/05/22 23:00:59 by francesca        ###   ########.fr        #
+#    Updated: 2025/06/07 08:46:57 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRC =	main.c \
 		parser/parser.c \
 		parser/build_pipeline.c \
 		parser/utils.c \
+		parser/quote_handling.c \
 
 # === Object files ===
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
