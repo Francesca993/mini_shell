@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 09:37:48 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 09:41:15 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,21 +106,6 @@ static int count_args_for_cmds(t_token_type *types, int start, int n_tokens)
     }
     return count;
 }
-
-/*
-Dal PDF:
-
-Handle ’ (single quote): disabilita interpretazione
-Handle " (double quote): interpreta solo $
-Handle $VAR
-Handle $? → ultimo exit status
-Quindi in expand_pipeline():
-
-Tracciare quali token sono in quote singole/doppie
-Espandere solo se:
-Non sono in quote singole
-Oppure sono in quote doppie e contengono $
-*/
 
 /*
  * Popola l'array di comandi `pipeline->cmds` analizzando token e tipi.

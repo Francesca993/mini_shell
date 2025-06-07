@@ -6,11 +6,27 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:43:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 09:38:45 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 10:58:31 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/quotehandling.h"
+
+/*
+Dal PDF:
+
+Handle ’ (single quote): disabilita interpretazione
+Handle " (double quote): interpreta solo $
+Handle $VAR
+Handle $? → ultimo exit status
+Quindi in expand_pipeline():
+
+Tracciare quali token sono in quote singole/doppie
+Espandere solo se:
+Non sono in quote singole
+Oppure sono in quote doppie e contengono $
+*/
+
 
 char    *remove_single_quote(const char *str)
 {
@@ -79,9 +95,8 @@ void    expand_quotes(t_pipeline *pipeline)
                 j++;
             }
         }
-
-        // if (pipeline->cmds[i]->quote_double)
-        //     expand_double_quotes(pipeline->cmds[i]);  // espande variabili, backslash ecc.
+        if (pipeline->cmds[i]->quote_double)
+            expand_double_quotes(pipeline->cmds[i]);  // espande variabili, backslash ecc.
         i++;
     }
 }
@@ -101,6 +116,8 @@ void find_quotes(t_pipeline *pipeline)
                 pipeline->cmds[i]->quote_single = 1;
             if (ft_strchr(pipeline->cmds[i]->args[j], '\"'))
                 pipeline->cmds[i]->quote_double = 1;
+            if (ft_strchr(pipeline->cmds[i]->args[j], '$'))
+                pipeline->cmds[i]->dollar = 1;
             j++;
         }
         i++;
