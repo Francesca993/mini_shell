@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:02:00 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/09 10:44:53 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 07:33:37 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 #include "minishell.h"
 
 char    **copy_env(char **envp);
+void    free_myenvp(char **my_env);
 
 #endif

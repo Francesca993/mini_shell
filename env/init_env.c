@@ -6,11 +6,25 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:00 by francesca         #+#    #+#             */
-/*   Updated: 2025/05/09 11:04:15 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 07:33:59 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/envp.h"
+
+void    free_myenvp(char **my_env)
+{
+    int i;
+
+    i = 0;
+
+    while (my_env[i])
+    {
+        free(my_env[i]);
+        i++;
+    }
+    free(my_env);
+}
 
 static int new_env_len(char **envp)
 {
