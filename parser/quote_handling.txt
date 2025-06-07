@@ -1,0 +1,52 @@
+1. Apici singoli: '...'
+Comportamento:
+Tutto viene interpretato letteralmente. Nessuna espansione di variabili, comandi, né escape.
+Esempi:
+echo 'Ciao $USER'       # stampa: Ciao $USER
+echo 'La directory è: `pwd`'  # stampa: La directory è: `pwd`
+Nessuna espansione. Il contenuto viene stampato esattamente così com'è.
+=================================================================
+2. Apici doppi: "..."
+Permettono l'espansione di variabili, comandi (con \`` o $(...)), ed interpretano alcuni **caratteri 
+speciali**. I backslash funzionano **solo per alcuni caratteri speciali** ($, `` ``, \, ", e newline).
+Esempi:
+echo "Ciao $USER"       # stampa: Ciao francesca (o chi sei)
+echo "La directory è: $(pwd)"  # stampa: La directory è: /home/francesca
+I contenuti vengono espansi: $USER viene sostituito col suo valore, $(pwd) viene eseguito.
+Escape funzionanti dentro doppi apici:
+
+echo "Doppio apice: \"ciao\""  # stampa: Doppio apice: "ciao"
+
+=================================================================
+3. Apici doppi preceduti da $: $"..."
+Comportamento:
+Questo attiva la localizzazione (gettext). È usato per supportare messaggi tradotti nelle lingue configurate.
+Esempio:
+gettext "Hello"
+# oppure
+echo $"Hello"
+Se esiste una traduzione per "Hello" nella lingua impostata, la userà. Altrimenti, stampa "Hello".
+⚠️ Attenzione: $" non fa nulla di speciale se la localizzazione (i file .mo) non è configurata.
+=================================================================
+4. Backtick e $(...) (comando tra virgolette):
+Anche se non sono apici, spesso vengono usati insieme alle virgolette.
+echo "Oggi è: $(date)"
+oppure
+echo "Oggi è: `date`"
+Entrambi eseguono date e ne inseriscono il risultato nel comando.
+=================================================================
+5. Combinazioni particolari:
+
+a. Apici doppi dentro singoli (ok):
+echo '"Testo tra doppi apici"' - > stampa: "Testo tra doppi apici"
+b. Apici singoli dentro doppi (ok):
+echo "'Testo tra singoli apici'" -> stampa: 'Testo tra singoli apici'
+c. Apici annidati dello stesso tipo (errore):
+echo "Un "testo" sbagliato"  -> Errore di sintassi
+
+
+
+1. Apici singoli: '...' -> Nessuna espansione. Il contenuto viene stampato esattamente così com'è.
+2. Apici doppi: "..." -> I contenuti vengono espansi: $USER viene sostituito col suo valore, $(pwd) viene eseguito.
+3. Apici doppi preceduti da $: $"..." -> Questo attiva la localizzazione (gettext). È usato per supportare messaggi tradotti nelle lingue configurate.
+4. Backtick e $(...) (comando tra virgolette) -> Entrambi eseguono date e ne inseriscono il risultato nel comando.

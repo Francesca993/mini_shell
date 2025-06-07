@@ -1,0 +1,37 @@
+francesca@MacBook-Pro-di-Francesca mini_shell % ./minishell
+minishell$: ciao
+=== TOKENS ===
+[ciao] -> WORD
+==============
+=== PIPELINE ===
+Command 1:
+  args: [ciao] 
+------------------------
+=== END OF PIPELINE ===
+minishell$: ciao ciao | bambia
+=== TOKENS ===
+[ciao] -> WORD
+[ciao] -> WORD
+[|] -> PIPE
+[bambia] -> WORD
+==============
+=== PIPELINE ===
+Command 1:
+  args: [ciao] [ciao] 
+  pipe: yes
+------------------------
+Command 2:
+  args: [bambia] 
+------------------------
+=== END OF PIPELINE ===
+minishell$: | ciao
+parse error near `|'
+francesca@MacBook-Pro-di-Francesca mini_shell % $"ciao"
+zsh: command not found: $ciao
+francesca@MacBook-Pro-di-Francesca mini_shell % ./minishell
+minishell$: ' "ciso
+syntax error: unclosed quote
+
+francesca@MacBook-Pro-di-Francesca mini_shell % 
+
+ma deve chiudersi in casoo di errore?
