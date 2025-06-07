@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 09:03:09 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 09:37:48 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens, t
 
     populate_comands(pipeline);
     find_quotes(pipeline);
+    expand_quotes(pipeline);
     return (pipeline);
 }
 

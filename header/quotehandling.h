@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:45:06 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 09:01:01 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 09:35:51 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_pipeline t_pipeline;
 char    *remove_single_quote(const char *str);
 void    expand_single_quotes(t_cmd *cmd);
 void    find_quotes(t_pipeline *pipeline);
+void    expand_quotes(t_pipeline *pipeline);
 
 extern int g_exit_status;
 #endif

@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:43:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 09:15:00 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 09:38:45 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void    expand_single_quotes(t_cmd *cmd)
 * Scorre tutti i comandi della pipeline e se trova le sigle quote lancia expand_single_quote
 *che rimuove le quote come la shell in quanto gli errori sono già gestiti prima
 */
-void    find_quotes(t_pipeline *pipeline)
+void    expand_quotes(t_pipeline *pipeline)
 {
     int i;
 
@@ -84,4 +84,26 @@ void    find_quotes(t_pipeline *pipeline)
         //     expand_double_quotes(pipeline->cmds[i]);  // espande variabili, backslash ecc.
         i++;
     }
+}
+
+
+void find_quotes(t_pipeline *pipeline)
+{
+    int i = 0;
+    int j;
+    
+    while (i < pipeline->n_cmds)
+    {
+        j = 0;
+        while (pipeline->cmds[i]->args[j])
+        {
+            if (ft_strchr(pipeline->cmds[i]->args[j], '\''))// solo se contiene '
+                pipeline->cmds[i]->quote_single = 1;
+            if (ft_strchr(pipeline->cmds[i]->args[j], '\"'))
+                pipeline->cmds[i]->quote_double = 1;
+            j++;
+        }
+        i++;
+    }
+    
 }
