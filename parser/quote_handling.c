@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:43:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 19:24:51 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/07 20:59:16 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char    *remove_quotes(const char *str) // gestisce sia virgole singole che dopp
         return NULL;
     while (str[i])
     {
-        if (str[i] != '\'' || str[i] != '"') 
+        if (str[i] != '\'' && str[i] != '"') 
         {
             res[j++] = str[i];
         }
@@ -77,6 +77,7 @@ static void    expand_double_quotes(t_cmd *cmd)
     int i;
     i = 0;
     char   *new_str;
+    char *backslash;
     //char *expanded;
     
     while (cmd->args && cmd->args[i])
@@ -84,11 +85,13 @@ static void    expand_double_quotes(t_cmd *cmd)
         if (ft_strchr(cmd->args[i], '"'))
         {
             new_str = remove_quotes(cmd->args[i]);
+            backslash = handle_backslash(new_str);
             //expanded = expand_var(new_str);
-            //free(new_str);
+            
+            free(new_str);
             free(cmd->args[i]);
-            printf("%s\n", new_str);
-            cmd->args[i] = new_str;
+            printf("%s\n", backslash);
+            cmd->args[i] = backslash;
             //cmd->args[i] = expanded; da sostituire a riga 91 quando expand_var è pronta
         }
         i++;
@@ -116,13 +119,13 @@ void    expand_quotes(t_pipeline *pipeline)
             }
         }
         if (pipeline->cmds[i]->quote_double)
-            expand_double_quotes(pipeline->cmds[i]);
+            {expand_double_quotes(pipeline->cmds[i]);
              int j = 0;
             while (pipeline->cmds[i]->args[j])
             {
                 printf("debug dopo expande_double quote: %s\n", pipeline->cmds[i]->args[j]);
                 j++;
-            }  // espande variabili, backslash ecc.
+            }}  // espande variabili, backslash ecc.
         i++;
     }
 }
