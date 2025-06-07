@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 22:23:22 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 07:33:46 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 16:29:08 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/parser.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "../header/minishell.h"
 
 void free_pipeline(t_pipeline *pipeline)
 {

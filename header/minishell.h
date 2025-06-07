@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:38:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 08:55:26 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/07 15:51:18 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 
 #include "envp.h"
 #include "parser.h"
+#include "quotehandling.h"
 
 extern int g_exit_status;
 

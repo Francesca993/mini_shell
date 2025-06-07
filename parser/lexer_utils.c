@@ -6,11 +6,11 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/04 16:31:02 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/07 16:25:25 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/parser.h"
+#include "../header/minishell.h"
 
 /*
  * Verifica se un carattere è uno spazio bianco valido.
