@@ -3,37 +3,32 @@ tempo di risolvere.
 
 echo "a\
 b"
-(Il backslash + newline vengono rimossi, la riga viene unita)
-
-echo "a\\" - atteso a\
-echo a\ b - attesi a b
-echo a\z atteso az
-echo "a\" a\
 
 
-Quando trova un backslash dentro le doppie virgolette, 
-il lexer dovrebbe riconoscere che \" non chiude la stringa, 
-ma inserisce un carattere " letterale.
-
-
+minishell$: 
+francesca@Mac mini_shell % a\ b
+zsh: command not found: a b
+francesca@Mac mini_shell % ./minishell 
+minishell$: a\ b
+=== TOKENS ===
+[a\] -> WORD
+[b] -> WORD
+==============
 === PIPELINE ===
 Command 1:
-  args: [a\z] 
-
-francesca@Mac ~ % echo a\z
-az
-
-se a seguire del backslash c'è un carattere o uno spazio, allora ignori il backslash e vai avanti;
-
-=== PIPELINE ===
-Command 1:
-  args: [a\] [b] 
-
-francesca@Mac ~ % echo a\ b
-a b
-
+  args: [a] [b] 
 ------------------------
 === END OF PIPELINE ===
-minishell$: echo "a\\"
-francesca@Mac ~ % echo "a\\"
-a\
+minishell$: a\ a\ a\ a\
+=== TOKENS ===
+[a\] -> WORD
+[a\] -> WORD
+[a\] -> WORD
+[a\] -> WORD
+==============
+=== PIPELINE ===
+Command 1:
+  args: [a] [a] [a] [a] 
+------------------------
+=== END OF PIPELINE ===
+minishell$: 

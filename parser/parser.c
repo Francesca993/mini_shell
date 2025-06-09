@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 19:07:24 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/09 15:00:32 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
     int ntokens;
 
     ntokens = lexer(line, &tokens, &types);
+    //find_backslash(tokens); quando trova le "" o '' nn deve interferire 
     if (ntokens == -1)
     {
         exit_shell(2, "Lexer error\n");

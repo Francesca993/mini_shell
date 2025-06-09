@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotehandling.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:45:06 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 20:55:47 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/09 15:30:38 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,11 @@ void    find_quotes(t_pipeline *pipeline);
 void    expand_quotes(t_pipeline *pipeline);
 char    *handle_backslash(char *str);
 
-//extern int g_exit_status;
+//Gestione backshalsh
+char    *handle_backslash_outside_quotes(const char *str);
+
+//Processing argoments
+void process_pipeline(t_pipeline *pipeline);
+void process_args(t_cmd *cmd);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/09 14:46:25 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/09 15:12:01 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ int	handle_word(const char *line, int i, char **tokens, t_token_type *types,
 	{
 		if ((line[i] == '\'' || line[i] == '"') && !quote)
 			quote = line[i];
-		else if (line[i] == '\\' && line[i+1] && line[i+1] =='\\')
+		else if (line[i] == '\\' && (line[i+1] && line[i+1] =='\\'))
 			i++;
 		else if (line[i] == '\\' && line[i+1] && line[i+1] =='"')
 			i++;
