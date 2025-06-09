@@ -1,0 +1,57 @@
+Checklist Parsing Mini-Shell 42 – Stato attuale
+
+1. Tokenizzazione
+[x] Gli spazi fuori dalle quote separano i token.
+[x] Gli spazi dentro le quote sono preservati nel token.
+[x] Le pipe (|) sono riconosciute come token separati.
+[x] Le redirezioni (<, >, >>, <<) sono riconosciute come token separati.
+[x] I delimitatori di heredoc sono riconosciuti come token.
+[x] Le quote singole e doppie sono riconosciute e gestite correttamente (almeno a livello di tokenizzazione).
+
+2. Gestione delle quote
+[x] Le single quote '...' preservano tutto letteralmente (nessuna espansione, nessun escape).
+[x] Le double quote "..." sono riconosciute e i token vengono marcati, ma:
+[ ] Le double quote non gestiscono ancora l’escape di $, ", \, e newline.
+[x] Le quote non chiuse generano errore di sintassi.
+
+3. Gestione del backslash
+[ ] Fuori dalle quote, il backslash escapa qualsiasi carattere (da implementare).
+[ ] Dentro le double quote, il backslash escapa solo $, ", \, e newline (da implementare).
+[x] Dentro le single quote, il backslash è trattato come carattere normale (già ok).
+
+4. Espansione variabili
+[ ] Espansione di $VAR e ${VAR} fuori e dentro le double quote (da implementare).
+[ ] Espansione di $? (ultimo exit status) (da implementare).
+[x] Nessuna espansione dentro le single quote.
+[ ] Espansione di variabili anche nei delimitatori di heredoc (se non tra single quote).
+
+5. Gestione errori sintattici
+[x] Pipe all’inizio o alla fine della linea generano errore.
+[x] Pipe consecutive senza comando in mezzo generano errore.
+[x] Redirezioni senza file generano errore.
+[x] Heredoc senza delimitatore genera errore.
+[x] Quote non chiuse generano errore.
+[ ] Messaggi di errore simili a bash (parzialmente: alcuni errori sono gestiti, ma verifica la fedeltà ai messaggi bash).
+
+6. Costruzione della pipeline
+[x] Ogni comando è rappresentato da una struttura con:
+[x] Argomenti (array di stringhe)
+[x] Redirezioni di input/output
+[x] Flag per append/heredoc
+[x] Pipe in uscita
+[x] La pipeline è una lista/array di comandi collegati dalle pipe.
+
+7. Heredoc
+[x] Riconoscimento del token << e del suo delimitatore.
+[ ] Se il delimitatore è tra single quote, nessuna espansione di variabili nel contenuto (da implementare).
+[ ] Se il delimitatore non è tra single quote, espansione delle variabili nel contenuto (da implementare).
+
+8. Edge-case e test
+[ ] Gestione di quote mischiate o annidate (es. "foo'bar", 'foo"bar') (da testare e rafforzare).
+[ ] Gestione di redirezioni multiple nello stesso comando (da testare).
+[ ] Gestione di pipe consecutive o senza comandi validi (già gestito, ma da testare con casi limite).
+[ ] Test con input complessi e confronto con bash (da fare).
+
+9. Gestione della memoria
+[x] Tutta la memoria allocata dinamicamente viene liberata correttamente (già gestito nelle funzioni di free).
+[ ] Nessun memory leak (test con valgrind consigliato).
