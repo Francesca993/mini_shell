@@ -16,7 +16,24 @@ il lexer dovrebbe riconoscere che \" non chiude la stringa,
 ma inserisce un carattere " letterale.
 
 
-"a\"b"
+=== PIPELINE ===
+Command 1:
+  args: [a\z] 
 
-"a\" 
+francesca@Mac ~ % echo a\z
+az
 
+se a seguire del backslash c'è un carattere o uno spazio, allora ignori il backslash e vai avanti;
+
+=== PIPELINE ===
+Command 1:
+  args: [a\] [b] 
+
+francesca@Mac ~ % echo a\ b
+a b
+
+------------------------
+=== END OF PIPELINE ===
+minishell$: echo "a\\"
+francesca@Mac ~ % echo "a\\"
+a\
