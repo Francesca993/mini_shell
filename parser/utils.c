@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 22:23:22 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 16:29:08 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/09 12:05:52 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,4 @@ void exit_shell(int code, const char *msg)
 		write(STDERR_FILENO, "\n", 1);
 	}
 	g_exit_status = code;
-	clear_history(); // opzionale, ma buona pratica
-	exit(code);
 }

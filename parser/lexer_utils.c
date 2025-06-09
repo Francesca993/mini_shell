@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 21:42:36 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/09 12:07:42 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,7 @@ int	count_token(const char *line)
 	while (line[i])
 	{
 		if (line[0] == '|')
-		{
-			g_exit_status = 1;
-			return (exit_shell(g_exit_status, "parse error near `|'"), - 1);
-		}
+			return (exit_shell(1, "parse error near `|'"), - 1);
 		// Salta spazi iniziali
 		while (ft_isspace(line[i]))
 			i++;
@@ -207,6 +204,8 @@ int	handle_word(const char *line, int i, char **tokens, t_token_type *types,
 	{
 		if ((line[i] == '\'' || line[i] == '"') && !quote)
 			quote = line[i];
+		else if (line[i] == '\\' && line[i+1] && (line[i+1] =='"' || line[i+1] =='\''))
+			i++;
 		else if (line[i] == quote)
 			quote = 0;
 		i++;
