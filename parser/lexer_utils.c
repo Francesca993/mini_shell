@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/09 15:12:01 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/09 19:03:02 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,34 +191,64 @@ int	handle_redirection(const char *line, int i, char **tokens,
  * - Nuovo indice i dopo il token
  * - -1 in caso di errore (quote non chiusa)
  */
+// int	handle_word(const char *line, int i, char **tokens, t_token_type *types,
+// 		int *count)
+// {
+// 	int		start;
+// 	char	quote;
+
+// 	start = i;
+// 	quote = 0;
+// 	while (line[i] && (quote || (!is_metachar(line[i])
+// 				&& !ft_isspace(line[i]))))
+// 	{
+// 		if ((line[i] == '\'' || line[i] == '"') && !quote)
+// 			quote = line[i];
+// 		else if (line[i] == '\\' && (line[i+1] && line[i+1] =='\\'))
+// 			i++;
+// 		else if (line[i] == '\\' && line[i+1] && line[i+1] =='"')
+// 			i++;
+// 		else if (line[i] == quote)
+// 			quote = 0;
+// 		i++;
+// 	}
+// 	if (quote)
+// 		return (-1); // errore: quote non chiusa
+// 	tokens[*count] = ft_substr(line, start, i - start);
+// 	types[*count] = WORD;
+// 	(*count)++;
+// 	return (i);
+// }
 int	handle_word(const char *line, int i, char **tokens, t_token_type *types,
 		int *count)
 {
-	int		start;
-	char	quote;
+	int		start = i;
+	char	quote = 0;
 
-	start = i;
-	quote = 0;
-	while (line[i] && (quote || (!is_metachar(line[i])
-				&& !ft_isspace(line[i]))))
+	while (line[i] && (quote || (!is_metachar(line[i]) && !ft_isspace(line[i]))))
 	{
 		if ((line[i] == '\'' || line[i] == '"') && !quote)
 			quote = line[i];
-		else if (line[i] == '\\' && (line[i+1] && line[i+1] =='\\'))
-			i++;
-		else if (line[i] == '\\' && line[i+1] && line[i+1] =='"')
-			i++;
 		else if (line[i] == quote)
 			quote = 0;
+		else if (line[i] == '\\')
+		{
+			if (!line[i + 1])
+				return (-1); // errore: backslash alla fine
+			// salta il carattere dopo la backslash (es. spazio, virgolette, \, ecc.)
+			i++;
+		}
 		i++;
 	}
 	if (quote)
 		return (-1); // errore: quote non chiusa
+	// Estrae il token grezzo, da normalizzare dopo
 	tokens[*count] = ft_substr(line, start, i - start);
 	types[*count] = WORD;
 	(*count)++;
-	return (i);
+	return i;
 }
+
 
 /*
  * Scorre l'intera linea di input e popola gli array `tokens` e `types`.

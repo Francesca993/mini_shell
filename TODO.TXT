@@ -32,3 +32,25 @@ Command 1:
 ------------------------
 === END OF PIPELINE ===
 minishell$: 
+
+==============
+TEST
+==============
+| Input      | Output   |
+| ---------- | -------- |
+| `a\z`      | `az`     |
+| `a\\z`     | `a\z`    |
+| `a\\\z`    | `a\z`    |
+| `\\\\`     | `\`      |
+| `a\\\b\\c` | `a\bc`   |
+| `\\hello`  | `\hello` |
+| `\a\b\c`   | `abc`    |
+
+| Input       | Comportamento                |
+| ----------- | ---------------------------- |
+| `a\ b`      | → OK, token = `a b`          |
+| `a\`        | → ❌ errore                   |
+| `"a\"b"`    | → OK, token = `a"b`          |
+| `"a\`       | → ❌ errore: quote non chiusa |
+| `echo a\\b` | → OK, token = `a\b`          |
+
