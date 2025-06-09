@@ -1,11 +1,22 @@
 ho iniziato a creare la funzione che gestisce i backslash ma c'è un problema con lexer che non ho avuto
 tempo di risolvere.
 
-In pratica se scrivo echo "a\"b"
-mi da syntax error : unclosed quotes, ma l'output dovrebbe essere a"b
+echo "a\
+b"
+(Il backslash + newline vengono rimossi, la riga viene unita)
 
-sicuramente ci sono altri casi da gestire
+echo "a\\" - atteso a\
+echo a\ b - attesi a b
+echo a\z atteso az
+echo "a\" a\
+
 
 Quando trova un backslash dentro le doppie virgolette, 
 il lexer dovrebbe riconoscere che \" non chiude la stringa, 
 ma inserisce un carattere " letterale.
+
+
+"a\"b"
+
+"a\" 
+

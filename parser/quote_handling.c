@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:43:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 20:59:16 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/09 12:27:11 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,12 @@ char    *remove_quotes(const char *str) // gestisce sia virgole singole che dopp
         return NULL;
     while (str[i])
     {
-        if (str[i] != '\'' && str[i] != '"') 
+        if (str[i] == '\\' && str[i + 1] && (str[i + 1] == '"' || str[i + 1] == '\\'))
+        {
+            i++;
+            res[j++] = str[i];
+        }
+        else if (str[i] != '\'' && str[i] != '"') 
         {
             res[j++] = str[i];
         }

@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/09 12:07:42 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/09 12:36:50 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,8 +204,8 @@ int	handle_word(const char *line, int i, char **tokens, t_token_type *types,
 	{
 		if ((line[i] == '\'' || line[i] == '"') && !quote)
 			quote = line[i];
-		else if (line[i] == '\\' && line[i+1] && (line[i+1] =='"' || line[i+1] =='\''))
-			i++;
+		// else if (line[i] == '\\' && line[i+1] && line[i+1] =='"')
+		// 	i++;	
 		else if (line[i] == quote)
 			quote = 0;
 		i++;
