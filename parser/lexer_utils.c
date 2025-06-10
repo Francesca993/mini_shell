@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/09 19:03:02 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/10 12:38:25 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,14 +234,14 @@ int	handle_word(const char *line, int i, char **tokens, t_token_type *types,
 		else if (line[i] == '\\')
 		{
 			if (!line[i + 1])
-				return (-1); // errore: backslash alla fine
+				return (exit_shell(2, "Error: \\ not close"),-1); // errore: backslash alla fine
 			// salta il carattere dopo la backslash (es. spazio, virgolette, \, ecc.)
 			i++;
 		}
 		i++;
 	}
 	if (quote)
-		return (-1); // errore: quote non chiusa
+		return (exit_shell(2, "Error: dquote>"), -1); // errore: quote non chiusa
 	// Estrae il token grezzo, da normalizzare dopo
 	tokens[*count] = ft_substr(line, start, i - start);
 	types[*count] = WORD;

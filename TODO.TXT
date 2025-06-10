@@ -53,4 +53,7 @@ TEST
 | `"a\"b"`    | → OK, token = `a"b`          |
 | `"a\`       | → ❌ errore: quote non chiusa |
 | `echo a\\b` | → OK, token = `a\b`          |
+echo a\
+b              → OK, output: a b (il newline è ignorato)
+
 

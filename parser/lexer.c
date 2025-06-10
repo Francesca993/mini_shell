@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:03:26 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 16:25:34 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/10 12:35:39 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int lexer(char *line, char ***tokens_out, t_token_type **types_out)
 	filled = fill_tokens(line, tokens, types);
 	if (filled == -1)
 	{
-		exit_shell(2, "syntax error: unclosed quote\n");
+		// exit_shell(2, "syntax error: unclosed quote\n");
 		// fprintf(stderr, "syntax error: unclosed quote\n");
 		// g_exit_status = 2;
 		free_partial_tokens(tokens, types, n_tokens);

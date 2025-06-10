@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/09 15:00:32 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/10 12:37:08 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
     //find_backslash(tokens); quando trova le "" o '' nn deve interferire 
     if (ntokens == -1)
     {
-        exit_shell(2, "Lexer error\n");
+        // exit_shell(2, "Lexer error\n");
         // fprintf(stderr, "Lexer error\n");
         // g_exit_status = 2;
         return (NULL);
@@ -129,7 +129,7 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
     pipeline = build_pipeline(tokens, types, ntokens, pipeline);
     if (!pipeline)
     {
-        exit_shell(2, "Parser error\n");
+        // exit_shell(2, "Parser error\n");
         //  fprintf(stderr, "Parser error\n");
         //  g_exit_status = 2;
         return (NULL);
