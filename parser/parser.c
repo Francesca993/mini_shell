@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/10 12:37:08 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/10 14:33:29 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 void print_tokens(char **tokens, t_token_type *types)
 {
     int i = 0;
+    if (!tokens || !tokens[0]) 
+    {
+        printf("=== TOKENS ===\n(nessun token trovato)\n==============\n");
+        return;
+    }
 
     printf("=== TOKENS ===\n");
     while (tokens[i])
@@ -113,12 +118,10 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
 
     ntokens = lexer(line, &tokens, &types);
     //find_backslash(tokens); quando trova le "" o '' nn deve interferire 
-    if (ntokens == -1)
+    if (ntokens == 0 || !tokens || !tokens[0] || ntokens == -1) 
     {
-        // exit_shell(2, "Lexer error\n");
-        // fprintf(stderr, "Lexer error\n");
-        // g_exit_status = 2;
-        return (NULL);
+        free_partial_tokens(tokens, types, ntokens);
+        return NULL;
     }
     // Debug temporaneo
     print_tokens(tokens, types);
@@ -126,6 +129,7 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
     pipeline = ft_calloc(1, sizeof(t_pipeline));
     if (!pipeline)
         return(free_pipeline(pipeline), NULL);
+    
     pipeline = build_pipeline(tokens, types, ntokens, pipeline);
     if (!pipeline)
     {

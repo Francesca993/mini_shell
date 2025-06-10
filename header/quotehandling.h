@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:45:06 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/09 15:30:38 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/10 17:34:33 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ char    *remove_quotes(const char *str);
 void    expand_single_quotes(t_cmd *cmd);
 void    find_quotes(t_pipeline *pipeline);
 void    expand_quotes(t_pipeline *pipeline);
-char    *handle_backslash(char *str);
+//char    *handle_backslash(char *str);
+char    *handle_backslash(char *str, int *dollar);
 
 //Gestione backshalsh
 char    *handle_backslash_outside_quotes(const char *str);

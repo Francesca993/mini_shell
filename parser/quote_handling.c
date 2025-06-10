@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:43:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/09 12:27:11 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/10 17:58:35 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void    expand_double_quotes(t_cmd *cmd)
         if (ft_strchr(cmd->args[i], '"'))
         {
             new_str = remove_quotes(cmd->args[i]);
-            backslash = handle_backslash(new_str);
+            backslash = handle_backslash(new_str, &(cmd->dollar)); //&(cmd->dollar) per gestire l'espansione di \$""\$U
             //expanded = expand_var(new_str);
             
             free(new_str);
@@ -152,6 +152,14 @@ void find_quotes(t_pipeline *pipeline)
                 pipeline->cmds[i]->quote_double = 1;
             if (ft_strchr(pipeline->cmds[i]->args[j], '$'))
                 pipeline->cmds[i]->dollar = 1;
+            // if (ft_strchr(pipeline->cmds[i]->args[j], '<'))
+            //     pipeline->cmds[i]->redir_in = 1;
+            // if (ft_strchr(pipeline->cmds[i]->args[j], '>'))
+            //     pipeline->cmds[i]->redir_out = 1;
+            // if (ft_strchr(pipeline->cmds[i]->args[j], '>>'))
+            //     pipeline->cmds[i]->append = 1;
+            // if (ft_strchr(pipeline->cmds[i]->args[j], '<<'))
+            //     pipeline->cmds[i]->heredoc = 1;
             j++;
         }
         i++;

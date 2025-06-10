@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 07:34:28 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/10 14:25:49 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void minishell_loop(char **env)
         if (!line)
         {
             write(1, "exit\n", 5);
-            break;
+            return;
         }
         if (*line)
             add_history(line);

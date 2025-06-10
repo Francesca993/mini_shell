@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/10 12:38:25 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/10 17:17:45 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,32 +222,47 @@ int	handle_redirection(const char *line, int i, char **tokens,
 int	handle_word(const char *line, int i, char **tokens, t_token_type *types,
 		int *count)
 {
-	int		start = i;
-	char	quote = 0;
+	int		start;
+	char	quote;
+	int		escaped;
+
+	start = i;
+	quote = 0;
+	escaped = 0;
 
 	while (line[i] && (quote || (!is_metachar(line[i]) && !ft_isspace(line[i]))))
 	{
-		if ((line[i] == '\'' || line[i] == '"') && !quote)
-			quote = line[i];
-		else if (line[i] == quote)
-			quote = 0;
+		escaped = (i > 0 && line[i - 1] == '\\');
+
+		if ((line[i] == '"' || line[i] == '\'') && !quote)
+		{
+			if (!(line[i] == '"' && escaped)) // se è \", non aprire quote
+				quote = line[i];
+		}
+		else if (line[i] == quote && !(quote == '"' && escaped))
+		{
+			quote = 0; // chiude quote, se non è preceduta da 
+		}
 		else if (line[i] == '\\')
 		{
-			if (!line[i + 1])
-				return (exit_shell(2, "Error: \\ not close"),-1); // errore: backslash alla fine
-			// salta il carattere dopo la backslash (es. spazio, virgolette, \, ecc.)
-			i++;
+			if (!line[i + 1]) // backslash alla fine → errore
+				return (exit_shell(2, "Error backslah not closed"), -1);
+			if ((line[i + 1] == ' ' || line[i + 1] == '\0') && (!line[i + 2] || ft_isspace(line[i + 2])))
+				return (exit_shell(2, "Error backslah not closed"), -1); // backslash seguito da spazio/fine, poi fine/spazio → errore
+			i++; // salta carattere dopo backslash
 		}
 		i++;
 	}
+
 	if (quote)
-		return (exit_shell(2, "Error: dquote>"), -1); // errore: quote non chiusa
-	// Estrae il token grezzo, da normalizzare dopo
+		return (exit_shell(2, "Error quote"), -1); // errore: quote non chiusa
+
 	tokens[*count] = ft_substr(line, start, i - start);
 	types[*count] = WORD;
 	(*count)++;
-	return i;
+	return (i);
 }
+
 
 
 /*
