@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:43:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/10 17:58:35 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/11 10:46:23 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void find_quotes(t_pipeline *pipeline)
                 pipeline->cmds[i]->quote_single = 1;
             if (ft_strchr(pipeline->cmds[i]->args[j], '\"'))
                 pipeline->cmds[i]->quote_double = 1;
-            if (ft_strchr(pipeline->cmds[i]->args[j], '$'))
+            if (ft_strchr(pipeline->cmds[i]->args[j], '$') && (pipeline->cmds[i]->quote_single == 0))
                 pipeline->cmds[i]->dollar = 1;
             // if (ft_strchr(pipeline->cmds[i]->args[j], '<'))
             //     pipeline->cmds[i]->redir_in = 1;
