@@ -4,7 +4,14 @@
 i segali e solo nel file principale .c e non nel .h per la norm
 - spostato args_processing nella cartella execution
 - tolto header handlequote e messo tutto in parser con i commentini carini
+- aggiunto l env nella pipeline
 - implemento la gestione dei segnali:
    > ctrl-d nel main se !line
    > crlt-\ e crlt-c nel file builtins/signal.c
 NB: COME DA SUBJECT ORA PER CHIUDERE DEVI SCRIVERE "exit" perchè il comando crlt-c dal pdf "does nothing" non deve fare nulla
+
+!!da fare: 
+Memory leaks
+Anche se molta memoria viene liberata (es. free_pipeline), attenzione a handle_backslash, remove_quotes, ecc., che duplicano stringhe.
+Serve assicurarsi che ogni ft_strdup, ft_substr, ft_calloc sia gestito con free.
+

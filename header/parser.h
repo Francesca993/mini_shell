@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 09:44:35 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/12 12:08:07 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_cmd {
 // STRUTTURA della PIPELINE
 // ==============================
 typedef struct s_pipeline {
+    char            **my_env;      // array di stringhe che rappresentano le variabili d'ambiente  
     t_cmd           **cmds;     // array di comandi strutturati
     int             n_cmds;     // numero totale di comandi
     char            **tokens;   // token grezzi, es. ["grep", "$VAR", "|", "wc"]
@@ -79,7 +80,7 @@ void    exit_shell(int code, const char *msg); // Esce dal programma con codice 
 // ==============================
 // BUILD PIPELINE
 // ==============================
-t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens, t_pipeline *pipeline);
+t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens, t_pipeline *pipeline, char **env);
 void free_pipeline(t_pipeline *pipeline);
 void populate_comands(t_pipeline *pipeline); //Popola i comandi della pipeline
 

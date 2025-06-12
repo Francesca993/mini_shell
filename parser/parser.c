@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/11 23:55:40 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/12 12:06:15 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,6 @@ void print_pipeline(t_pipeline *pipeline)
  */
 t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
 {
-    (void)env; // Per ora lo ignoriamo
-    
     char **tokens = NULL;
     t_token_type *types = NULL;
     int ntokens;
@@ -130,7 +128,7 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
     if (!pipeline)
         return(free_pipeline(pipeline), NULL);
     
-    pipeline = build_pipeline(tokens, types, ntokens, pipeline);
+    pipeline = build_pipeline(tokens, types, ntokens, pipeline, env);
     if (!pipeline)
     {
         // exit_shell(2, "Parser error\n");

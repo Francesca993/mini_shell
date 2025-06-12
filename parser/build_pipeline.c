@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 10:37:43 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/12 12:06:04 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int count_cmds(char ** tokens)
  * - Puntatore alla `t_pipeline` allocata e popolata.
  * - NULL in caso di errore di allocazione.
  */
-t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens, t_pipeline *pipeline)
+t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens, t_pipeline *pipeline, char **env)
 {
     int num_cmds;
 
@@ -60,6 +60,7 @@ t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens, t
     pipeline->tokens = tokens;
     pipeline->n_cmds = num_cmds;
     pipeline->n_tokens = num_tokens;
+    pipeline->my_env = env;
     
     // printf("%d\n", pipeline->n_cmds);
     // printf("%d\n", pipeline->n_tokens);
