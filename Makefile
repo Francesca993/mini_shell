@@ -6,7 +6,7 @@
 #    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/06/11 23:23:59 by francesca        ###   ########.fr        #
+#    Updated: 2025/06/12 11:22:37 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,12 @@ NAME	= minishell
 
 # === Compiler settings ===
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -Iheader -g
+CFLAGS = -Wall -Wextra -g -I/opt/homebrew/opt/readline/include
+LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
 
 # === Libraries ===
 LIBFT_DIR = Libft
 LIBFT = $(LIBFT_DIR)/libft.a
-LIBS = -lreadline
 
 # === Directories ===
 SRC_DIR = .
@@ -45,6 +45,7 @@ SRC =	main.c \
 		parser/backslash.c \
 		execution/args_processing.c \
 		builtins/exit.c \
+		builtins/signal.c \
 
 # === Object files ===
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
@@ -54,7 +55,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
 	@echo "$(GREEN)Linking $(NAME)...$(RESET)"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(LIBS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(LDFLAGS)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)

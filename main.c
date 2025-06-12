@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 10:45:40 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/12 11:08:35 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int main(int argc, char **argv, char**envp)
     (void)argv;
 
     char **my_env;
+    init_signals();
     
     my_env = copy_env(envp);
     /*

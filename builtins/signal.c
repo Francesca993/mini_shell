@@ -6,11 +6,13 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 09:50:36 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 10:26:20 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/12 11:24:26 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 /*
 I segnali sono un meccanismo del sistema operativo per notificare ai processi 
@@ -27,14 +29,22 @@ Comportamento richiesto:
 Mostrare un newline (\n)
 Mostrare di nuovo il prompt
 Non uscire dalla shell
+Cosa fa in Bash?
+Interrompe il comando corrente.
+Se sei sulla shell e nessun comando è in esecuzione, stampa semplicemente una nuova riga vuota e ripresenta il prompt.
+Non chiude la shell.
+⚙️ In termini tecnici:
+Invia il segnale SIGINT (numero 2) al processo in foreground.
 */
-void handle_sigint(int signo)
+void	handle_sigint(int signo)
 {
-    g_exit_status = 130; // 128 + SIGINT
-    write(1, "\n", 1);
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
+	(void)signo;
+	g_exit_status = 130;
+	write(1, "\n", 1);
+	rl_on_new_line();        // Informa readline che siamo su una nuova riga
+	rl_replace_line("", 0);  // Cancella la linea corrente
+	rl_redisplay();          // Ridisegna il prompt vuoto
+    
 }
 
 /*
@@ -43,10 +53,21 @@ Ricevuto con Ctrl-\
 Comportamento richiesto:
 Non fare nulla
 Ignorarlo
+Cosa fa in Bash?
+Invia SIGQUIT (3) al processo in foreground.
+Se sei nella shell senza processi, Bash non fa nulla.
+Se un processo è attivo, di solito lo termina con core dump.
 */
-signal(SIGQUIT, SIG_IGN); // ignora completamente il segnale
+void	init_signals(void)
+{
+	signal(SIGINT, handle_sigint);  // Ctrl-C: gestito con handler
+	signal(SIGQUIT, SIG_IGN);       // Ctrl-\\: ignorato completamente
+}
+
 
 /*
+**NEL MAIN**
+(!line)
 Ctrl-D → EOF (fine input)
 Non è un segnale, ma readline restituisce NULL
 Comportamento richiesto:
