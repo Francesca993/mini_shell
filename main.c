@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 09:53:50 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/12 10:45:40 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,20 @@ void minishell_loop(char **env)
 {
     char    *line;
     t_pipeline   *pipeline = NULL;
-    int exit = 1;
+    int processing = 1;
 
-    while (exit == 1)
+    while (processing == 1)
+    
     {
         line = readline("minishell$: ");
-        if (!line || *line == '\0')
+        // Ctrl-D premuto
+        if (!line)
+        {
+            exit_shell(0, NULL);
+            write(1, "exit\n", 5);
+            break;
+        }
+        if (*line == '\0')
         {
             free(line);
             continue; // prompt nuovo senza crash
@@ -49,10 +57,10 @@ void minishell_loop(char **env)
             // lexer ha già stampato l’errore, salta solo l'esecuzione
             free_pipeline(pipeline);
         }
-        if (pipeline->cmds[0] != NULL)
+        if (pipeline && pipeline->cmds[0] != NULL)
         {
             // ⬇️ ESECUZIONE
-            exit = process_pipeline(pipeline);
+            processing = process_pipeline(pipeline);
         }
         if (pipeline)
             free_pipeline(pipeline);
@@ -80,7 +88,8 @@ int main(int argc, char **argv, char**envp)
     */
     minishell_loop(my_env);
     free_myenvp(my_env);
-    rl_clear_history(); // libera la history ma lo fa gia exitshell
+    //rl_clear_history(); // libera la history ma lo fa gia exitshell per linux
+    clear_history();
     //return (0);
     return (g_exit_status);
 }

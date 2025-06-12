@@ -4,4 +4,5 @@
 i segali e solo nel file principale .c e non nel .h per la norm
 - spostato args_processing nella cartella execution
 - tolto header handlequote e messo tutto in parser con i commentini carini
-- implemento la gestione dei segnali
+- implemento la gestione dei segnali:
+   > ctrl-d nel main se !line

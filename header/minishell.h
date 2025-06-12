@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:38:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 09:53:15 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/12 10:37:54 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@
 #include "builtins.h"
 
 //extern int g_exit_status;
+extern volatile sig_atomic_t g_exit_status;
 
 #endif
