@@ -6,30 +6,42 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/10 14:25:49 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/12 09:53:50 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./header/minishell.h"
 
-int g_exit_status = 0;
+/*
+** Variabile globale usata per memorizzare lo stato di uscita della shell.
+** - Aggiornata dopo l'esecuzione di ogni comando (per supportare $?)
+** - Modificata anche dai signal handler per riflettere l'interruzione da segnali (es. Ctrl-C → 130)
+**
+** Conforme al subject:
+** - È l'unica variabile globale usata per i segnali
+** - Non accede né fornisce accesso ad altre strutture dati
+** - Di tipo sig_atomic_t per garantire scrittura sicura nei signal handler
+** - È lo stesso valore che l'utente potrà recuperare con $? in uno script o dopo un comando.
+*/
+//Dichiarazione globale (in un .c file, NON in un header .h per rispetto alla Norm)
+volatile sig_atomic_t g_exit_status = 0;
 
 void minishell_loop(char **env)
 {
     char    *line;
     t_pipeline   *pipeline = NULL;
+    int exit = 1;
 
-    while (1)
+    while (exit == 1)
     {
         line = readline("minishell$: ");
-        if (!line)
+        if (!line || *line == '\0')
         {
-            write(1, "exit\n", 5);
-            return;
+            free(line);
+            continue; // prompt nuovo senza crash
         }
         if (*line)
             add_history(line);
-
         // ⬇️ PARSING
         pipeline = parse_line(line, env, pipeline);
         if (!pipeline)
@@ -37,15 +49,12 @@ void minishell_loop(char **env)
             // lexer ha già stampato l’errore, salta solo l'esecuzione
             free_pipeline(pipeline);
         }
-       /*
-        if (cmd)
+        if (pipeline->cmds[0] != NULL)
         {
             // ⬇️ ESECUZIONE
-            execute_cmd(cmd, env);
-            free_cmd(cmd);
+            exit = process_pipeline(pipeline);
         }
-        */
-       if (pipeline)
+        if (pipeline)
             free_pipeline(pipeline);
         free(line);
     }
@@ -71,6 +80,7 @@ int main(int argc, char **argv, char**envp)
     */
     minishell_loop(my_env);
     free_myenvp(my_env);
-    //rl_clear_history(); // libera la history ma lo fa gia exitshell
-    return (0);
+    rl_clear_history(); // libera la history ma lo fa gia exitshell
+    //return (0);
+    return (g_exit_status);
 }

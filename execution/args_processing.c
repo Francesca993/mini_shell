@@ -6,14 +6,13 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:20:58 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/09 15:28:42 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/11 23:30:25 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-
-void process_args(t_cmd *cmd)
+int process_args(t_cmd *cmd)
 {
     int i = 0;
     
@@ -26,17 +25,26 @@ void process_args(t_cmd *cmd)
             cmd->args[i] = tmp;
         }
         // ...altre gestioni (espansione variabili, ecc.)
+        //builtins exit
         i++;
     }
+    return (1);
 }
 
-void process_pipeline(t_pipeline *pipeline)
+int process_pipeline(t_pipeline *pipeline)
 {
     int j = 0;
     
     while (pipeline->cmds[j])
     {
-        process_args(pipeline->cmds[j]);
+        if (ft_strncmp(pipeline->cmds[0]->args[0], "exit", 4) == 0)
+        {
+            if (ft_exit(pipeline->cmds[0]->args) == 0)
+                return (0); // interrompi ciclo
+        }
+        if (process_args(pipeline->cmds[j]) == 0)
+            return (0);
         j++;
     }
+    return (1);
 }

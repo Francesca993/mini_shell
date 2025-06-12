@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:43:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/11 10:46:23 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/11 23:47:25 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,11 @@ void find_quotes(t_pipeline *pipeline)
 {
     int i = 0;
     int j;
-    
+   
     while (i < pipeline->n_cmds)
     {
         j = 0;
-        while (pipeline->cmds[i]->args[j])
+        while (pipeline->cmds[i]->args[j] != NULL)
         {
             if (ft_strchr(pipeline->cmds[i]->args[j], '\''))// solo se contiene '
                 pipeline->cmds[i]->quote_single = 1;

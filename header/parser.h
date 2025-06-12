@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 16:13:14 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/12 09:44:35 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,18 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline); // Costr
 // ==============================
 void    print_tokens(char **tokens, t_token_type *types);
 void    print_pipeline(t_pipeline *pipeline);
+// ==============================
+// GESTIONE QUOTES
+// ==============================
+char    *remove_quotes(const char *str);
+void    expand_single_quotes(t_cmd *cmd);
+void    find_quotes(t_pipeline *pipeline);
+void    expand_quotes(t_pipeline *pipeline);
+// ==============================
+// Gestione backshalsh
+// ==============================
+//char    *handle_backslash(char *str);
+char    *handle_backslash(char *str, int *dollar);
+char    *handle_backslash_outside_quotes(const char *str);
 
 #endif

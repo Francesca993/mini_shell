@@ -1,0 +1,7 @@
+- implementata funzione exit per uscire pulita, non ho potuto far altro che modificare il loop principale
+- sistemato il prompt vuoto che andava in segfault
+- sistemata la variabile globale che doveva essere di un altro tipo per gestire 
+i segali e solo nel file principale .c e non nel .h per la norm
+- spostato args_processing nella cartella execution
+- tolto header handlequote e messo tutto in parser con i commentini carini
+- implemento la gestione dei segnali

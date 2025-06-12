@@ -6,7 +6,7 @@
 #    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/06/09 15:31:18 by francesca        ###   ########.fr        #
+#    Updated: 2025/06/11 23:23:59 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ SRC =	main.c \
 		parser/utils.c \
 		parser/quote_handling.c \
 		parser/backslash.c \
-		parser/args_processing.c \
+		execution/args_processing.c \
+		builtins/exit.c \
 
 # === Object files ===
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
