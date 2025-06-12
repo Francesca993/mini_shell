@@ -6,7 +6,7 @@
 #    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/06/12 11:22:37 by francesca        ###   ########.fr        #
+#    Updated: 2025/06/12 13:17:57 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,8 @@ SRC =	main.c \
 		execution/args_processing.c \
 		builtins/exit.c \
 		builtins/signal.c \
+		builtins/builtins.c \
+		builtins/pwd.c \
 
 # === Object files ===
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
