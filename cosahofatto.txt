@@ -15,4 +15,5 @@ Memory leaks
 Anche se molta memoria viene liberata (es. free_pipeline), attenzione a handle_backslash, remove_quotes, ecc., che duplicano stringhe.
 Serve assicurarsi che ogni ft_strdup, ft_substr, ft_calloc sia gestito con free.
 
-- ho implementato la buildin di pwd
+- ho implementato la buildin di pwd e export
+- funzione cd iin stato di implementazione 

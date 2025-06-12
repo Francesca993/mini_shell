@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:02:00 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 16:22:26 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/12 13:57:30 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 
 char    **copy_env(char **envp);
 void    free_myenvp(char **my_env);
+void    export_myenvp(char **my_env);
 
 #endif

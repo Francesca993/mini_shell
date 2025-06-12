@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:20:58 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 13:30:58 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/12 14:14:50 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,31 +30,15 @@ int process_args(t_cmd *cmd)
     }
     return (1);
 }
-
-// {
-//     if ((ft_strncmp(str, "echo", 5) == 0) || (ft_strncmp(str, "pwd", 4) == 0) \
-//         || (ft_strncmp(str, "cd", 3) == 0) || (ft_strncmp(str, "export", 7) == 0) \
-//         || (ft_strncmp(str, "unset", 6) == 0) || (ft_strncmp(str, "env", 4) == 0))
-//         {
-//             return (1);
-//         }
-//     return (0);
-// }
-
 int process_pipeline(t_pipeline *pipeline)
 {
     int j = 0;
     
     while (pipeline->cmds[j])
     {
-        if (ft_strncmp(pipeline->cmds[0]->args[0], "exit", 5) == 0)
-        {
-            if (ft_exit(pipeline->cmds[0]->args) == 0)
-                return (0); // interrompi ciclo
-        }
-        if (ft_strncmp(pipeline->cmds[j]->args[0], "pwd", 4) == 0)
-                ft_pwd();
         if (process_args(pipeline->cmds[j]) == 0)
+            return (0);
+        if (execute_builtin(pipeline->cmds[j], pipeline->my_env) == 0)
             return (0);
         j++;
     }

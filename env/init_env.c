@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:00 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/07 16:28:47 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/12 13:57:13 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+void    export_myenvp(char **my_env)
+{
+    int i;
+    i = 0;
+    while (my_env[i])
+    {
+        printf("%s\n", my_env[i]);
+        i++;
+    }
+}
 
 void    free_myenvp(char **my_env)
 {

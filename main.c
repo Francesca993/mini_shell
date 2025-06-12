@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 12:11:17 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/12 13:56:33 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,6 @@ int main(int argc, char **argv, char**envp)
     init_signals();
     
     my_env = copy_env(envp);
-    /*
-    int i = 0;
-    stampa env copiato
-    while (my_env[i])
-    {
-        printf("%s\n", my_env[i]);
-        i++;
-    }
-    */
     minishell_loop(my_env);
     free_myenvp(my_env); // ora dovrei liberarlo nella funzione che libera la pipeline? o dove?
     //rl_clear_history(); // libera la history ma lo fa gia exitshell per linux
