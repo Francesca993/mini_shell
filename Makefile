@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
+#    By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/06/12 14:23:22 by francesca        ###   ########.fr        #
+#    Updated: 2025/06/13 12:17:28 by skayed           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME	= minishell
 
 # === Compiler settings ===
 CC		= cc
-CFLAGS = -Wall -Wextra -g -I/opt/homebrew/opt/readline/include
+CFLAGS = -Wall -Wextra -Werror -g -gdwarf-4 -I/opt/homebrew/opt/readline/include
 LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
 
 # === Libraries ===
@@ -79,5 +79,8 @@ fclean: clean
 	@make fclean -C $(LIBFT_DIR)
 
 re: fclean all
+
+valgrind: $(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./$(NAME)
 
 .PHONY: all clean fclean re
