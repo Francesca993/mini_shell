@@ -6,13 +6,13 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:03:06 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 14:27:47 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/16 17:44:18 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-int execute_builtin(t_cmd *cmd, char ***my_envp)
+int execute_builtin(t_cmd *cmd, char ***my_envp, t_pipeline *pipeline)
 {
     if (!cmd || !cmd->args || !cmd->args[0])
         return (0);
@@ -24,19 +24,13 @@ int execute_builtin(t_cmd *cmd, char ***my_envp)
     else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
                 ft_pwd();
     else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
+            export_variable(*my_envp, cmd->args);
+    else if ((ft_strncmp(cmd->args[0], "env", 4) == 0 ))
             export_myenvp(*my_envp);
     else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
-            ft_cd(cmd->args);
-    // if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
-    //     return (ft_echo(cmd->args));
-    // else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
-    //     return (ft_cd(cmd->args, envp));
-    // else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
-    //     return (ft_export(cmd->args, envp));
-    // else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
-    //     return (ft_unset(cmd->args, envp));
-    // else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
-    //     return (ft_env(*envp));
+            ft_cd(cmd->args, pipeline->my_env);
+    if (ft_strncmp(cmd->args[0], "unset", 6) == 0 && cmd->args[1])
+            unset_variable(*my_envp, cmd->args);
     else
         return (1);
     return (1); // ritorna prompt

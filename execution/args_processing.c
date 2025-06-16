@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_processing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:20:58 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/13 12:04:33 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/16 14:37:01 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int process_pipeline(t_pipeline *pipeline)
     {
         if (process_args(pipeline->cmds[j]) == 0)
             return (0);
-        if (execute_builtin(pipeline->cmds[j], &pipeline->my_env) == 0)
+        if (execute_builtin(pipeline->cmds[j], &pipeline->my_env, pipeline) == 0)
             return (0);
         j++;
     }

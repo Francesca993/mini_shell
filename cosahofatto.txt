@@ -17,3 +17,23 @@ Serve assicurarsi che ogni ft_strdup, ft_substr, ft_calloc sia gestito con free.
 
 - ho implementato la buildin di pwd e export
 - funzione cd iin stato di implementazione 
+
+16/06
+- risolto probabile doppio leak nel main?
+- fixato cd con la cartella non eistente e fixato cd da solo che torna sulla home, nono ho fatto $HOME perche tanto quello viene gia aperto prima da 
+   $ e dovrebbe arrivare il path
+- fatta anche env, che stampa l env come export
+- implementato (anche se non so se fosse davvero richiesto) che quando cambia directory aggiorna anche il path nel my_env
+- implementata unset che rimuove variabili globali ma solo dal env del programma e non da quello vero, gestisce già piu variabilli, e non fa niente se
+   non gli passi parametri e imposta a 0 exit status
+- env da rivedere
+
+
+✅ Built-in obbligatori da implementare
+echo	Deve supportare -n	Stampa argomenti separati da spazi, -n evita il newline finale
+[X] cd	Solo path assoluto o relativo	Cambia directory, non è richiesto cd senza argomenti
+[X] pwd	Nessuna opzione	Stampa la directory corrente
+[X] export	Nessuna opzione	Stampa l’ambiente oppure aggiunge/modifica variabili
+unset	Nessuna opzione	Rimuove variabili dall’ambiente
+[X] env	Nessuna opzione né argomenti	Stampa tutte le variabili dell’ambiente
+[X] exit	Nessuna opzione	Termina la shell, supporta exit [code]

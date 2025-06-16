@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/13 12:03:05 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/16 13:55:50 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void minishell_loop(char **env)
     int processing = 1;
 
     while (processing == 1)
-    
     {
         line = readline("minishell$: ");
         // Ctrl-D premuto
@@ -55,7 +54,10 @@ void minishell_loop(char **env)
         if (!pipeline)
         {
             // lexer ha già stampato l’errore, salta solo l'esecuzione
-            free_pipeline(pipeline);
+            // cursor dice che qui si rischia un doppio free
+            //free_pipeline(pipeline);
+            free(line);
+            continue;
         }
         if (pipeline && pipeline->cmds[0] != NULL)
         {
