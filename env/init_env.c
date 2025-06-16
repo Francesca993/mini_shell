@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:00 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/16 14:09:48 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/16 18:26:01 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void    export_myenvp(char **my_env)
     i = 0;
     while (my_env[i])
     {
-        printf("%s\n", my_env[i]);
+         if (ft_strchr(my_env[i], '=')) // stampa solo se contiene '='
+            printf("%s\n", my_env[i]);
         i++;
     }
 }
