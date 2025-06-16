@@ -6,7 +6,7 @@
 #    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/06/16 17:43:50 by francesca        ###   ########.fr        #
+#    Updated: 2025/06/16 18:34:21 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC =	main.c \
 		builtins/cd.c \
 		builtins/unset.c \
 		builtins/export.c \
+		builtins/export_utils.c \
 
 # === Object files ===
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

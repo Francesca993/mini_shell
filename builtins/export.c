@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:03:02 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/16 18:21:31 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/16 18:35:45 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,29 +101,6 @@ static void add_new_var(char **my_env, const char *entry)
 }
 
 /*
-** Stampa tutte le variabili come `declare -x` (come Bash)
-*/
-void print_export_buildin(char **my_env)
-{
-    int i = 0;
-
-    while (my_env[i])
-    {
-        char *equal = ft_strchr(my_env[i], '=');
-        if (equal)
-        {
-            size_t key_len = equal - my_env[i];
-            printf("declare -x ");
-            write(1, my_env[i], key_len + 1); // "VAR="
-            printf("\"%s\"\n", equal + 1);    // "valore"
-        }
-        else
-            printf("declare -x %s\n", my_env[i]); // caso VAR senza '='
-        i++;
-    }
-}
-
-/*
 ** Trova la chiave (prima di '=' se presente)
 */
 char *find_key(char *str)
@@ -151,7 +128,7 @@ void export_variable(char **my_env, char **args)
     g_exit_status = 0; 
     if (!args[1]) // solo "export" → stampa l'ambiente
     {
-        print_export_buildin(my_env);
+        print_export_buildin_sorted(my_env);
         return;
     }
     while (args[i])
