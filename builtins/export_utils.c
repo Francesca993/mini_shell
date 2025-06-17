@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 18:32:39 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/16 18:50:41 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/16 21:32:17 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,19 @@ void print_export_buildin_sorted(char **my_env)
         return;
 
     i = 0;
-    while (sorted[i])
+    while (sorted[i] != NULL)
     {
-        equal = ft_strchr(sorted[i], '=');
-        if (equal)
-        {
-            len = equal - sorted[i];
-            printf("declare -x ");
-            write(1, sorted[i], len + 1);
-            printf("\"%s\"\n", equal + 1);
-        }
-        else
-            printf("declare -x %s\n", sorted[i]);
+        // equal = ft_strchr(sorted[i], '=');
+        // if (equal)
+        // {
+        //     len = equal - sorted[i];
+        //     printf("declare -x %.*s=\"%s\"\n", (int)len, sorted[i], equal + 1);
+        // }
+        // else
+        // {
+        //     printf("declare -x %s\n", sorted[i]);
+        // }
+        printf("%s\n", sorted[i]);
         free(sorted[i]);
         i++;
     }

@@ -26,7 +26,7 @@ Serve assicurarsi che ogni ft_strdup, ft_substr, ft_calloc sia gestito con free.
 - implementato (anche se non so se fosse davvero richiesto) che quando cambia directory aggiorna anche il path nel my_env
 - implementata unset che rimuove variabili globali ma solo dal env del programma e non da quello vero, gestisce già piu variabilli, e non fa niente se
    non gli passi parametri e imposta a 0 exit status
-- env da rivedere
+- lanciare export su bash e vedere se scrive davvero "declare -x" prima di ogni variabile
 
 
 ✅ Built-in obbligatori da implementare

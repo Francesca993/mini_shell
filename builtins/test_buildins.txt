@@ -1,0 +1,64 @@
+✅ BUILTIN: cd
+
+Comando	Cosa aspettarti
+cd ..	Cambia directory al padre
+cd /tmp	Cambia alla directory /tmp
+cd	Va in $HOME (solo se hai scelto di implementarlo)
+cd pippo pluto	Errore: "too many arguments"
+cd nonesiste	Errore: "no such file or directory"
+dopo cd, pwd	Verifica che la working directory sia aggiornata
+cd aggiorna PWD?	Controlla con `export
+✅ BUILTIN: pwd
+
+Comando	Aspettativa
+pwd	Stampa la directory corrente
+dopo cd, pwd	Mostra nuova posizione
+✅ BUILTIN: export
+
+Comando	Cosa aspettarti
+export	Stampa tutte le variabili, ordinate, in stile declare -x
+export VAR1=ciao	Aggiunge VAR1 con valore ciao
+export VAR1=nuovo	Aggiorna VAR1, mantiene posizione
+export VAR2	Aggiunge VAR2 senza valore (risulta VAR2=)
+export 1ABC=fail	Errore: not a valid identifier
+export VAR3=ok VAR4 VAR5=123	Gestisce tutti: aggiunge/aggiorna/crea vuoti
+export	Deve stampare VAR3, VAR4, VAR5 in ordine alfabetico
+export VAR4	Non crea duplicato se VAR4 già esiste
+
+✅ BUILTIN: unset
+Comando	Cosa aspettarti
+unset VAR1	Rimuove VAR1 dall’ambiente
+unset VAR4 VAR5	Rimuove più variabili
+unset	Silenzioso, non fa nulla, exit status 0
+unset NOTEXIST	Nessun errore, variabile non esiste
+dopo unset, export	Variabili rimosse non devono essere più visibili
+
+✅ BUILTIN: env
+Comando	Cosa aspettarti
+env	Stampa solo variabili con = (nessuna VAR senza valore)
+
+✅ BUILTIN: exit
+Comando	Aspettativa
+exit	Shell termina
+exit 0	Shell termina con status 0
+exit 42	Shell termina con status 42e
+exit abc	Errore: numeric argument required, exit 255
+exit 1 2	Errore: too many arguments, non esce
+📌 Se vuoi controllare:
+Lancia da bash:
+./minishell -c 
+"exit 0"
+echo $?
+
+🧪 Test extra per variabili e ordine
+Test	Cosa verificare
+export A=1 B=2 C=3	Tutte aggiunte
+export	A, B, C stampati in ordine alfabetico
+unset B → export	Solo A e C presenti
+export D → env	D non appare (non ha =)
+✅ Come testare
+Per ogni comando:
+
+Esegui il comando nella tua minishell
+Confronta output con Bash (/bin/bash)
+Usa echo $? (o stampa g_exit_status) per confermare il valore di ritorno
