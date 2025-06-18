@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/18 09:44:13 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/18 13:08:18 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ void populate_comands(t_pipeline *pipeline)
             free(cmd);
             return;
         }
-
         int arg_idx = 0;
         while (i < pipeline->n_tokens && pipeline->types[i] != PIPE)
         {
@@ -164,21 +163,18 @@ void populate_comands(t_pipeline *pipeline)
                 cmd->outfile = ft_strdup(pipeline->tokens[++i]), cmd->append = 1;
             else if (pipeline->types[i] == HEREDOC && i + 1 < pipeline->n_tokens)
                 cmd->infile = ft_strdup(pipeline->tokens[++i]), cmd->heredoc = 1;
-
             i++;
         }
-
         cmd->args[arg_idx] = NULL;
-
+        cmd->fd_in = STDIN_FILENO;
+        cmd->fd_out = STDOUT_FILENO;
         if (i < pipeline->n_tokens && pipeline->types[i] == PIPE)
         {
             cmd->pipe = 1;
             i++; // salta la pipe
         }
-
         pipeline->cmds[cmd_idx++] = cmd;
     }
-    
     find_quotes(pipeline);
     expand_pipeline_variables(pipeline);
 }

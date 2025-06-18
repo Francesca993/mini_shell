@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+         #
+#    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/06/18 09:44:51 by skayed           ###   ########.fr        #
+#    Updated: 2025/06/18 12:15:31 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRC =	main.c \
 		builtins/unset.c \
 		builtins/export.c \
 		builtins/export_utils.c \
+		builtins/echo.c \
 
 # === Object files ===
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
