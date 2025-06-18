@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/16 13:55:50 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/18 17:27:05 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 //Dichiarazione globale (in un .c file, NON in un header .h per rispetto alla Norm)
 volatile sig_atomic_t g_exit_status = 0;
 
-void minishell_loop(char **env)
+void minishell_loop(char ***env)
 {
     char    *line;
     t_pipeline   *pipeline = NULL;
@@ -50,10 +50,10 @@ void minishell_loop(char **env)
         if (*line)
             add_history(line);
         // ⬇️ PARSING
-        pipeline = parse_line(line, env, pipeline);
+        pipeline = parse_line(line, *env, pipeline);
         if (!pipeline)
         {
-            // lexer ha già stampato l’errore, salta solo l'esecuzione
+            // lexer ha già stampato l'errore, salta solo l'esecuzione
             // cursor dice che qui si rischia un doppio free
             //free_pipeline(pipeline);
             free(line);
@@ -62,7 +62,7 @@ void minishell_loop(char **env)
         if (pipeline && pipeline->cmds[0] != NULL)
         {
             // ⬇️ ESECUZIONE
-            processing = process_pipeline(pipeline);
+            processing = process_pipeline(pipeline, env);
         }
         if (pipeline)
             free_pipeline(pipeline);
@@ -80,7 +80,7 @@ int main(int argc, char **argv, char**envp)
     init_signals();
     
     my_env = copy_env(envp);
-    minishell_loop(my_env);
+    minishell_loop(&my_env);
     //free_myenvp(my_env); // visto che minishell loop chiama gia' free pipeline alla fine, ho inserito free_myenvp direttamente dentro free pipe
     //rl_clear_history(); // libera la history ma lo fa gia exitshell per linux
     clear_history();

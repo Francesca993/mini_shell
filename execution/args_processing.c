@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_processing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:20:58 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/18 09:50:18 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/18 17:26:57 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int process_args(t_cmd *cmd)
     }
     return (1);
 }
-int process_pipeline(t_pipeline *pipeline)
+int process_pipeline(t_pipeline *pipeline, char ***main_env)
 {
     int j = 0;
     
@@ -40,5 +40,12 @@ int process_pipeline(t_pipeline *pipeline)
             return (0);
         j++;
     }
+    
+    // Aggiorna l'env del main con le modifiche fatte dalla pipeline
+    if (main_env && *main_env != pipeline->my_env)
+    {
+        *main_env = pipeline->my_env;
+    }
+    
     return (1);
 }
