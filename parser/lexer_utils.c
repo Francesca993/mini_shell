@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/10 17:17:45 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/18 17:44:49 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,10 +143,6 @@ int	handle_redirection(const char *line, int i, char **tokens,
 {
 	char	c;
 
-	/*
-	c = line[i];
-	i++;
-    */
 	c = line[i++];
 	if (line[i] == c) // >> o <<
 	{
@@ -191,34 +187,6 @@ int	handle_redirection(const char *line, int i, char **tokens,
  * - Nuovo indice i dopo il token
  * - -1 in caso di errore (quote non chiusa)
  */
-// int	handle_word(const char *line, int i, char **tokens, t_token_type *types,
-// 		int *count)
-// {
-// 	int		start;
-// 	char	quote;
-
-// 	start = i;
-// 	quote = 0;
-// 	while (line[i] && (quote || (!is_metachar(line[i])
-// 				&& !ft_isspace(line[i]))))
-// 	{
-// 		if ((line[i] == '\'' || line[i] == '"') && !quote)
-// 			quote = line[i];
-// 		else if (line[i] == '\\' && (line[i+1] && line[i+1] =='\\'))
-// 			i++;
-// 		else if (line[i] == '\\' && line[i+1] && line[i+1] =='"')
-// 			i++;
-// 		else if (line[i] == quote)
-// 			quote = 0;
-// 		i++;
-// 	}
-// 	if (quote)
-// 		return (-1); // errore: quote non chiusa
-// 	tokens[*count] = ft_substr(line, start, i - start);
-// 	types[*count] = WORD;
-// 	(*count)++;
-// 	return (i);
-// }
 int	handle_word(const char *line, int i, char **tokens, t_token_type *types,
 		int *count)
 {

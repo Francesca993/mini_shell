@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 12:06:15 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/18 17:46:03 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
         return NULL;
     }
     // Debug temporaneo
-    print_tokens(tokens, types);
+    //print_tokens(tokens, types);
      // ✅ Costruisce la pipeline da tokens e types
     pipeline = ft_calloc(1, sizeof(t_pipeline));
     if (!pipeline)
@@ -136,7 +136,7 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
         //  g_exit_status = 2;
         return (NULL);
     }
-    print_pipeline(pipeline);
+    //print_pipeline(pipeline);
     return (pipeline);
 }
 

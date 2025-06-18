@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:43:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/11 23:47:25 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/18 17:56:14 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void    expand_single_quotes(t_cmd *cmd)
         {
             new_str = remove_quotes(cmd->args[i]);
             free(cmd->args[i]);
-            printf("%s\n", new_str);
+            // printf("%s\n", new_str);
             cmd->args[i] = new_str;
         }
         i++;
@@ -95,7 +95,7 @@ static void    expand_double_quotes(t_cmd *cmd)
             
             free(new_str);
             free(cmd->args[i]);
-            printf("%s\n", backslash);
+            // printf("%s\n", backslash);
             cmd->args[i] = backslash;
             //cmd->args[i] = expanded; da sostituire a riga 91 quando expand_var è pronta
         }
@@ -116,21 +116,23 @@ void    expand_quotes(t_pipeline *pipeline)
         if (pipeline->cmds[i]->quote_single)
         {
             expand_single_quotes(pipeline->cmds[i]);   // espande come literal
-            int j = 0;
-            while (pipeline->cmds[i]->args[j])
-            {
-                printf("debug dopo expande_single quote: %s\n", pipeline->cmds[i]->args[j]);
-                j++;
-            }
+            // int j = 0;
+            // while (pipeline->cmds[i]->args[j])
+            // {
+            //     printf("debug dopo expande_single quote: %s\n", pipeline->cmds[i]->args[j]);
+            //     j++;
+            // }
         }
         if (pipeline->cmds[i]->quote_double)
-            {expand_double_quotes(pipeline->cmds[i]);
-             int j = 0;
-            while (pipeline->cmds[i]->args[j])
             {
-                printf("debug dopo expande_double quote: %s\n", pipeline->cmds[i]->args[j]);
-                j++;
-            }}  // espande variabili, backslash ecc.
+                expand_double_quotes(pipeline->cmds[i]);
+            //  int j = 0;
+            // while (pipeline->cmds[i]->args[j])
+            // {
+            //     printf("debug dopo expande_double quote: %s\n", pipeline->cmds[i]->args[j]);
+            //     j++;
+            // }
+            }  // espande variabili, backslash ecc.
         i++;
     }
 }
