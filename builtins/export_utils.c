@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 18:32:39 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/18 10:15:46 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:01:11 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ static char **sort_env_copy(char **env)
         return (NULL);
 
     sort_env(copy);
+
+    // 🔍 Debug: controlla che la copia sia terminata correttamente
+    int max_check = 100;
+    for (int i = 0; i < max_check; i++) {
+        if (copy[i] == NULL) {
+            printf("✅ Fine array trovata a posizione %d\n", i);
+            break;
+        }
+    }
+
     return (copy);
 }
 

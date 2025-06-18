@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:03:02 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/18 12:59:41 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/18 14:08:46 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,32 @@ int is_valid_identifier(const char *str)
 /*
 ** Aggiunge una nuova variabile a my_env (in fondo)
 */
-static void add_new_var(char **my_env, const char *entry)
+static char **add_new_var(char **my_env, const char *entry)
 {
     int len = 0;
-    while (my_env[len])
+    char **new_env;
+    int i = 0;
+
+    while (my_env && my_env[len])
         len++;
 
-    my_env[len] = ft_strdup(entry);
-    my_env[len + 1] = NULL;
+    new_env = ft_calloc(len + 2, sizeof(char *)); // +1 per nuova, +1 per NULL
+    if (!new_env)
+        return (my_env); // fallback se malloc fallisce
+
+    while (i < len)
+    {
+        new_env[i] = my_env[i]; // riciclo i vecchi puntatori
+        i++;
+    }
+
+    new_env[len] = ft_strdup(entry);
+    new_env[len + 1] = NULL;
+
+    free(my_env); // libera solo il contenitore, non le stringhe
+    return (new_env);
 }
+
 
 /*
 ** Trova la chiave (prima di '=' se presente)
@@ -117,20 +134,22 @@ char *find_key(char *str)
     return (key);
 }
 
-void export_variable(char **my_env, char **args)
+void export_variable(char ***my_envp, char **args)
 {
-    int i;
+    int i = 1;
     char *key;
     char *equal;
     int index;
-    //perche il primo argomento è il comando export  
-    i = 1;
-    g_exit_status = 0; 
-    if (!args[1]) // solo "export" → stampa l'ambiente
+    char **my_env = *my_envp;
+
+    g_exit_status = 0;
+
+    if (!args[1])
     {
         print_export_buildin_sorted(my_env);
         return;
     }
+
     while (args[i])
     {
         equal = ft_strchr(args[i], '=');
@@ -138,6 +157,7 @@ void export_variable(char **my_env, char **args)
             key = ft_substr(args[i], 0, equal - args[i]);
         else
             key = ft_strdup(args[i]);
+
         if (!is_valid_identifier(key))
         {
             fprintf(stderr, "minishell: export: `%s`: not a valid identifier\n", args[i]);
@@ -146,29 +166,30 @@ void export_variable(char **my_env, char **args)
             i++;
             continue;
         }
+
         index = find_env_index(my_env, key);
-        // Esiste già
-        if (index >= 0)
+        if (index >= 0 && equal)
         {
-            if (equal) // aggiorna solo se c'è '='
-            {
-                free(my_env[index]);
-                my_env[index] = ft_strdup(args[i]);
-            }
+            free(my_env[index]);
+            my_env[index] = ft_strdup(args[i]);
         }
-        else
+        else if (index == -1)
         {
             if (equal)
-                add_new_var(my_env, args[i]); // VAR=VAL
+                my_env = add_new_var(my_env, args[i]);
             else
             {
-                char *tmp = ft_strjoin(args[i], "="); // aggiunge VAR=
-                add_new_var(my_env, tmp);
+                char *tmp = ft_strjoin(args[i], "=");
+                my_env = add_new_var(my_env, tmp);
                 free(tmp);
             }
         }
+
         free(key);
         i++;
     }
+
+    *my_envp = my_env; // aggiorna il chiamante
 }
+
 

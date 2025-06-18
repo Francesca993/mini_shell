@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:03:06 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/18 12:17:24 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/18 14:09:28 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int execute_builtin(t_cmd *cmd, char ***my_envp, t_pipeline *pipeline)
         else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
                 ft_pwd();
         else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
-                export_variable(*my_envp, cmd->args);
+                export_variable(my_envp, cmd->args);
         else if ((ft_strncmp(cmd->args[0], "env", 4) == 0))
                 export_myenvp(*my_envp);
         else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
