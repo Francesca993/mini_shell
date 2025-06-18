@@ -21,7 +21,7 @@ Checklist Parsing Mini-Shell 42 – Stato attuale
 
 4. Espansione variabili
 [ ] Espansione di $VAR e ${VAR} fuori e dentro le double quote (da implementare).
-[ ] Espansione di $? (ultimo exit status) (da implementare).
+[x] Espansione di $? (ultimo exit status) (da implementare).
 [x] Nessuna espansione dentro le single quote.
 [ ] Espansione di variabili anche nei delimitatori di heredoc (se non tra single quote).
 

@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:33:23 by skayed            #+#    #+#             */
-/*   Updated: 2025/06/18 09:58:00 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/18 11:40:31 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,37 @@ static char *get_var_name(const char *str, int *len)
     if (!str || str[0] != '$')
         return (NULL);
     
-    // Caso speciale: $?
-    if (str[1] == '?')
+    // Caso ${VAR} o ${?} o ${0}
+    if (str[1] == '{')
+    {
+        i = 2; // inizia dopo ${ 
+        
+        // Cerca la parentesi chiusa
+        while (str[i] && str[i] != '}')
+            i++;
+        
+        if (str[i] == '}') // parentesi chiusa trovata
+        {
+            *len = i + 1; // include ${ e }
+            var_name = ft_substr(str, 2, i - 2); // estrae solo il nome
+            return (var_name);
+        }
+        else
+        {
+            // Parentesi non chiusa, tratta come $ normale
+            fprintf(stderr, "minishell: syntax error: unterminated variable name\n");
+            *len = 1;
+            return (ft_strdup(""));
+        }
+    }
+    
+    // Caso $VAR, $?, $0
+    if (str[1] == '?' || str[1] == '0')
     {
         *len = 2;
-        return (ft_strdup("?"));
+        return (ft_strdup(str + 1)); // estrae ? o 0
     }
-
-    // Caso speciale: $0
-    if (str[1] == '0')
-    {
-        *len = 2;
-        return (ft_strdup("0"));
-    }
-
+    
     // Caso normale: $VAR
     i = 1;
     while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
@@ -60,7 +77,8 @@ static char *get_env_value(const char *var_name, char **env)
 
     if (!var_name || !env)
         return (NULL);
-
+    if (ft_strlen(var_name) == 0)
+        return (ft_strdup(""));
     // Gestione casi speciali
     if (ft_strcmp(var_name, "?") == 0)
         return (ft_itoa(g_exit_status));
@@ -132,7 +150,7 @@ char *expand_variables(const char *str, char **env)
     {
         if (result[i] == '$' && result[i + 1] && 
             (ft_isalnum(result[i + 1]) || result[i + 1] == '?' || 
-             result[i + 1] == '_' || result[i + 1] == '$'))
+             result[i + 1] == '_' || result[i + 1] == '$' || result[i + 1] == '{'))
         {
             temp = expand_single_variable(result + i, env);
             if (!temp)
