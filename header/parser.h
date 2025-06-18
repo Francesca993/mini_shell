@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 12:08:07 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/18 10:11:36 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_cmd {
     int     quote_single;   // 1 se contiene quote singole
     int     quote_double;   // 1 se contiene quote doppie
     int     dollar;         // 1 se contiene $
+    int     fd_in;
+    int     fd_out;
 } t_cmd;
 
 // ==============================
@@ -108,4 +110,14 @@ void    expand_quotes(t_pipeline *pipeline);
 char    *handle_backslash(char *str, int *dollar);
 char    *handle_backslash_outside_quotes(const char *str);
 
+// ==============================
+// ESPANSIONE VARIABILI
+// ==============================
+char *expand_variables(const char *str, char **env);
+void expand_cmd_variables(t_cmd *cmd, char **env);
+void expand_pipeline_variables(t_pipeline *pipeline);
+void check_var(t_pipeline *pipeline);
+
+
+int ft_strcmp(const char *s1, const char *s2);
 #endif

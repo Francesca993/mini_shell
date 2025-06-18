@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 12:06:04 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/18 09:44:13 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens, t
 
     populate_comands(pipeline);
     find_quotes(pipeline);
+    expand_pipeline_variables(pipeline);
     // process_pipeline(pipeline);
     return (pipeline);
 }
@@ -178,5 +179,7 @@ void populate_comands(t_pipeline *pipeline)
         pipeline->cmds[cmd_idx++] = cmd;
     }
     
+    find_quotes(pipeline);
+    expand_pipeline_variables(pipeline);
 }
 

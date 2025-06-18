@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
+#    By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/06/16 18:34:21 by francesca        ###   ########.fr        #
+#    Updated: 2025/06/18 09:44:51 by skayed           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRC =	main.c \
 		parser/utils.c \
 		parser/quote_handling.c \
 		parser/backslash.c \
+		parser/exp_var.c \
 		execution/args_processing.c \
 		builtins/exit.c \
 		builtins/signal.c \

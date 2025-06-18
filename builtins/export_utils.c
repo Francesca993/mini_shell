@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 18:32:39 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/16 21:32:17 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/18 10:15:46 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void print_export_buildin_sorted(char **my_env)
 {
     int i;
     char **sorted;
-    char *equal;
-    size_t len;
+    //char *equal;
+    //size_t len;
 
     sorted = sort_env_copy(my_env);
     if (!sorted)

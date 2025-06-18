@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 09:50:36 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 11:24:26 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/18 10:15:12 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	handle_sigint(int signo)
 	g_exit_status = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();        // Informa readline che siamo su una nuova riga
-	rl_replace_line("", 0);  // Cancella la linea corrente
+	//rl_replace_line("", 0);  // Cancella la linea corrente
 	rl_redisplay();          // Ridisegna il prompt vuoto
     
 }

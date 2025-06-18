@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_processing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:20:58 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/16 14:37:01 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/18 09:50:18 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int process_args(t_cmd *cmd)
             free(cmd->args[i]);
             cmd->args[i] = tmp;
         }
-        // ...altre gestioni (espansione variabili, ecc.)
-        //builtins exit
         i++;
     }
     return (1);
