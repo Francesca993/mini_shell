@@ -37,3 +37,10 @@ echo	Deve supportare -n	Stampa argomenti separati da spazi, -n evita il newline 
 unset	Nessuna opzione	Rimuove variabili dall’ambiente
 [X] env	Nessuna opzione né argomenti	Stampa tutte le variabili dell’ambiente
 [X] exit	Nessuna opzione	Termina la shell, supporta exit [code]
+
+
+18/06
+- ho sistemato export perche env non veniva aggiornato correttamente nel loop quindi quando aggiungevi una variabile il programma 
+continuava ad utilizzare il vecchio env, che ormai era vuoto, e dip3ndeva da come veniva passato dal loop principale alle varie funzioni
+e questo ha sistemato anche l espansione della doppia var $HOME:$USER probabbilmente perche accedeva a due env diversi
+- ho rimosso tutti i debug, perche iniziavano a confondermi, e non so se iniziare a dare una pulita.
