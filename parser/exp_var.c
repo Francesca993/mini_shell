@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:33:23 by skayed            #+#    #+#             */
-/*   Updated: 2025/06/18 11:40:31 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/19 11:00:51 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char *get_env_value(const char *var_name, char **env)
         return (ft_strdup(""));
     // Gestione casi speciali
     if (ft_strcmp(var_name, "?") == 0)
-        return (ft_itoa(g_exit_status));
+        return (ft_strdup(ft_itoa(g_exit_status)));
     if (ft_strcmp(var_name, "0") == 0)
         return (ft_strdup("minishell"));
     if (ft_strcmp(var_name, "$") == 0)
@@ -101,71 +101,94 @@ static char *get_env_value(const char *var_name, char **env)
     return (ft_strdup("")); // Variabile non trovata
 }
 
-// Funzione per espandere una singola variabile in una stringa
-static char *expand_single_variable(const char *str, char **env)
+// Funzione per ottenere la lunghezza del valore di una variabile dall'ambiente
+static int get_env_value_len(const char *var_name, char **env)
 {
-    char *var_name;
-    char *var_value;
-    char *result;
-    int var_len;
-    int total_len;
-
-    var_name = get_var_name(str, &var_len);
-    if (!var_name)
-        return (ft_strdup(str));
-
-    var_value = get_env_value(var_name, env);
-    free(var_name);
-
-    total_len = ft_strlen(str) - var_len + ft_strlen(var_value);
-    result = ft_calloc(total_len + 1, sizeof(char));
-    if (!result)
+    int i, len;
+    if (!var_name || !env)
+        return 0;
+    if (ft_strlen(var_name) == 0)
+        return 0;
+    if (ft_strcmp(var_name, "?") == 0)
     {
-        free(var_value);
-        return (NULL);
+        char *tmp = ft_itoa(g_exit_status);
+        int len = ft_strlen(tmp);
+        free(tmp);
+        return len;
     }
-
-    ft_strlcat(result, var_value, total_len + 1);
-    ft_strlcat(result, str + var_len, total_len + 1);
-    free(var_value);
-    return (result);
+    if (ft_strcmp(var_name, "0") == 0)
+        return ft_strlen("minishell");
+    if (ft_strcmp(var_name, "$") == 0)
+        return 1;
+    len = ft_strlen(var_name);
+    i = 0;
+    while (env[i])
+    {
+        if (ft_strncmp(env[i], var_name, len) == 0 && env[i][len] == '=')
+            return ft_strlen(env[i] + len + 1);
+        i++;
+    }
+    return 0; // Variabile non trovata
 }
 
-// Funzione principale per espandere tutte le variabili in un comando
+// Funzione per calcolare la lunghezza della stringa espansa
+static int compute_expanded_length(const char *str, char **env)
+{
+    int len = 0, i = 0, var_len;
+    char *var_name;
+    while (str[i]) {
+        if (str[i] == '$' && str[i + 1] &&
+            (ft_isalnum(str[i + 1]) || str[i + 1] == '?' ||
+             str[i + 1] == '_' || str[i + 1] == '$'))
+        {
+            var_name = get_var_name(str + i, &var_len);
+            len += get_env_value_len(var_name, env);
+            free(var_name);
+            i += var_len;
+        } else {
+            len++;
+            i++;
+        }
+    }
+    return len;
+}
+
 char *expand_variables(const char *str, char **env)
 {
-    char *result;
-    char *temp;
-    int i;
-
-    if (!str || !env)
-        return (NULL);
-
-    result = ft_strdup(str);
+    int i = 0;
+    int var_len;
+    char *var_name;
+    char *var_value;
+    int out_len = compute_expanded_length(str, env);
+    char *result = ft_calloc(out_len + 1, sizeof(char));
     if (!result)
-        return (NULL);
-
-    i = 0;
-    while (result[i])
+        return NULL;
+    int res_i = 0;
+    while (str[i])
     {
-        if (result[i] == '$' && result[i + 1] && 
-            (ft_isalnum(result[i + 1]) || result[i + 1] == '?' || 
-             result[i + 1] == '_' || result[i + 1] == '$' || result[i + 1] == '{'))
+        if (str[i] == '$' && str[i + 1] &&
+            (ft_isalnum(str[i + 1]) || str[i + 1] == '?' ||
+             str[i + 1] == '_' || str[i + 1] == '$'))
         {
-            temp = expand_single_variable(result + i, env);
-            if (!temp)
+            var_name = get_var_name(str + i, &var_len);
+            var_value = get_env_value(var_name, env);
+            free(var_name);
+            if (var_value)
             {
-                free(result);
-                return (NULL);
+                int v = 0;
+                while (var_value[v])
+                    result[res_i++] = var_value[v++];
+                free(var_value);
             }
-            free(result);
-            result = temp;
-            i = 0; // Ricomincia da capo per gestire variabili multiple
+            i += var_len;
         }
         else
-            i++;
+        {
+            result[res_i++] = str[i++];
+        }
     }
-    return (result);
+    result[res_i] = '\0';
+    return result;
 }
 
 // Funzione per espandere le variabili in tutti gli argomenti di un comando

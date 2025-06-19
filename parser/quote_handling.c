@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:43:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/18 17:56:14 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/19 10:30:10 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 /*
 Dal PDF:
 
-Handle ’ (single quote): disabilita interpretazione
+Handle ' (single quote): disabilita interpretazione
 Handle " (double quote): interpreta solo $
 Handle $VAR
 Handle $? → ultimo exit status
@@ -26,6 +26,12 @@ Non sono in quote singole
 Oppure sono in quote doppie e contengono $
 */
 
+char *strip_outer_quotes(const char *str) {
+    size_t len = ft_strlen(str);
+    if (len >= 2 && ((str[0] == '\'' && str[len-1] == '\'') || (str[0] == '"' && str[len-1] == '"')))
+        return ft_substr(str, 1, len-2);
+    return ft_strdup(str);
+}
 
 char    *remove_quotes(const char *str) // gestisce sia virgole singole che doppie 
 {
@@ -60,48 +66,42 @@ char    *remove_quotes(const char *str) // gestisce sia virgole singole che dopp
 
 void    expand_single_quotes(t_cmd *cmd)
 {
-    int     i;
-    char    *new_str;
-    
-    i = 0;
+    int i = 0;
+    char *new_str;
+
     while (cmd->args && cmd->args[i])
     {
-        if (ft_strchr(cmd->args[i], '\'')) // solo se contiene '
+        // Se l'argomento è racchiuso tra singole quote
+        if (cmd->args[i][0] == '\'' && cmd->args[i][ft_strlen(cmd->args[i]) - 1] == '\'')
         {
-            new_str = remove_quotes(cmd->args[i]);
+            new_str = strip_outer_quotes(cmd->args[i]);
             free(cmd->args[i]);
-            // printf("%s\n", new_str);
             cmd->args[i] = new_str;
         }
         i++;
     }
-    
 }
-static void    expand_double_quotes(t_cmd *cmd)
+
+void expand_double_quotes(t_cmd *cmd, char **env)
 {
-    int i;
-    i = 0;
-    char   *new_str;
-    char *backslash;
-    //char *expanded;
-    
+    int i = 0;
+    char *new_str;
+    char *expanded;
+
     while (cmd->args && cmd->args[i])
     {
-        if (ft_strchr(cmd->args[i], '"'))
+        if (cmd->args[i][0] == '"' && cmd->args[i][ft_strlen(cmd->args[i]) - 1] == '"')
         {
-            new_str = remove_quotes(cmd->args[i]);
-            backslash = handle_backslash(new_str, &(cmd->dollar)); //&(cmd->dollar) per gestire l'espansione di \$""\$U
-            //expanded = expand_var(new_str);
-            
+            new_str = strip_outer_quotes(cmd->args[i]);
+            expanded = expand_variables(new_str, env);
             free(new_str);
             free(cmd->args[i]);
-            // printf("%s\n", backslash);
-            cmd->args[i] = backslash;
-            //cmd->args[i] = expanded; da sostituire a riga 91 quando expand_var è pronta
+            cmd->args[i] = expanded;
         }
         i++;
     }
 }
+
 /*
 * Scorre tutti i comandi della pipeline e se trova le sigle quote lancia expand_single_quote
 *che rimuove le quote come la shell in quanto gli errori sono già gestiti prima
@@ -116,23 +116,11 @@ void    expand_quotes(t_pipeline *pipeline)
         if (pipeline->cmds[i]->quote_single)
         {
             expand_single_quotes(pipeline->cmds[i]);   // espande come literal
-            // int j = 0;
-            // while (pipeline->cmds[i]->args[j])
-            // {
-            //     printf("debug dopo expande_single quote: %s\n", pipeline->cmds[i]->args[j]);
-            //     j++;
-            // }
         }
         if (pipeline->cmds[i]->quote_double)
-            {
-                expand_double_quotes(pipeline->cmds[i]);
-            //  int j = 0;
-            // while (pipeline->cmds[i]->args[j])
-            // {
-            //     printf("debug dopo expande_double quote: %s\n", pipeline->cmds[i]->args[j]);
-            //     j++;
-            // }
-            }  // espande variabili, backslash ecc.
+        {
+            expand_double_quotes(pipeline->cmds[i], pipeline->my_env);
+        }
         i++;
     }
 }

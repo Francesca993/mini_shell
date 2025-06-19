@@ -44,3 +44,13 @@ unset	Nessuna opzione	Rimuove variabili dall’ambiente
 continuava ad utilizzare il vecchio env, che ormai era vuoto, e dip3ndeva da come veniva passato dal loop principale alle varie funzioni
 e questo ha sistemato anche l espansione della doppia var $HOME:$USER probabbilmente perche accedeva a due env diversi
 - ho rimosso tutti i debug, perche iniziavano a confondermi, e non so se iniziare a dare una pulita.
+
+-> Escape variabile	echo \$HOME	stampa $HOME, non espande -> questo non funziona
+-> Redirezioni non funzionano
+Caso	Comando	Atteso
+Output	echo test > file.txt	crea/sovrascrive file.txt
+Append	echo more >> file.txt	appende
+Input	cat < file.txt	legge file.txt
+Heredoc	cat << END + input + END	riceve input fino a END
+Errore redir senza argomento	echo >	errore sintattico
+-> da gestire rrore su singola pipe, su pipe doppia, su pipe finale
