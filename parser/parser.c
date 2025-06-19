@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/18 17:46:03 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/19 11:16:10 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,37 @@ void print_pipeline(t_pipeline *pipeline)
     printf("=== END OF PIPELINE ===\n");
 }
 
+int check_syntax(char **tokens, t_token_type *types, int ntokens)
+{
+    if (ntokens == 0)
+        return 0;
+    // 1. Pipe o redir all'inizio
+    if (types[0] == PIPE)
+        return (fprintf(stderr, "minishell: syntax error near unexpected token `|'\n"), 0);
+    if (types[0] == REDIR_IN || types[0] == REDIR_OUT || types[0] == APPEND || types[0] == HEREDOC)
+        return (fprintf(stderr, "minishell: syntax error near unexpected token `%s'\n", tokens[0]), 0);
+
+    for (int i = 0; i < ntokens; i++)
+    {
+        // 2. Pipe doppia o pipe senza comando
+        if (types[i] == PIPE)
+        {
+            // Pipe alla fine
+            if (i == ntokens - 1)
+                return (fprintf(stderr, "minishell: syntax error near unexpected token `|'\n"), 0);
+            // Pipe seguita da un'altra pipe
+            if (types[i+1] == PIPE)
+                return (fprintf(stderr, "minishell: syntax error near unexpected token `|'\n"), 0);
+        }
+        // 3. Redir senza argomento
+        if ((types[i] == REDIR_IN || types[i] == REDIR_OUT || types[i] == APPEND || types[i] == HEREDOC))
+        {
+            if (i == ntokens - 1 || types[i+1] != WORD)
+                return (fprintf(stderr, "minishell: syntax error near unexpected token `%s'\n", tokens[i]), 0);
+        }
+    }
+    return 1;
+}
 
 /*
  * Funzione principale del parser: riceve una linea di input e la converte
@@ -116,7 +147,7 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
     
     ntokens = lexer(line, &tokens, &types);
     //find_backslash(tokens); quando trova le "" o '' nn deve interferire 
-    if (ntokens == 0 || !tokens || !tokens[0] || ntokens == -1 || !line) 
+    if (ntokens == 0 || !tokens || !tokens[0] || ntokens == -1 || !line || !check_syntax(tokens, types, ntokens)) 
     {
         free_partial_tokens(tokens, types, ntokens);
         return NULL;

@@ -54,4 +54,10 @@ Append	echo more >> file.txt	appende
 Input	cat < file.txt	legge file.txt
 Heredoc	cat << END + input + END	riceve input fino a END
 Errore redir senza argomento	echo >	errore sintattico
--> da gestire rrore su singola pipe, su pipe doppia, su pipe finale
+-> gestito rrore su singola pipe, su pipe doppia, su pipe finale e < << > >> aperti senza argomenti
+
+Dal PDF del subject, sezione Mandatory part, si legge chiaramente:
+“Not interpret unclosed quotes or special characters which are not required by the subject such as \ (backslash) or ; (semicolon).”
+Quindi:
+Il backslash non deve essere interpretato (come escape character, ad esempio).
+La sua gestione non è richiesta (né in parsing, né in esecuzione).
