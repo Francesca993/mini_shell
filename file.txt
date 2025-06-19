@@ -1,13 +1,13 @@
 minishell/
-├── Libft
-├── Makefile
-├── main.c
-├── header
-|      ├── minishell.h
-|      └──envp.h
-├── parser/
-├── executor/
-├── builtins/
-├── utils/
-├── signals/
-└── env/
+├── Libft/           # Libreria di funzioni personalizzate (libft)
+├── Makefile         # File per la compilazione del progetto
+├── main.c           # File principale di avvio del programma
+├── header/          # Directory degli header file
+│   ├── minishell.h  # Header principale del progetto
+│   └── envp.h       # Header per la gestione delle variabili d'ambiente
+├── parser/          # Modulo per l'analisi e la suddivisione dei comandi
+├── executor/        # Modulo per l'esecuzione dei comandi
+├── builtins/        # Implementazione dei comandi built-in della shell
+├── utils/           # Funzioni di utilità generiche
+├── signals/         # Gestione dei segnali (es. SIGINT, SIGQUIT)
+└── env/             # Gestione delle variabili d'ambiente
