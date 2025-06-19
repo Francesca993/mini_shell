@@ -6,63 +6,46 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:33:23 by skayed            #+#    #+#             */
-/*   Updated: 2025/06/19 11:00:51 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/19 11:03:33 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
 // Funzione per ottenere il nome della variabile da una stringa
-static char *get_var_name(const char *str, int *len)
+char *get_var_name(const char *str, int *len)
 {
-    int i;
+    int i = 0;
     char *var_name;
-
-    if (!str || str[0] != '$')
-        return (NULL);
-    
-    // Caso ${VAR} o ${?} o ${0}
-    if (str[1] == '{')
+    if (str[0] == '$' && str[1] == '{')
     {
-        i = 2; // inizia dopo ${ 
-        
-        // Cerca la parentesi chiusa
+        i = 2;
         while (str[i] && str[i] != '}')
             i++;
-        
-        if (str[i] == '}') // parentesi chiusa trovata
+        if (str[i] == '}')
         {
-            *len = i + 1; // include ${ e }
-            var_name = ft_substr(str, 2, i - 2); // estrae solo il nome
-            return (var_name);
+            *len = i + 1;
+            return ft_substr(str, 2, i - 2); // nome tra { e }
         }
-        else
-        {
-            // Parentesi non chiusa, tratta come $ normale
-            fprintf(stderr, "minishell: syntax error: unterminated variable name\n");
-            *len = 1;
-            return (ft_strdup(""));
-        }
+        // Parentesi non chiusa, tratta come $ normale
+        *len = 1;
+        return ft_strdup("");
     }
-    
     // Caso $VAR, $?, $0
     if (str[1] == '?' || str[1] == '0')
     {
         *len = 2;
-        return (ft_strdup(str + 1)); // estrae ? o 0
+        return ft_substr(str, 1, 1); // estrae ? o 0
     }
-    
     // Caso normale: $VAR
     i = 1;
     while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
         i++;
-    
     if (i == 1) // Solo $ senza nome variabile
     {
         *len = 1;
-        return (ft_strdup("$"));
+        return ft_strdup("$");
     }
-
     *len = i;
     var_name = ft_substr(str, 1, i - 1);
     return (var_name);
@@ -168,7 +151,7 @@ char *expand_variables(const char *str, char **env)
     {
         if (str[i] == '$' && str[i + 1] &&
             (ft_isalnum(str[i + 1]) || str[i + 1] == '?' ||
-             str[i + 1] == '_' || str[i + 1] == '$'))
+             str[i + 1] == '_' || str[i + 1] == '$' || str[i + 1] == '{'))
         {
             var_name = get_var_name(str + i, &var_len);
             var_value = get_env_value(var_name, env);

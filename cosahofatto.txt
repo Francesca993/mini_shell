@@ -45,7 +45,8 @@ continuava ad utilizzare il vecchio env, che ormai era vuoto, e dip3ndeva da com
 e questo ha sistemato anche l espansione della doppia var $HOME:$USER probabbilmente perche accedeva a due env diversi
 - ho rimosso tutti i debug, perche iniziavano a confondermi, e non so se iniziare a dare una pulita.
 
--> Escape variabile	echo \$HOME	stampa $HOME, non espande -> questo non funziona
+-> sistemata Escape variabile	echo \$HOME	stampa $HOME, non espande 
+-> sistemata gestione delle quote e variabili eccc
 -> Redirezioni non funzionano
 Caso	Comando	Atteso
 Output	echo test > file.txt	crea/sovrascrive file.txt
