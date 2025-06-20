@@ -1,0 +1,13 @@
+in build pipeline ho settato i due fd_in e out a -1, in modo che io possa controllare se abbiamo simboli di redirect oppure no
+li setto io solo se devo aprire un file
+altrimenti vengono ignorati
+
+exec_pipeline.c
+
+creato scheletro della funzione execute pipeline con funzioni helper statiche
+
+
+DA FARE IN EXECUTE CMD:
+
+	// funzione per impostare i fd nei redir 
+	// funzione per trovare il path dell'executable nell-env 

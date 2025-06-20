@@ -1,0 +1,15 @@
+- ho digitato cd home, mi ha ritornato no such file or directory ed e andato in segfault
+
+minishell$: cd home
+=== TOKENS ===
+[cd] -> WORD
+[home] -> WORD
+==============
+=== PIPELINE ===
+Command 1:
+  args: [cd] [home] 
+------------------------
+=== END OF PIPELINE ===
+minishell: cd: no such file or directory
+
+zsh: segmentation fault (core dumped)  ./minishell
