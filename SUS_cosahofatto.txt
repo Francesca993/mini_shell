@@ -4,10 +4,18 @@ altrimenti vengono ignorati
 
 exec_pipeline.c
 
+
 creato scheletro della funzione execute pipeline con funzioni helper statiche
 
+exec_utils.c
 
-DA FARE IN EXECUTE CMD:
+creata funzione per redirezioni
+creata funzione per cercare path assoluto o relativo in my env
 
-	// funzione per impostare i fd nei redir 
-	// funzione per trovare il path dell'executable nell-env 
+// path assoluto o relativo
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, X_OK) == 0)
+			return (ft_strdup(cmd));
+		return (NULL);
+	}

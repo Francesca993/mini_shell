@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:20:58 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/20 17:17:32 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/24 12:09:51 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ int	process_pipeline(t_pipeline *pipeline, char ***main_env)
 		if (execute_builtin(pipeline->cmds[j], &pipeline->my_env,
 				pipeline) == 0)
 			return (0);
+		else
+			execute_pipeline(pipeline);
 		j++;
 	}
-
 	// Aggiorna l'env del main con le modifiche fatte dalla pipeline
 	if (main_env && *main_env != pipeline->my_env)
 	{

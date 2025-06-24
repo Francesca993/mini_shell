@@ -1,15 +1,7 @@
-- ho digitato cd home, mi ha ritornato no such file or directory ed e andato in segfault
+- CONTROLLO PRINT ERRORE NO SUCH FILE
+ho digitato cd home, mi ha ritornato no such file or directory printato due volte
 
 minishell$: cd home
-=== TOKENS ===
-[cd] -> WORD
-[home] -> WORD
-==============
-=== PIPELINE ===
-Command 1:
-  args: [cd] [home] 
-------------------------
-=== END OF PIPELINE ===
-minishell: cd: no such file or directory
+minishell: cd: no such file or directory, No such file or directory
 
-zsh: segmentation fault (core dumped)  ./minishell
+- LIBERARE MY ENV QUANDO TERMINA IL PROGRAMMA

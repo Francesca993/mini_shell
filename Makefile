@@ -6,7 +6,7 @@
 #    By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/06/20 18:09:11 by skayed           ###   ########.fr        #
+#    Updated: 2025/06/24 10:17:06 by skayed           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRC =	main.c \
 		parser/exp_var.c \
 		execution/args_processing.c \
 		execution/exec_pipeline.c \
+		execution/exec_utils.c \
 		builtins/exit.c \
 		builtins/signal.c \
 		builtins/builtins.c \
