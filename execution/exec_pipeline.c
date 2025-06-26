@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:22:22 by skayed            #+#    #+#             */
-/*   Updated: 2025/06/24 12:14:22 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/26 10:13:16 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ static int	**create_pipes(int n_cmds)
 	pipes = malloc(sizeof(int *) * (n_cmds - 1));
 	if (!pipes)
 		return (NULL);
-	while (i < n_cmds)
-	{
-		if (pipe(pipes[i]) < 0)
-			return (perror("pipe failed"), NULL);
-		i++;
-	}
+	while (i < n_cmds - 1)
+{
+	pipes[i] = malloc(sizeof(int) * 2); // 👈 aggiungi questo
+	if (!pipes[i])
+		return (perror("malloc failed"), NULL);
+	if (pipe(pipes[i]) < 0)
+		return (perror("pipe failed"), NULL);
+	i++;
+}
 	return (pipes);
 }
 
