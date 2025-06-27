@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:22:22 by skayed            #+#    #+#             */
-/*   Updated: 2025/06/27 14:36:40 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 14:46:47 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void	execute_cmd(t_cmd *cmd, int i, int **pipes, int n_cmds, char **my_en
 	}
 
 	set_redirections(cmd);
-
 	if (is_builtin(cmd))
 	{
 		execute_builtin(cmd, &my_env, NULL);
