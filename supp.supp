@@ -1,0 +1,12 @@
+{
+   suppress_readline_reachable
+   Memcheck:Leak
+   fun:malloc
+   obj:*/libreadline.so.*
+}
+{
+   suppress_tinfo_reachable
+   Memcheck:Leak
+   fun:malloc
+   obj:*/libtinfo.so.*
+}
