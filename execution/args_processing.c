@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:20:58 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/24 12:09:51 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 12:26:24 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,25 @@ int	process_pipeline(t_pipeline *pipeline, char ***main_env)
 {
 	int j = 0;
 
+	if (pipeline->n_cmds == 1 && is_builtin(pipeline->cmds[0]))
+    {
+        process_args(pipeline->cmds[0]);
+        execute_builtin(pipeline->cmds[0], &pipeline->my_env, pipeline);
+        if (main_env && *main_env != pipeline->my_env)
+            *main_env = pipeline->my_env;
+        return (1);
+    }
 	while (pipeline->cmds[j])
 	{
-		if (process_args(pipeline->cmds[j]) == 0)
-			return (0);
-		if (execute_builtin(pipeline->cmds[j], &pipeline->my_env,
-				pipeline) == 0)
-			return (0);
-		else
-			execute_pipeline(pipeline);
-		j++;
-	}
-	// Aggiorna l'env del main con le modifiche fatte dalla pipeline
-	if (main_env && *main_env != pipeline->my_env)
-	{
-		*main_env = pipeline->my_env;
+		process_args(pipeline->cmds[j]);
+		if (!execute_builtin(pipeline->cmds[j], &pipeline->my_env, pipeline))
+			return 0;
+    	j++;
 	}
 
-	return (1);
+execute_pipeline(pipeline);
+if (main_env && *main_env != pipeline->my_env)
+    *main_env = pipeline->my_env;
+return 1;
+
 }

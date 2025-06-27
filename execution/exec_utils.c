@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 10:13:09 by skayed            #+#    #+#             */
-/*   Updated: 2025/06/24 12:14:15 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/26 10:20:56 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char	*check_path(char *env_path, char *cmd)
 	char	*tmp;
 	int		i;
 
+	if (!env_path || !cmd)
+		return (NULL);
 	matrix = ft_split(env_path, ':');
 	if (!matrix)
 		return (perror("Split failed"), NULL);
@@ -70,8 +72,8 @@ char	*check_path(char *env_path, char *cmd)
 			return (ft_free_matrix(matrix), NULL);
 		if (access(full_path, F_OK | X_OK) == 0)
 			return (ft_free_matrix(matrix), full_path);
-		i++;
 		free(full_path);
+		i++;
 	}
 	ft_free_matrix(matrix);
 	return (perror("Command not found"), NULL);

@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:22:22 by skayed            #+#    #+#             */
-/*   Updated: 2025/06/26 10:13:16 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/26 20:08:54 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	**create_pipes(int n_cmds)
 		return (NULL);
 	while (i < n_cmds - 1)
 {
-	pipes[i] = malloc(sizeof(int) * 2); // 👈 aggiungi questo
+	pipes[i] = malloc(sizeof(int) * 2); 
 	if (!pipes[i])
 		return (perror("malloc failed"), NULL);
 	if (pipe(pipes[i]) < 0)
@@ -42,8 +42,8 @@ static void	close_pipes(int **pipes, int n_pipes)
 	{
 		close(pipes[i][0]);
 		close(pipes[i][1]);
+		i++;
 	}
-	free(pipes);
 }
 static void	execute_cmd(t_cmd *cmd, int i, int **pipes, int n_cmds,
 		char **my_env)
@@ -78,6 +78,7 @@ static void	execute_cmd(t_cmd *cmd, int i, int **pipes, int n_cmds,
 		}
 		execve(path, cmd->args, my_env);
 		perror("execve");
+		free(path);
 		exit(1);
 	}
 }
@@ -112,12 +113,6 @@ void	execute_pipeline(t_pipeline *pipeline)
 	while (i < pipeline->n_cmds)
 	{
 		waitpid(pids[i], NULL, 0);
-		i++;
-	}
-	i = 0;
-	while (i < pipeline->n_cmds)
-	{
-		free(pipes[i]);
 		i++;
 	}
 	free(pipes);

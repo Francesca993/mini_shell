@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 23:22:20 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/18 14:10:15 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/26 15:47:35 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ void    unset_variable(char **my_env, char **args);
 void    export_variable(char ***my_env, char **args);
 void    print_export_buildin_sorted(char **my_env);
 void    ft_echo(char **args);
+int is_builtin(t_cmd *cmd);
 
 #endif

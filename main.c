@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/18 17:52:26 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/27 12:27:37 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./header/minishell.h"
+#include "header/envp.h"
 
 /*
 ** Variabile globale usata per memorizzare lo stato di uscita della shell.
@@ -81,7 +82,7 @@ int main(int argc, char **argv, char**envp)
     
     my_env = copy_env(envp);
     minishell_loop(&my_env);
-    //free_myenvp(my_env); // visto che minishell loop chiama gia' free pipeline alla fine, ho inserito free_myenvp direttamente dentro free pipe
+    free_myenvp(my_env);
     //rl_clear_history(); // libera la history ma lo fa gia exitshell per linux
     clear_history();
     //return (0);
