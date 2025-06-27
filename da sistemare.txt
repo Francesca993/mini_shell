@@ -26,3 +26,5 @@ gestione completa
 
 - check exit status ultimo comando in pipe 
 - padre salva pid figlio 
+
+prova
