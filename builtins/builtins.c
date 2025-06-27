@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:03:06 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/27 14:07:53 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 14:42:10 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int is_builtin(t_cmd *cmd)
 {
     if (!cmd || !cmd->args || !cmd->args[0])
         return 0;
-
     if (ft_strcmp(cmd->args[0], "echo") == 0)
         return 1;
     if (ft_strcmp(cmd->args[0], "cd") == 0)
@@ -32,7 +31,6 @@ int is_builtin(t_cmd *cmd)
         return 1;
     if (ft_strcmp(cmd->args[0], "exit") == 0)
         return 1;
-
     return 0;
 }
 

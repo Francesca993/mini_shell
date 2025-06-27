@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:03:41 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/20 17:15:49 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 15:22:30 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	ft_cd(char **args, char **my_env)
 		path = args[1]; // path = argomento dell'utente
 	if (chdir(path) != 0)
 	{
-		exit_shell(1, "minishell: cd: no such file or directory, ");
+		exit_shell(1, NULL);
 		perror("");
 		return (1);
 	}

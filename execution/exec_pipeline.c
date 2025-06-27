@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:22:22 by skayed            #+#    #+#             */
-/*   Updated: 2025/06/27 14:46:47 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 15:20:19 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,13 @@ static void	execute_cmd(t_cmd *cmd, int i, int **pipes, int n_cmds, char **my_en
 		if (access(cmd->args[0], X_OK) == 0)
 			execve(cmd->args[0], cmd->args, my_env);
 		else
-		{
-			fprintf(stderr, "minishell: %s: No such file or permission denied\n", cmd->args[0]);
 			exit(126);
-		}
 	}
 	else
 	{
 		path = check_path(find_path(my_env), cmd->args[0]);
 		if (!path)
-		{
-			fprintf(stderr, "minishell: %s: command not found\n", cmd->args[0]);
 			exit(127);
-		}
 		execve(path, cmd->args, my_env);
 		perror("execve");
 		free(path);

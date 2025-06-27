@@ -1,7 +1,28 @@
-- CONTROLLO PRINT ERRORE NO SUCH FILE
-ho digitato cd home, mi ha ritornato no such file or directory printato due volte
+FRA:
+- sistemare return builtins 
+- sistemare execute_builtin con i return delle builtins 
 
-minishell$: cd home
-minishell: cd: no such file or directory, No such file or directory
+controllare gestione degli errori: 
+- l'errore stampa spesso due volte ( check di tutti gli errori e le uscite ) check con exit shell + funzioni execution 
+- verificare uscite builtin ( stampa errori ) e togliere "minishell:" dai messaggi di errori 
+- controllare exit status e aggiornarlo sempre ( check ) - da fare entrambe
 
-- LIBERARE MY ENV QUANDO TERMINA IL PROGRAMMA
+stampa:
+
+- controllo \n dove invece ha stampato spazio 
+
+
+SUSA :
+gestione segnali: 
+- padre gestisce per non chiudere las shell
+- figlio ripristina i segnali di default 
+- guarda subject per i segnali 
+
+REDIREZIONI SU execution
+gestione completa 
+
+
+- check signal ctrl C 
+
+- check exit status ultimo comando in pipe 
+- padre salva pid figlio 
