@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 21:58:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/20 17:16:06 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 16:05:22 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	check_valid_no_new_line(char *arg)
 		return (0);
 }
 
-void	ft_echo(char **args)
+int	ft_echo(char **args)
 {
 	int	i;
 	int	newline;
@@ -66,4 +66,5 @@ void	ft_echo(char **args)
 	if (newline)
 		printf("\n");
 	g_exit_status = 0;
+	return (1);
 }

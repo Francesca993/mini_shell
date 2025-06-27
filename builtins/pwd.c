@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:41:48 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/20 17:17:08 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 15:58:04 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_pwd(void)
 	if (!safe_copy)
 	{
 		free(cwd);
-		exit_shell(1, "minishell: failed malloc nel pwd");
+		exit_shell(1, "failed malloc nel pwd");
 		return (1);
 	}
 	ft_strlcpy(safe_copy, cwd, ft_strlen(cwd) + 1);

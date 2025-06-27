@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:00 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/20 17:17:28 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 16:02:12 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-void	export_myenvp(char **my_env)
+int		export_myenvp(char **my_env)
 {
 	int	i;
 
@@ -23,6 +23,7 @@ void	export_myenvp(char **my_env)
 			printf("%s\n", my_env[i]);
 		i++;
 	}
+	return (1);
 }
 
 void	free_myenvp(char **my_env)
