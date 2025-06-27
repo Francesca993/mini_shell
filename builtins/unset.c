@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:49:59 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/20 17:17:20 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 16:04:28 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	unset_variable_2(char **my_env, const char *key)
 	size_t	key_len;
 
 	i = 0;
-	key_len = strlen(key);
+	key_len = ft_strlen(key);
 	if (!key || !*key)
 		return ;
 	while (my_env[i])
 	{
 		// Se trova una variabile che inizia con key + '='
-		if (strncmp(my_env[i], key, key_len) == 0 &&
+		if (ft_strncmp(my_env[i], key, key_len) == 0 &&
 			(my_env[i][key_len] == '=' || my_env[i][key_len] == '\0'))
 		{
 			free(my_env[i]);
@@ -84,7 +84,7 @@ void	unset_variable_2(char **my_env, const char *key)
 ** - Chiama `unset_variable_2()` per ogni variabile
 ** - Imposta sempre `g_exit_status = 0`, come fa Bash
 */
-void	unset_variable(char **my_env, char **args)
+int	unset_variable(char **my_env, char **args)
 {
 	// perchè arg[0] è unset e non una variabile
 	int i = 1;
@@ -95,4 +95,5 @@ void	unset_variable(char **my_env, char **args)
 		i++;
 	}
 	g_exit_status = 0;
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:03:02 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/20 17:17:02 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 16:00:14 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char	*find_key(char *str)
 	return (key);
 }
 
-void	export_variable(char ***my_envp, char **args)
+int	export_variable(char ***my_envp, char **args)
 {
 	int		i;
 	char	*key;
@@ -147,7 +147,7 @@ void	export_variable(char ***my_envp, char **args)
 	if (!args[1])
 	{
 		print_export_buildin_sorted(my_env);
-		return ;
+		return (1);
 	}
 	while (args[i])
 	{
@@ -158,7 +158,7 @@ void	export_variable(char ***my_envp, char **args)
 			key = ft_strdup(args[i]);
 		if (!is_valid_identifier(key))
 		{
-			fprintf(stderr, "minishell: export: `%s`: not a valid identifier\n",
+			fprintf(stderr, "export: `%s`: not a valid identifier\n",
 					args[i]);
 			g_exit_status = 1;
 			free(key);
@@ -186,4 +186,5 @@ void	export_variable(char ***my_envp, char **args)
 		i++;
 	}
 	*my_envp = my_env; // aggiorna il chiamante
+	return (1);
 }

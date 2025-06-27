@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:03:06 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/27 14:42:10 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 16:07:13 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,18 @@ int	execute_builtin(t_cmd *cmd, char ***my_envp, t_pipeline *pipeline)
 		if (ft_exit(cmd->args) == 0)
 			return (0); // interrompi ciclo
 	}
-	else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
-		ft_pwd();
-	else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
-		export_variable(my_envp, cmd->args);
-	else if ((ft_strncmp(cmd->args[0], "env", 4) == 0))
-		export_myenvp(*my_envp);
-	else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
-		ft_cd(cmd->args, pipeline->my_env);
-	else if (ft_strncmp(cmd->args[0], "unset", 6) == 0 && cmd->args[1])
-		unset_variable(*my_envp, cmd->args);
-	else if (ft_strncmp(cmd->args[0], "echo", 4) == 0)
-		ft_echo(cmd->args);
+	if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
+		return (ft_pwd());
+	if (ft_strncmp(cmd->args[0], "export", 7) == 0)
+		return (export_variable(my_envp, cmd->args));
+	if ((ft_strncmp(cmd->args[0], "env", 4) == 0))
+		return (export_myenvp(*my_envp));
+	if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
+		return (ft_cd(cmd->args, pipeline->my_env));
+	if (ft_strncmp(cmd->args[0], "unset", 6) == 0 && cmd->args[1])
+		return (unset_variable(*my_envp, cmd->args));
+	if (ft_strncmp(cmd->args[0], "echo", 4) == 0)
+		return (ft_echo(cmd->args));
 	else
 		return (1);
-	return (1); // ritorna prompt
 }

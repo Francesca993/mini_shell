@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:02:00 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/12 13:57:30 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/27 16:02:49 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 
 char    **copy_env(char **envp);
 void    free_myenvp(char **my_env);
-void    export_myenvp(char **my_env);
+int     export_myenvp(char **my_env);
 
 #endif
