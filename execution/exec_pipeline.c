@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:22:22 by skayed            #+#    #+#             */
-/*   Updated: 2025/06/26 20:08:54 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 14:36:40 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,31 @@ static void	close_pipes(int **pipes, int n_pipes)
 		i++;
 	}
 }
-static void	execute_cmd(t_cmd *cmd, int i, int **pipes, int n_cmds,
-		char **my_env)
+static void	execute_cmd(t_cmd *cmd, int i, int **pipes, int n_cmds, char **my_env)
 {
 	char	*path;
 
-	if (i > 0 && !cmd->redir_in && !cmd->heredoc)
-		// se non sei il primo e non hai un redir di input allora il tuo input viene dalla pipe precedente
+	// Se non è il primo comando, duplica la pipe precedente su stdin
+	if (i > 0)
 		dup2(pipes[i - 1][0], STDIN_FILENO);
-	if (cmd->pipe && !cmd->redir_out && !cmd->append)
-		// se hai pipe in uscita e non hai redir su file, allora la pipe successiva riceve stdout
-			dup2(pipes[i][1], STDOUT_FILENO);
-	close_pipes(pipes, (n_cmds - 1));
+	// Se non è l'ultimo comando, duplica la pipe attuale su stdout
+	if (i < n_cmds - 1)
+		dup2(pipes[i][1], STDOUT_FILENO);
+
+	// Chiudi tutte le pipe nel figlio
+	for (int j = 0; j < n_cmds - 1; j++)
+	{
+		close(pipes[j][0]);
+		close(pipes[j][1]);
+	}
+
 	set_redirections(cmd);
+
+	if (is_builtin(cmd))
+	{
+		execute_builtin(cmd, &my_env, NULL);
+		exit(1);
+	}
 	if (ft_strchr(cmd->args[0], '/'))
 	{
 		if (access(cmd->args[0], X_OK) == 0)

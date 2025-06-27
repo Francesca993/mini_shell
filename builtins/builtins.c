@@ -6,11 +6,12 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:03:06 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/27 12:21:42 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 14:07:53 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+#include <stdio.h>
 
 int is_builtin(t_cmd *cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:20:58 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/27 12:26:24 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/27 14:19:24 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,23 @@ int	process_args(t_cmd *cmd)
 int	process_pipeline(t_pipeline *pipeline, char ***main_env)
 {
 	int j = 0;
+	int exit = 1;
 
 	if (pipeline->n_cmds == 1 && is_builtin(pipeline->cmds[0]))
     {
         process_args(pipeline->cmds[0]);
-        execute_builtin(pipeline->cmds[0], &pipeline->my_env, pipeline);
+		exit = execute_builtin(pipeline->cmds[0], &pipeline->my_env, pipeline);
         if (main_env && *main_env != pipeline->my_env)
             *main_env = pipeline->my_env;
-        return (1);
+		return (exit);
     }
 	while (pipeline->cmds[j])
 	{
 		process_args(pipeline->cmds[j]);
-		if (!execute_builtin(pipeline->cmds[j], &pipeline->my_env, pipeline))
-			return 0;
     	j++;
 	}
-
-execute_pipeline(pipeline);
-if (main_env && *main_env != pipeline->my_env)
+	execute_pipeline(pipeline);
+	if (main_env && *main_env != pipeline->my_env)
     *main_env = pipeline->my_env;
-return 1;
-
+	return (1);
 }
