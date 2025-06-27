@@ -6,11 +6,34 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:03:06 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/26 09:44:07 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/26 15:47:16 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+int is_builtin(t_cmd *cmd)
+{
+    if (!cmd || !cmd->args || !cmd->args[0])
+        return 0;
+
+    if (ft_strcmp(cmd->args[0], "echo") == 0)
+        return 1;
+    if (ft_strcmp(cmd->args[0], "cd") == 0)
+        return 1;
+    if (ft_strcmp(cmd->args[0], "pwd") == 0)
+        return 1;
+    if (ft_strcmp(cmd->args[0], "export") == 0)
+        return 1;
+    if (ft_strcmp(cmd->args[0], "unset") == 0)
+        return 1;
+    if (ft_strcmp(cmd->args[0], "env") == 0)
+        return 1;
+    if (ft_strcmp(cmd->args[0], "exit") == 0)
+        return 1;
+
+    return 0;
+}
 
 int	execute_builtin(t_cmd *cmd, char ***my_envp, t_pipeline *pipeline)
 {
