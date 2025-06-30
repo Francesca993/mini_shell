@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:03:41 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/30 08:13:58 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/30 08:49:35 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_cd(char **args, char **my_env)
 		path = getenv("HOME");
 		if (!path)
 		{
-			exit_shell(1, "minishell: cd: HOME not set\n");
+			exit_shell(1, "cd: HOME not set\n");
 			return (1);
 		}
 		// exit_shell(1, "minishell: cd: missing argument\n");
@@ -67,7 +67,7 @@ int	ft_cd(char **args, char **my_env)
 	}
 	else if (args[2])
 	{
-		exit_shell(1, "minishell: cd: too many arguments\n");
+		exit_shell(1, "cd: too many arguments\n");
 		return (1);
 	}
 	else

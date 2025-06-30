@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 22:49:55 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/20 17:16:18 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/30 08:48:39 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ int	ft_exit(char **args)
 		if (args[2])
 		{
 			// non esce, ma segnala errore
-			fprintf(stderr, "minishell: exit: too many arguments\n");
+			fprintf(stderr, "exit: too many arguments\n");
 			return (1);
 		}
 		//Se al secondo argomentoo c'è un numero esce stampandolo
 		if (!ft_is_numeric(args[1]))
 		{
-			fprintf(stderr, "minishell: exit: %s: numeric argument required\n",
+			fprintf(stderr, "exit: %s: numeric argument required\n",
 					args[1]);
 			exit_shell(2, "");
 			return (0);

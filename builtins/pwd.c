@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:41:48 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/27 15:58:04 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/30 08:49:12 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_pwd(void)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		exit_shell(1, "minishell: pwd");
+		exit_shell(1, "pwd");
 		return (1);
 	}
 
@@ -29,7 +29,7 @@ int	ft_pwd(void)
 	if (!safe_copy)
 	{
 		free(cwd);
-		exit_shell(1, "failed malloc nel pwd");
+		exit_shell(1, "failed malloc");
 		return (1);
 	}
 	ft_strlcpy(safe_copy, cwd, ft_strlen(cwd) + 1);

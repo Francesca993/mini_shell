@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/19 11:16:10 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/30 08:45:14 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,33 +88,54 @@ void print_pipeline(t_pipeline *pipeline)
 
 int check_syntax(char **tokens, t_token_type *types, int ntokens)
 {
+    int i;
+
+    i = 0;
     if (ntokens == 0)
-        return 0;
+        return (0);
     // 1. Pipe o redir all'inizio
     if (types[0] == PIPE)
-        return (fprintf(stderr, "minishell: syntax error near unexpected token `|'\n"), 0);
+        return (exit_shell(2, "syntax error near unexpected token `|'\n"), 0);
     if (types[0] == REDIR_IN || types[0] == REDIR_OUT || types[0] == APPEND || types[0] == HEREDOC)
-        return (fprintf(stderr, "minishell: syntax error near unexpected token `%s'\n", tokens[0]), 0);
+    {
+        char msg[256];
+        snprintf(msg, sizeof(msg), "syntax error near unexpected token `%s'\n", tokens[0]);
+        exit_shell(2, msg);
+        return 0;
+    }
 
-    for (int i = 0; i < ntokens; i++)
+    while (i < ntokens)
     {
         // 2. Pipe doppia o pipe senza comando
         if (types[i] == PIPE)
         {
-            // Pipe alla fine
             if (i == ntokens - 1)
-                return (fprintf(stderr, "minishell: syntax error near unexpected token `|'\n"), 0);
-            // Pipe seguita da un'altra pipe
-            if (types[i+1] == PIPE)
-                return (fprintf(stderr, "minishell: syntax error near unexpected token `|'\n"), 0);
+            {
+                exit_shell(2, "syntax error near unexpected token `|'\n");
+                return 0;
+            }
+            if (types[i + 1] == PIPE)
+            {
+                exit_shell(2, "syntax error near unexpected token `|'\n");
+                return 0;
+            }
         }
+
         // 3. Redir senza argomento
-        if ((types[i] == REDIR_IN || types[i] == REDIR_OUT || types[i] == APPEND || types[i] == HEREDOC))
+        if (types[i] == REDIR_IN || types[i] == REDIR_OUT || types[i] == APPEND || types[i] == HEREDOC)
         {
-            if (i == ntokens - 1 || types[i+1] != WORD)
-                return (fprintf(stderr, "minishell: syntax error near unexpected token `%s'\n", tokens[i]), 0);
+            if (i == ntokens - 1 || types[i + 1] != WORD)
+            {
+                char msg[256];
+                snprintf(msg, sizeof(msg), "syntax error near unexpected token `%s'\n", tokens[i]);
+                exit_shell(2, msg);
+                return 0;
+            }
         }
+
+        i++;
     }
+
     return 1;
 }
 

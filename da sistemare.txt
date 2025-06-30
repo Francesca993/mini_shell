@@ -8,6 +8,7 @@ controllare gestione degli errori:
 
 - controllare exit status e aggiornarlo sempre ( check ) - da fare entrambe
 -> exit status sulle builtin ok, mancava su env, ora controllo anche il resto del parsing
+-> dovrei aver tolto la scritta minishell: da un pò di parti, poi ricontrollo per bene tutto
 
 stampa:
 

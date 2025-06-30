@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:03:26 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/10 12:35:39 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/30 08:34:48 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ int lexer(char *line, char ***tokens_out, t_token_type **types_out)
 	{
 		free(tokens);
 		free(types);
-		//exit_shell(1, "minishell: malloc failed");
+		exit_shell(1, NULL);
 		return -1;
 	}
 	filled = fill_tokens(line, tokens, types);
 	if (filled == -1)
 	{
-		// exit_shell(2, "syntax error: unclosed quote\n");
+		// exit_shell(2, "syntax error: unclosed quote\n"); gia presente in un altra funzione nn serve qui
 		// fprintf(stderr, "syntax error: unclosed quote\n");
 		// g_exit_status = 2;
 		free_partial_tokens(tokens, types, n_tokens);

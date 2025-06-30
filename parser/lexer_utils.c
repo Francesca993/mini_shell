@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/18 17:44:49 by francesca        ###   ########.fr       */
+/*   Updated: 2025/06/30 08:38:08 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int	count_token(const char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[0] == '|')
-			return (exit_shell(1, "parse error near `|'"), - 1);
+		// if (line[0] == '|')
+		// 	return (exit_shell(1, "parse error near `|' \n"), - 1);
 		// Salta spazi iniziali
 		while (ft_isspace(line[i]))
 			i++;
@@ -214,16 +214,16 @@ int	handle_word(const char *line, int i, char **tokens, t_token_type *types,
 		else if (line[i] == '\\')
 		{
 			if (!line[i + 1]) // backslash alla fine → errore
-				return (exit_shell(2, "Error backslah not closed"), -1);
+				return (exit_shell(2, "Error backslah not closed \n"), -1);
 			if ((line[i + 1] == ' ' || line[i + 1] == '\0') && (!line[i + 2] || ft_isspace(line[i + 2])))
-				return (exit_shell(2, "Error backslah not closed"), -1); // backslash seguito da spazio/fine, poi fine/spazio → errore
+				return (exit_shell(2, "Error backslah not closed \n"), -1); // backslash seguito da spazio/fine, poi fine/spazio → errore
 			i++; // salta carattere dopo backslash
 		}
 		i++;
 	}
 
 	if (quote)
-		return (exit_shell(2, "Error quote"), -1); // errore: quote non chiusa
+		return (exit_shell(2, "syntax error: unclosed quote \n"), -1); // errore: quote non chiusa
 
 	tokens[*count] = ft_substr(line, start, i - start);
 	types[*count] = WORD;
