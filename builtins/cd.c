@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:03:41 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/27 15:22:30 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/30 08:13:58 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_cd(char **args, char **my_env)
 	if (chdir(path) != 0)
 	{
 		exit_shell(1, NULL);
-		perror("");
+		// perror("");
 		return (1);
 	}
 	else

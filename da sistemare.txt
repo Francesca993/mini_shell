@@ -5,7 +5,9 @@ FRA:
 controllare gestione degli errori: 
 - l'errore stampa spesso due volte ( check di tutti gli errori e le uscite ) check con exit shell + funzioni execution 
 - verificare uscite builtin ( stampa errori ) e togliere "minishell:" dai messaggi di errori 
+
 - controllare exit status e aggiornarlo sempre ( check ) - da fare entrambe
+-> exit status sulle builtin ok, mancava su env, ora controllo anche il resto del parsing
 
 stampa:
 
