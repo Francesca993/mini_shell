@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:20:58 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/27 14:19:24 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/02 11:30:12 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,20 @@ int	process_pipeline(t_pipeline *pipeline, char ***main_env)
 	int exit = 1;
 
 	if (pipeline->n_cmds == 1 && is_builtin(pipeline->cmds[0]))
-    {
-        process_args(pipeline->cmds[0]);
+	{
+		process_args(pipeline->cmds[0]);
 		exit = execute_builtin(pipeline->cmds[0], &pipeline->my_env, pipeline);
-        if (main_env && *main_env != pipeline->my_env)
-            *main_env = pipeline->my_env;
+		if (main_env && *main_env != pipeline->my_env)
+			*main_env = pipeline->my_env;
 		return (exit);
-    }
+	}
 	while (pipeline->cmds[j])
 	{
 		process_args(pipeline->cmds[j]);
-    	j++;
+		j++;
 	}
 	execute_pipeline(pipeline);
 	if (main_env && *main_env != pipeline->my_env)
-    *main_env = pipeline->my_env;
+		*main_env = pipeline->my_env;
 	return (1);
 }

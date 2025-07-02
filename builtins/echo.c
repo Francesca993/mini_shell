@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 21:58:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/27 16:05:22 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/02 11:50:55 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ int	ft_echo(char **args)
 	// Stampa tutti gli argomenti separati da spazio
 	while (args[i])
 	{
-		printf("%s", args[i]);
+		write(STDOUT_FILENO, args[i], strlen(args[i]));
 		if (args[i + 1])
-			printf(" ");
+			write(STDOUT_FILENO, " ", 1);
 		i++;
 	}
 	if (newline)
-		printf("\n");
+		write(STDOUT_FILENO, "\n", 1);
 	g_exit_status = 0;
 	return (1);
 }
