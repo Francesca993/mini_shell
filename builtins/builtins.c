@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:03:06 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/02 12:05:51 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/02 13:30:34 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	execute_builtin(t_cmd *cmd, char ***my_envp, t_pipeline *pipeline)
 {
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return (1);
-	printf("[DEBUG] Forked process: %d\n", getpid());
 	if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
 	{
 		if (ft_exit(cmd->args) == 0)

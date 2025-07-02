@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/02 12:03:41 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/02 13:30:28 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	minishell_loop(char ***env)
 		{
 			// ⬇️ ESECUZIONE
 			processing = process_pipeline(pipeline, env);
-			printf("[DEBUG] Main process: %d\n", getpid());
 		}
 		if (pipeline)
 			free_pipeline(pipeline);
