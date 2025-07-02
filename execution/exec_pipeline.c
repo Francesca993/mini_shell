@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:22:22 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/02 12:01:59 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/02 13:38:58 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static void	execute_cmd(t_cmd *cmd, int i, int **pipes, int n_cmds,
 {
 	char	*path;
 
-	printf("[DEBUG] Forked process: %d (i = %d)\n", getpid(), i);
 	// Se non è il primo comando, duplica la pipe precedente su stdin
 	if (i > 0)
 		dup2(pipes[i - 1][0], STDIN_FILENO);

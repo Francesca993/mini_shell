@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 21:58:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/02 11:50:55 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/02 13:18:53 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ int	ft_echo(char **args)
 	{
 		write(STDOUT_FILENO, args[i], strlen(args[i]));
 		if (args[i + 1])
-			write(STDOUT_FILENO, " ", 1);
+			write(1, " ", 1);
 		i++;
 	}
 	if (newline)
-		write(STDOUT_FILENO, "\n", 1);
+		write(1, "\n", 1);
 	g_exit_status = 0;
 	return (1);
 }
