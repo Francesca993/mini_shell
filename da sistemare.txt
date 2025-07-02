@@ -14,15 +14,12 @@ stampa:
 
 SUSA :
 gestione segnali: 
-- padre gestisce per non chiudere las shell
+- padre gestisce per non chiudere la shell
 - figlio ripristina i segnali di default 
 - guarda subject per i segnali 
 
 REDIREZIONI SU execution
 gestione completa 
-
-
-- check signal ctrl C 
 
 - check exit status ultimo comando in pipe 
 - padre salva pid figlio 
