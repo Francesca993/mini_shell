@@ -6,11 +6,12 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/20 18:17:40 by skayed           ###   ########.fr       */
+/*   Updated: 2025/06/30 15:05:46 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+#include "../header/execution.h"
 
 /*
  * Conta quanti comandi sono presenti nella linea, basandosi sulle pipe (|).
@@ -168,6 +169,27 @@ void populate_comands(t_pipeline *pipeline)
         cmd->args[arg_idx] = NULL;
         cmd->fd_in = -1;
         cmd->fd_out = -1;
+        // INTEGRAZIONE REDIRECTIONS
+        int error = 0;
+        if (cmd->redir_in && cmd->infile)
+            {if (setup_redir_in(cmd) == -1)
+                error = 1;}
+        if (cmd->redir_out && cmd->outfile)
+            {if (setup_redir_out(cmd) == -1)
+                error = 1;}
+        if (cmd->append && cmd->outfile)
+            {if (setup_redir_append(cmd) == -1)
+                error = 1;}
+        if (cmd->heredoc && cmd->infile)
+           { if (setup_heredoc(cmd, cmd->infile) == -1)
+                error = 1;}
+        if (error)
+        {
+            // Libera pipeline, stampa errore, esci dalla funzione
+            free_pipeline(pipeline);
+            return;
+        }
+        // FINE INTEGRAZIONE
         if (i < pipeline->n_tokens && pipeline->types[i] == PIPE)
         {
             cmd->pipe = 1;

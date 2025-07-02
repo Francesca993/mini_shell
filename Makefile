@@ -6,7 +6,7 @@
 #    By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/06/24 10:17:06 by skayed           ###   ########.fr        #
+#    Updated: 2025/06/30 15:07:37 by skayed           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC =	main.c \
 		parser/quote_handling.c \
 		parser/backslash.c \
 		parser/exp_var.c \
+		parser/redirection.c \
 		execution/args_processing.c \
 		execution/exec_pipeline.c \
 		execution/exec_utils.c \

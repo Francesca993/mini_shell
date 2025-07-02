@@ -17,17 +17,19 @@ stampa:
 
 SUSA :
 gestione segnali: 
-- padre gestisce per non chiudere las shell
+- padre gestisce per non chiudere la shell
 - figlio ripristina i segnali di default 
 - guarda subject per i segnali 
-
-REDIREZIONI SU execution
-gestione completa 
-
-
-- check signal ctrl C 
 
 - check exit status ultimo comando in pipe 
 - padre salva pid figlio 
 
-prova
+
+TO FIX:
+
+cat << 'EOF' : bash riconosce la parola EOF senza apici, la nostra minishell non la riconosce finche non ha gli apici
+----- 
+cat << EOF
+$USER
+EOF 
+non stampa lo user
