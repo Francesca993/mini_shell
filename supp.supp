@@ -1,12 +1,36 @@
 {
-   suppress_readline_reachable
+   suppress_readline_malloc
    Memcheck:Leak
    fun:malloc
-   obj:*/libreadline.so.*
+   obj:*/libreadline.so*
 }
 {
-   suppress_tinfo_reachable
+   suppress_readline_calloc
+   Memcheck:Leak
+   fun:calloc
+   obj:*/libreadline.so*
+}
+{
+   suppress_readline_realloc
+   Memcheck:Leak
+   fun:realloc
+   obj:*/libreadline.so*
+}
+{
+   suppress_tinfo_malloc
    Memcheck:Leak
    fun:malloc
-   obj:*/libtinfo.so.*
+   obj:*/libtinfo.so*
+}
+{
+   suppress_tinfo_calloc
+   Memcheck:Leak
+   fun:calloc
+   obj:*/libtinfo.so*
+}
+{
+   suppress_tinfo_realloc
+   Memcheck:Leak
+   fun:realloc
+   obj:*/libtinfo.so*
 }
