@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmontini <fmontini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:06:07 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/04 15:34:44 by fmontini         ###   ########.fr       */
+/*   Updated: 2025/07/04 16:36:27 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,12 @@ int	setup_heredoc(t_cmd *cmd, char *delimiter)
 {
 	int pipe_fd[2];
 	char *new_del = NULL;
+	int exp_var;
+	
+	exp_var = 0;
 	new_del = strip_outer_quotes(delimiter);
-	//cmd->infile = ft_strdup(new_del);
+	if (!ft_strcmp(new_del, delimiter))
+		exp_var = 1;
 	
 	if (pipe(pipe_fd) < 0)
 		return (perror("pipe heredoc"), -1);
@@ -69,8 +73,16 @@ int	setup_heredoc(t_cmd *cmd, char *delimiter)
 			line = readline("> ");
 			if (!line || ft_strcmp(line, new_del) == 0)
 				break ;
-			write(pipe_fd[1], line, ft_strlen(line));
-			write(pipe_fd[1], "\n", 1);
+			if (exp_var)
+			{
+				char *tmp = expand_variables(line, cmd->pipeline->my_env);
+				write(pipe_fd[1], tmp, ft_strlen(tmp));
+				write(pipe_fd[1], "\n", 1);
+				free(tmp);
+			}
+			else
+			{write(pipe_fd[1], line, ft_strlen(line));
+			write(pipe_fd[1], "\n", 1);}
 			free(line);
 		}
 		free(line);

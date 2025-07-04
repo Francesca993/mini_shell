@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:22:22 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/02 13:38:58 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/04 17:36:04 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	execute_pipeline(t_pipeline *pipeline)
 			return (perror("Pipe failed"));
 		if (pids[i] == 0)
 		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			execute_cmd(pipeline->cmds[i], i, pipes, pipeline->n_cmds,
 					pipeline->my_env);
 		}

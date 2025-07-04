@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/02 13:30:28 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/04 17:12:18 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 
 	char **my_env;
-	init_signals();
+	if(isatty(STDIN_FILENO))
+		init_signals();
 
 	my_env = copy_env(envp);
 	minishell_loop(&my_env);
