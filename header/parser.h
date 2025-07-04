@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmontini <fmontini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/04 14:59:21 by fmontini         ###   ########.fr       */
+/*   Updated: 2025/07/04 22:25:09 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ int     fill_tokens(char *line, char **tokens, t_token_type *types); // Popola g
                                                                     // Ritorna il numero di token oppure -1 in caso di errore
 int     handle_word(const char *line, int i, char **tokens, t_token_type *types, int *count); // Gestisce una parola normale o quotata a partire dalla posizione i
                                                                                             // Aggiunge il token e tipo e ritorna il nuovo indice (oppure -1 per errore quote)
-void    free_partial_tokens(char **tokens, t_token_type *types, int count); // Libera solo i token e tipi allocati fino a count in caso di errore nel lexer
 void    exit_shell(int code, const char *msg); // Esce dal programma con codice e messaggio, pulendo la history e settando g_exit_status
+void	free_matrix(char **data);
 
 // ==============================
 // BUILD PIPELINE

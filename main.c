@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmontini <fmontini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:58:21 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/04 17:54:18 by fmontini         ###   ########.fr       */
+/*   Updated: 2025/07/04 21:48:30 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,13 @@
 /*
 ** Variabile globale usata per memorizzare lo stato di uscita della shell.
 ** - Aggiornata dopo l'esecuzione di ogni comando (per supportare $?)
-**
-	- Modificata anche dai signal handler per riflettere l'interruzione 
-	da segnali (es. Ctrl-C → 130)
+** Modificata anche dai signal handler per riflettere l'interruzione 
+** da segnali (es. Ctrl-C → 130)
 **
 ** Conforme al subject:
 ** - È l'unica variabile globale usata per i segnali
 ** - Non accede né fornisce accesso ad altre strutture dati
 ** - Di tipo sig_atomic_t per garantire scrittura sicura nei signal handler
-**
-	- È lo stesso valore che l'utente potrà recuperare 
-	con $? in uno script o dopo un comando.
 */
 
 volatile sig_atomic_t	g_exit_status = 0;

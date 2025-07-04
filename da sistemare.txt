@@ -23,3 +23,15 @@ gestione segnali:
 
 - check exit status ultimo comando in pipe 
 - padre salva pid figlio 
+
+
+==========================
+No, non è necessario chiamare rl_clear_history() alla fine del main, perché:
+clear_history() è già sufficiente per liberare la cronologia usata da readline.
+clear_history() cancella l'intera cronologia e libera la memoria associata.
+rl_clear_history() è un alias obsoleto o non sempre definito a seconda delle versioni di readline.
+Hai già incluso clear_history() alla fine del ciclo, quindi chiamare anche rl_clear_history() sarebbe ridondante.
+=========================
+
+--> norminettato main, lexer e utils, ho fatto una funzione free_matrix e l ho utilizzata per snellire la free_pipeline 
+    e ho cancellato free_partial_tokens che dava fastidio ed era inutile e l ho sostituita

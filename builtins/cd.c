@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:03:41 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/30 08:49:35 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/04 21:26:37 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	ft_cd(char **args, char **my_env)
 		path = args[1]; // path = argomento dell'utente
 	if (chdir(path) != 0)
 	{
-		exit_shell(1, NULL);
+		exit_shell(1,  "cd: no such file or directory\n");
 		// perror("");
 		return (1);
 	}

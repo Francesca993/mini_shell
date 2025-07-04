@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/30 08:45:14 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/04 22:24:50 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,15 +167,12 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
     int ntokens;
     
     ntokens = lexer(line, &tokens, &types);
-    //find_backslash(tokens); quando trova le "" o '' nn deve interferire 
     if (ntokens == 0 || !tokens || !tokens[0] || ntokens == -1 || !line || !check_syntax(tokens, types, ntokens)) 
     {
-        free_partial_tokens(tokens, types, ntokens);
+        free_matrix(tokens);
+        free(types);
         return NULL;
     }
-    // Debug temporaneo
-    //print_tokens(tokens, types);
-     // ✅ Costruisce la pipeline da tokens e types
     pipeline = ft_calloc(1, sizeof(t_pipeline));
     if (!pipeline)
         return(free_pipeline(pipeline), NULL);
@@ -183,12 +180,9 @@ t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
     pipeline = build_pipeline(tokens, types, ntokens, pipeline, env);
     if (!pipeline)
     {
-        // exit_shell(2, "Parser error\n");
-        //  fprintf(stderr, "Parser error\n");
-        //  g_exit_status = 2;
+        g_exit_status = 2;
         return (NULL);
     }
-    //print_pipeline(pipeline);
     return (pipeline);
 }
 
