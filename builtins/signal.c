@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 09:50:36 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/20 17:17:12 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/04 16:56:38 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	handle_sigint(int signo)
 	g_exit_status = 130;
 	write(1, "\n", 1);
 	rl_on_new_line(); // Informa readline che siamo su una nuova riga
-	//rl_replace_line("", 0);  // Cancella la linea corrente
+	rl_replace_line("", 0);  // Cancella la linea corrente
 	rl_redisplay(); // Ridisegna il prompt vuoto
 }
 

@@ -23,13 +23,3 @@ gestione segnali:
 
 - check exit status ultimo comando in pipe 
 - padre salva pid figlio 
-
-
-TO FIX:
-
-cat << 'EOF' : bash riconosce la parola EOF senza apici, la nostra minishell non la riconosce finche non ha gli apici
------ 
-cat << EOF
-$USER
-EOF 
-non stampa lo user
