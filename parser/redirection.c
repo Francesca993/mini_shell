@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: fmontini <fmontini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:06:07 by skayed            #+#    #+#             */
-/*   Updated: 2025/06/27 16:13:17 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/04 15:34:44 by fmontini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,15 @@ int	setup_redir_append(t_cmd *cmd)
 int	setup_heredoc(t_cmd *cmd, char *delimiter)
 {
 	int pipe_fd[2];
-
+	char *new_del = NULL;
+	new_del = strip_outer_quotes(delimiter);
+	//cmd->infile = ft_strdup(new_del);
+	
 	if (pipe(pipe_fd) < 0)
 		return (perror("pipe heredoc"), -1);
 
 	pid_t pid = fork();
+
 	if (pid == 0)
 	{
 		char *line;
@@ -63,7 +67,7 @@ int	setup_heredoc(t_cmd *cmd, char *delimiter)
 		while (1)
 		{
 			line = readline("> ");
-			if (!line || ft_strcmp(line, delimiter) == 0)
+			if (!line || ft_strcmp(line, new_del) == 0)
 				break ;
 			write(pipe_fd[1], line, ft_strlen(line));
 			write(pipe_fd[1], "\n", 1);
@@ -73,6 +77,7 @@ int	setup_heredoc(t_cmd *cmd, char *delimiter)
 		close(pipe_fd[1]);
 		exit(0);
 	}
+	free(new_del);
 	wait(NULL);
 	close(pipe_fd[1]); // chiudi la scrittura nel padre
 	cmd->fd_in = pipe_fd[0];

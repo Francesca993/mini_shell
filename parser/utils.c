@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: fmontini <fmontini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 22:23:22 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/18 10:09:26 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/04 15:18:30 by fmontini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	free_pipeline(t_pipeline *pipeline)
 		}
 		free(cmd->infile);
 		free(cmd->outfile);
+		//free(cmd->pipeline);
 		free(cmd);
 	}
 	free(pipeline->cmds);

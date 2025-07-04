@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: fmontini <fmontini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/30 15:05:46 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/04 13:49:00 by fmontini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void populate_comands(t_pipeline *pipeline)
             free(cmd);
             return;
         }
+        cmd->pipeline = pipeline;
         int arg_idx = 0;
         while (i < pipeline->n_tokens && pipeline->types[i] != PIPE)
         {

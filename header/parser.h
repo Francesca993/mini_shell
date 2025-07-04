@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: fmontini <fmontini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/18 10:11:36 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/04 14:59:21 by fmontini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef enum e_token_type {
     HEREDOC       // <<
 }   t_token_type;
 
+typedef struct s_pipeline t_pipeline;
+
 // ==============================
 // STRUTTURA di comando singolo
 // ==============================
@@ -34,6 +36,7 @@ typedef struct s_cmd {
     char    **args;         // ["grep", "ciao", NULL]
     char    *infile;        // NULL o filename
     char    *outfile;       // NULL o filename
+    t_pipeline  *pipeline;
     int     append;         // 1 se >>
     int     heredoc;        // 1 se <<
     int     redir_in;       // 1 se <
@@ -85,6 +88,7 @@ void    exit_shell(int code, const char *msg); // Esce dal programma con codice 
 t_pipeline *build_pipeline(char **tokens, t_token_type *types, int num_tokens, t_pipeline *pipeline, char **env);
 void free_pipeline(t_pipeline *pipeline);
 void populate_comands(t_pipeline *pipeline); //Popola i comandi della pipeline
+char *strip_outer_quotes(const char *str);
 
 // ==============================
 // PARSER
