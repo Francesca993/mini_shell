@@ -19,7 +19,6 @@ SUSA :
 gestione segnali: 
 - padre gestisce per non chiudere la shell
 - figlio ripristina i segnali di default 
-- guarda subject per i segnali 
+
 
 - check exit status ultimo comando in pipe 
-- padre salva pid figlio 

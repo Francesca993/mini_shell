@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:22:22 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/04 17:36:04 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/04 18:06:09 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,10 @@ void	execute_pipeline(t_pipeline *pipeline)
 	int		i;
 	pid_t	*pids;
 	int		**pipes;
+	int status;
 
 	i = 0;
+	status = 0;
 	pipes = create_pipes(pipeline->n_cmds);
 	if (!pipes)
 		return ;
@@ -118,9 +120,13 @@ void	execute_pipeline(t_pipeline *pipeline)
 	i = 0;
 	while (i < pipeline->n_cmds)
 	{
-		waitpid(pids[i], NULL, 0);
+		waitpid(pids[i], &status, 0);
 		i++;
 	}
+	if (WIFEXITED(status))
+    	g_exit_status = WEXITSTATUS(status);
+	else
+    g_exit_status = 1;
 	free(pipes);
 	free(pids);
 }
