@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 09:50:36 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/04 16:56:38 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/06 11:14:18 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include <readline/readline.h>
 
 /*
-I segnali sono un meccanismo del sistema operativo per notificare ai processi 
+I segnali sono un meccanismo del sistema operativo per notificare ai processi
 che si è verificato un evento, come ad esempio:
 SIGINT (Ctrl-C): interruzione
-				-> Ctrl-C	SIGINT	Interruzione	Mostrare una nuova riga con prompt
+-> Ctrl-C	SIGINT	Interruzione	Mostrare una nuova riga con prompt
 SIGQUIT (Ctrl-): quit (interrompe e core dump)
-				-> Ctrl-\	SIGQUIT	Quit (dump del core)	Non deve fare nulla
+-> Ctrl-\	SIGQUIT	Quit (dump del core)	Non deve fare nulla
 SIGTERM: terminazione
-				-> Ctrl-D	(EOF)	Fine input (non è un segnale)	Uscire dalla shell
+-> Ctrl-D	(EOF)	Fine input (non è un segnale)	Uscire dalla shell
 */
 
 /*
@@ -45,9 +45,9 @@ void	handle_sigint(int signo)
 	(void)signo;
 	g_exit_status = 130;
 	write(1, "\n", 1);
-	rl_on_new_line(); // Informa readline che siamo su una nuova riga
-	rl_replace_line("", 0);  // Cancella la linea corrente
-	rl_redisplay(); // Ridisegna il prompt vuoto
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 /*
@@ -63,8 +63,8 @@ Se un processo è attivo, di solito lo termina con core dump.
 */
 void	init_signals(void)
 {
-	signal(SIGINT, handle_sigint); // Ctrl-C: gestito con handler
-	signal(SIGQUIT, SIG_IGN);      // Ctrl-\\: ignorato completamente
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 /*

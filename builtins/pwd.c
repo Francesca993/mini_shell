@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:41:48 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/30 08:49:12 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 11:12:50 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 int	ft_pwd(void)
 {
-	char *cwd;
+	char	*cwd;
+	char	*safe_copy;
 
-	// getcwd con NULL → alloca quanto serve
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
 		exit_shell(1, "pwd");
 		return (1);
 	}
-
-	// Copia sicura con ft_calloc
-	char *safe_copy = ft_calloc(ft_strlen(cwd) + 1, sizeof(char));
+	safe_copy = ft_calloc(ft_strlen(cwd) + 1, sizeof(char));
 	if (!safe_copy)
 	{
 		free(cwd);

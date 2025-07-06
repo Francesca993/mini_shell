@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 18:32:39 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/20 17:16:50 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/06 11:09:39 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static char	**sort_env_copy(char **env)
 	if (!copy)
 		return (NULL);
 	sort_env(copy);
-	// 🔍 Debug: controlla che la copia sia terminata correttamente
 	max_check = 100;
 	for (int i = 0; i < max_check; i++)
 	{
@@ -72,24 +71,12 @@ void	print_export_buildin_sorted(char **my_env)
 	int		i;
 	char	**sorted;
 
-	//char *equal;
-	//size_t len;
 	sorted = sort_env_copy(my_env);
 	if (!sorted)
 		return ;
 	i = 0;
 	while (sorted[i] != NULL)
 	{
-		// equal = ft_strchr(sorted[i], '=');
-		// if (equal)
-		// {
-		//     len = equal - sorted[i];
-		//     printf("declare -x %.*s=\"%s\"\n", (int)len, sorted[i], equal+ 1);
-		// }
-		// else
-		// {
-		//     printf("declare -x %s\n", sorted[i]);
-		// }
 		printf("%s\n", sorted[i]);
 		free(sorted[i]);
 		i++;
