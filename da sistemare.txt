@@ -1,28 +1,28 @@
 FRA:
-- sistemare return builtins 
-- sistemare execute_builtin con i return delle builtins 
+•⁠  ⁠sistemare return builtins 
+•⁠  ⁠sistemare execute_builtin con i return delle builtins 
 
 controllare gestione degli errori: 
-- l'errore stampa spesso due volte ( check di tutti gli errori e le uscite ) check con exit shell + funzioni execution 
-- verificare uscite builtin ( stampa errori ) e togliere "minishell:" dai messaggi di errori 
+•⁠  ⁠l'errore stampa spesso due volte ( check di tutti gli errori e le uscite ) check con exit shell + funzioni execution 
+•⁠  ⁠verificare uscite builtin ( stampa errori ) e togliere "minishell:" dai messaggi di errori 
 
-- controllare exit status e aggiornarlo sempre ( check ) - da fare entrambe
+•⁠  ⁠controllare exit status e aggiornarlo sempre ( check ) - da fare entrambe
 -> exit status sulle builtin ok, mancava su env, ora controllo anche il resto del parsing
 -> dovrei aver tolto la scritta minishell: da un pò di parti, poi ricontrollo per bene tutto
 
 stampa:
 
-- controllo \n dove invece ha stampato spazio 
+•⁠  ⁠controllo \n dove invece ha stampato spazio 
 
 
 SUSA :
 gestione segnali: 
-- padre gestisce per non chiudere la shell
-- figlio ripristina i segnali di default 
-- guarda subject per i segnali 
+•⁠  ⁠padre gestisce per non chiudere la shell
+•⁠  ⁠figlio ripristina i segnali di default 
+•⁠  ⁠guarda subject per i segnali 
 
-- check exit status ultimo comando in pipe 
-- padre salva pid figlio 
+•⁠  ⁠check exit status ultimo comando in pipe 
+•⁠  ⁠padre salva pid figlio 
 
 
 ==========================
@@ -65,6 +65,3 @@ Hai già incluso clear_history() alla fine del ciclo, quindi chiamare anche rl_c
     Error: TOO_MANY_ARGS        (line:  91, col:  44):      Function has more than 4 arguments
 
 da formattare: redirection.c e exp_var
-
-
-
