@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 07:43:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 10:32:21 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 13:58:32 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*remove_quotes(const char *str)
 	while (str[i])
 	{
 		if (str[i] == '\\' && str[i + 1] && (str[i + 1] == '"' || str[i
-				+ 1] == '\\'))
+					+ 1] == '\\'))
 		{
 			i++;
 			res[j++] = str[i];
@@ -129,29 +129,4 @@ void	expand_quotes(t_pipeline *pipeline)
 		}
 		i++;
 	}
-}
-
-void	find_quotes(t_pipeline *pipeline)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < pipeline->n_cmds)
-	{
-		j = 0;
-		while (pipeline->cmds[i]->args[j] != NULL)
-		{
-			if (ft_strchr(pipeline->cmds[i]->args[j], '\''))
-				pipeline->cmds[i]->quote_single = 1;
-			if (ft_strchr(pipeline->cmds[i]->args[j], '\"'))
-				pipeline->cmds[i]->quote_double = 1;
-			if (ft_strchr(pipeline->cmds[i]->args[j], '$')
-				&& (pipeline->cmds[i]->quote_single == 0))
-				pipeline->cmds[i]->dollar = 1;
-			j++;
-		}
-		i++;
-	}
-	expand_quotes(pipeline);
 }

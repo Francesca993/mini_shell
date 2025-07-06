@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+         #
+#    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/06/30 15:07:37 by skayed           ###   ########.fr        #
+#    Updated: 2025/07/06 13:55:34 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC =	main.c \
 		parser/build_pipeline.c \
 		parser/utils.c \
 		parser/quote_handling.c \
+		parser/quote_handling_2.c \
 		parser/backslash.c \
 		parser/exp_var.c \
 		parser/redirection.c \

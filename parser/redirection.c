@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:06:07 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/04 16:36:27 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/06 13:50:54 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,23 @@ int	setup_redir_append(t_cmd *cmd)
 
 int	setup_heredoc(t_cmd *cmd, char *delimiter)
 {
-	int pipe_fd[2];
-	char *new_del = NULL;
-	int exp_var;
-	
+	int		pipe_fd[2];
+	char	*new_del;
+	int		exp_var;
+	pid_t	pid;
+	char	*line;
+	char	*tmp;
+
+	new_del = NULL;
 	exp_var = 0;
 	new_del = strip_outer_quotes(delimiter);
 	if (!ft_strcmp(new_del, delimiter))
 		exp_var = 1;
-	
 	if (pipe(pipe_fd) < 0)
 		return (perror("pipe heredoc"), -1);
-
-	pid_t pid = fork();
-
+	pid = fork();
 	if (pid == 0)
 	{
-		char *line;
 		close(pipe_fd[0]); // chiudi la lettura
 		while (1)
 		{
@@ -75,14 +75,16 @@ int	setup_heredoc(t_cmd *cmd, char *delimiter)
 				break ;
 			if (exp_var)
 			{
-				char *tmp = expand_variables(line, cmd->pipeline->my_env);
+				tmp = expand_variables(line, cmd->pipeline->my_env);
 				write(pipe_fd[1], tmp, ft_strlen(tmp));
 				write(pipe_fd[1], "\n", 1);
 				free(tmp);
 			}
 			else
-			{write(pipe_fd[1], line, ft_strlen(line));
-			write(pipe_fd[1], "\n", 1);}
+			{
+				write(pipe_fd[1], line, ft_strlen(line));
+				write(pipe_fd[1], "\n", 1);
+			}
 			free(line);
 		}
 		free(line);
