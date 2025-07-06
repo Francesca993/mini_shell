@@ -57,7 +57,13 @@ Hai già incluso clear_history() alla fine del ciclo, quindi chiamare anche rl_c
     pwd.c -> OK
     signal.c -> OK
     unset.c -> OK
-    
+
+    header ok ma abbiamo un problema:
+    parser.h: Error!
+    Error: TOO_MANY_ARGS        (line:  78, col:  80):      Function has more than 4 arguments
+    Error: TOO_MANY_ARGS        (line:  82, col:  65):      Function has more than 4 arguments
+    Error: TOO_MANY_ARGS        (line:  91, col:  44):      Function has more than 4 arguments
+
 da formattare: redirection.c e exp_var
 
 
