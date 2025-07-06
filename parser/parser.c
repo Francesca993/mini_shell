@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 13:45:15 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 14:45:29 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,56 +96,6 @@
 // 	}
 // 	printf("=== END OF PIPELINE ===\n");
 // }
-
-int	check_syntax(char **tokens, t_token_type *types, int ntokens)
-{
-	int		i;
-	char	msg[256];
-
-	i = 0;
-	if (ntokens == 0)
-		return (0);
-	if (types[0] == PIPE)
-		return (exit_shell(2, "syntax error near unexpected token `|'\n"), 0);
-	if (types[0] == REDIR_IN || types[0] == REDIR_OUT || types[0] == APPEND
-		|| types[0] == HEREDOC)
-	{
-		snprintf(msg, sizeof(msg), "syntax error near unexpected token `%s'\n",
-			tokens[0]);
-		exit_shell(2, msg);
-		return (0);
-	}
-	while (i < ntokens)
-	{
-		if (types[i] == PIPE)
-		{
-			if (i == ntokens - 1)
-			{
-				exit_shell(2, "syntax error near unexpected token `|'\n");
-				return (0);
-			}
-			if (types[i + 1] == PIPE)
-			{
-				exit_shell(2, "syntax error near unexpected token `|'\n");
-				return (0);
-			}
-		}
-		if (types[i] == REDIR_IN || types[i] == REDIR_OUT || types[i] == APPEND
-			|| types[i] == HEREDOC)
-		{
-			if (i == ntokens - 1 || types[i + 1] != WORD)
-			{
-				snprintf(msg, sizeof(msg),
-					"syntax error near unexpected token `%s'\n", tokens[i]);
-				exit_shell(2, msg);
-				return (0);
-			}
-		}
-		i++;
-	}
-	return (1);
-}
-
 /*
  * Funzione principale del parser: riceve una linea di input e la converte
  * in una struttura `t_pipeline`, pronta per l'esecuzione.

@@ -42,7 +42,7 @@ Hai già incluso clear_history() alla fine del ciclo, quindi chiamare anche rl_c
     main.c \ 
     utils.c -> OK\ 
     quote_handling -> OK \ creato nuovi file quote_handling_2 perche c erano piu di 5 funzioni 
-    parser.c (sistemare funzione lunga) \ 
+    parser.c -> OK \ -> aggiunto nuovo file direttamente per gestire la sintassi corretta di pipe etc -> check syntax 
     lexer.c \ 
     lexer_utils (da rivedere bene) \
     build_pipeline (anche questa da rivedere molto bene)
