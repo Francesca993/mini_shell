@@ -6,7 +6,7 @@
 #    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/07/06 15:03:17 by francesca        ###   ########.fr        #
+#    Updated: 2025/07/06 23:05:09 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ OBJ_DIR = obj
 SRC =	main.c \
 		env/init_env.c \
 		parser/lexer_utils.c \
+		parser/lexer_utils_2.c \
 		parser/lexer.c \
 		parser/parser.c \
 		parser/check_syntax.c \
