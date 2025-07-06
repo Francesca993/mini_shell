@@ -35,3 +35,30 @@ Hai già incluso clear_history() alla fine del ciclo, quindi chiamare anche rl_c
 
 --> norminettato main, lexer e utils, ho fatto una funzione free_matrix e l ho utilizzata per snellire la free_pipeline 
     e ho cancellato free_partial_tokens che dava fastidio ed era inutile e l ho sostituita
+
+--> togliere una funzione da quote_handling file co piu di 5 funzioni, e cancellare le funzioni di debug per stampare la piepeline etc alla fine
+
+--> formattati con 42 formatter:
+    main.c \ 
+    utils.c \ 
+    quote_handling (sistemare funzione lunga) \ 
+    parser.c (sistemare funzione lunga) \ 
+    lexer.c \ 
+    lexer_utils (da rivedere bene) \
+    build_pipeline (anche questa da rivedere molto bene)
+    backslash.c (controllare funzioni con piu di 25 righe)
+    init_env --> OK
+    builtins.c -> OK
+    cd.c -> OK
+    echo -> quasi ok, controllare assegnamento struttura line 53
+    exit -> OK (forse si puo sisyemare qualcosa)
+    export_utils.c -> controllare ciclo for su static char	**sort_env_copy(char **env)
+    export.c -> troppe funzioni, e funzione lunga
+    pwd.c -> OK
+    signal.c -> OK
+    unset.c -> OK
+    
+da formattare: redirection.c e exp_var
+
+
+

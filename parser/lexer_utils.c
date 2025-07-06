@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/30 08:38:08 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 10:41:39 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,49 +68,37 @@ int	count_token(const char *line)
 	int	count;
 	int	quote;
 
-	count = 0; // numero di token trovati
-	quote = 0; // stato quote attivo (' o "), 0 se non dentro quote
+	count = 0;
+	quote = 0;
 	i = 0;
 	while (line[i])
 	{
-		// if (line[0] == '|')
-		// 	return (exit_shell(1, "parse error near `|' \n"), - 1);
-		// Salta spazi iniziali
 		while (ft_isspace(line[i]))
 			i++;
-		// Fine stringa dopo spazi
 		if (!line[i])
 			break ;
-		// === METACARATTERI ===
-		// Pipe: è sempre un token singolo
 		if (line[i] == '|')
 		{
 			count++;
 			i++;
 		}
-		// Redirezioni: può essere singolo (< >) o doppio (<< >>)
 		else if (line[i] == '<' || line[i] == '>')
 		{
 			i++;
-			if (line[i] == line[i - 1]) // >> o <<
+			if (line[i] == line[i - 1])
 				i++;
-			count++; //un solo token per qualsiasi redirezione
+			count++;
 		}
-		// === PAROLA / ARGOMENTO / QUOTED TOKEN ===
 		else
 		{
-			count++; // inizia un nuovo token
-			// Avanza finché:
-			// - sei dentro quote
-			// - oppure non incontri spazio o metacarattere
+			count++;
 			while (line[i] && (quote || (!is_metachar(line[i])
 						&& !ft_isspace(line[i]))))
 			{
-				// Se trovi una quote aperta (solo se non sei già dentro un'altra quote)
 				if ((line[i] == '\'' || line[i] == '"') && !quote)
-					quote = line[i]; // entra nella quote
+					quote = line[i];
 				else if (line[i] == quote)
-					quote = 0; // chiudi quote
+					quote = 0;
 				i++;
 			}
 		}
@@ -144,7 +132,7 @@ int	handle_redirection(const char *line, int i, char **tokens,
 	char	c;
 
 	c = line[i++];
-	if (line[i] == c) // >> o <<
+	if (line[i] == c)
 	{
 		tokens[*count] = ft_substr(line, i - 1, 2);
 		if (c == '>')
@@ -197,41 +185,35 @@ int	handle_word(const char *line, int i, char **tokens, t_token_type *types,
 	start = i;
 	quote = 0;
 	escaped = 0;
-
-	while (line[i] && (quote || (!is_metachar(line[i]) && !ft_isspace(line[i]))))
+	while (line[i] && (quote || (!is_metachar(line[i])
+				&& !ft_isspace(line[i]))))
 	{
 		escaped = (i > 0 && line[i - 1] == '\\');
-
 		if ((line[i] == '"' || line[i] == '\'') && !quote)
 		{
-			if (!(line[i] == '"' && escaped)) // se è \", non aprire quote
+			if (!(line[i] == '"' && escaped))
 				quote = line[i];
 		}
 		else if (line[i] == quote && !(quote == '"' && escaped))
-		{
-			quote = 0; // chiude quote, se non è preceduta da 
-		}
+			quote = 0;
 		else if (line[i] == '\\')
 		{
-			if (!line[i + 1]) // backslash alla fine → errore
+			if (!line[i + 1])
 				return (exit_shell(2, "Error backslah not closed \n"), -1);
-			if ((line[i + 1] == ' ' || line[i + 1] == '\0') && (!line[i + 2] || ft_isspace(line[i + 2])))
-				return (exit_shell(2, "Error backslah not closed \n"), -1); // backslash seguito da spazio/fine, poi fine/spazio → errore
-			i++; // salta carattere dopo backslash
+			if ((line[i + 1] == ' ' || line[i + 1] == '\0') && (!line[i + 2]
+					|| ft_isspace(line[i + 2])))
+				return (exit_shell(2, "Error backslah not closed \n"), -1);
+			i++;
 		}
 		i++;
 	}
-
 	if (quote)
-		return (exit_shell(2, "syntax error: unclosed quote \n"), -1); // errore: quote non chiusa
-
+		return (exit_shell(2, "syntax error: unclosed quote \n"), -1);
 	tokens[*count] = ft_substr(line, start, i - start);
 	types[*count] = WORD;
 	(*count)++;
 	return (i);
 }
-
-
 
 /*
  * Scorre l'intera linea di input e popola gli array `tokens` e `types`.
@@ -264,22 +246,19 @@ int	fill_tokens(char *line, char **tokens, t_token_type *types)
 			i++;
 		if (!line[i])
 			break ;
-		// --- PIPE
 		if (line[i] == '|')
 		{
 			tokens[count] = ft_strdup("|");
 			types[count++] = PIPE;
 			i++;
 		}
-		// --- REDIREZIONI
 		else if (line[i] == '<' || line[i] == '>')
 			i = handle_redirection(line, i, tokens, types, &count);
-		// --- WORD o QUOTED STRING
 		else
 		{
 			i = handle_word(line, i, tokens, types, &count);
 			if (i == -1)
-				return (-1); // errore da handle_word (es. quote non chiusa)
+				return (-1);
 		}
 	}
 	return (count);

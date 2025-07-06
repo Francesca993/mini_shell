@@ -6,22 +6,21 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:30:00 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/04 21:47:28 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 10:52:15 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
 // stampa solo se contiene '='
-int		export_myenvp(char **my_env)
+int	export_myenvp(char **my_env)
 {
 	int	i;
-	g_exit_status = 0; 
 
+	g_exit_status = 0;
 	i = 0;
 	while (my_env[i])
 	{
-		
 		if (ft_strchr(my_env[i], '='))
 			printf("%s\n", my_env[i]);
 		i++;

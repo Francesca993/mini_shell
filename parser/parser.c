@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/04 22:24:50 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 10:35:49 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,126 +17,134 @@
 // DEBUG
 // ==============================
 */
-void print_tokens(char **tokens, t_token_type *types)
+// void	print_tokens(char **tokens, t_token_type *types)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (!tokens || !tokens[0])
+// 	{
+// 		printf("=== TOKENS ===\n(nessun token trovato)\n==============\n");
+// 		return ;
+// 	}
+// 	printf("=== TOKENS ===\n");
+// 	while (tokens[i])
+// 	{
+// 		printf("[%s] -> ", tokens[i]);
+// 		switch (types[i])
+// 		{
+// 		case WORD:
+// 			printf("WORD\n");
+// 			break ;
+// 		case PIPE:
+// 			printf("PIPE\n");
+// 			break ;
+// 		case REDIR_IN:
+// 			printf("REDIR_IN (<)\n");
+// 			break ;
+// 		case REDIR_OUT:
+// 			printf("REDIR_OUT (>)\n");
+// 			break ;
+// 		case APPEND:
+// 			printf("APPEND (>>)\n");
+// 			break ;
+// 		case HEREDOC:
+// 			printf("HEREDOC (<<)\n");
+// 			break ;
+// 		default:
+// 			printf("UNKNOWN\n");
+// 			break ;
+// 		}
+// 		i++;
+// 	}
+// 	printf("==============\n");
+// }
+// void	print_pipeline(t_pipeline *pipeline)
+// {
+// 	t_cmd	*cmd;
+
+// 	printf("=== PIPELINE ===\n");
+// 	for (int i = 0; i < pipeline->n_cmds; i++)
+// 	{
+// 		cmd = pipeline->cmds[i];
+// 		if (!cmd)
+// 		{
+// 			printf("Command %d: (null)\n", i + 1);
+// 			continue ;
+// 		}
+// 		printf("Command %d:\n", i + 1);
+// 		printf("  args: ");
+// 		if (cmd->args)
+// 		{
+// 			for (int j = 0; cmd->args[j]; j++)
+// 				printf("[%s] ", cmd->args[j]);
+// 			printf("\n");
+// 		}
+// 		else
+// 		{
+// 			printf("(none)\n");
+// 		}
+// 		if (cmd->infile)
+// 			printf("  infile: %s (%s)\n", cmd->infile,
+// 				cmd->heredoc ? "HEREDOC" : "REDIR_IN");
+// 		if (cmd->outfile)
+// 			printf("  outfile: %s (%s)\n", cmd->outfile,
+// 				cmd->append ? "APPEND" : "REDIR_OUT");
+// 		if (cmd->pipe)
+// 			printf("  pipe: yes\n");
+// 		printf("------------------------\n");
+// 	}
+// 	printf("=== END OF PIPELINE ===\n");
+// }
+
+int	check_syntax(char **tokens, t_token_type *types, int ntokens)
 {
-    int i = 0;
-    if (!tokens || !tokens[0]) 
-    {
-        printf("=== TOKENS ===\n(nessun token trovato)\n==============\n");
-        return;
-    }
+	int		i;
+	char	msg[256];
+	char	msg[256];
 
-    printf("=== TOKENS ===\n");
-    while (tokens[i])
-    {
-        printf("[%s] -> ", tokens[i]);
-        switch (types[i])
-        {
-            case WORD: printf("WORD\n"); break;
-            case PIPE: printf("PIPE\n"); break;
-            case REDIR_IN: printf("REDIR_IN (<)\n"); break;
-            case REDIR_OUT: printf("REDIR_OUT (>)\n"); break;
-            case APPEND: printf("APPEND (>>)\n"); break;
-            case HEREDOC: printf("HEREDOC (<<)\n"); break;
-            default: printf("UNKNOWN\n"); break;
-        }
-        i++;
-    }
-    printf("==============\n");
-}
-void print_pipeline(t_pipeline *pipeline)
-{
-    printf("=== PIPELINE ===\n");
-
-    for (int i = 0; i < pipeline->n_cmds; i++)
-    {
-        t_cmd *cmd = pipeline->cmds[i];
-        if (!cmd)
-        {
-            printf("Command %d: (null)\n", i + 1);
-            continue;
-        }
-
-        printf("Command %d:\n", i + 1);
-
-        // Protezione args
-        printf("  args: ");
-        if (cmd->args)
-        {
-            for (int j = 0; cmd->args[j]; j++)
-                printf("[%s] ", cmd->args[j]);
-            printf("\n");
-        }
-        else
-        {
-            printf("(none)\n");
-        }
-
-        if (cmd->infile)
-            printf("  infile: %s (%s)\n", cmd->infile, cmd->heredoc ? "HEREDOC" : "REDIR_IN");
-        if (cmd->outfile)
-            printf("  outfile: %s (%s)\n", cmd->outfile, cmd->append ? "APPEND" : "REDIR_OUT");
-
-        if (cmd->pipe)
-            printf("  pipe: yes\n");
-
-        printf("------------------------\n");
-    }
-
-    printf("=== END OF PIPELINE ===\n");
-}
-
-int check_syntax(char **tokens, t_token_type *types, int ntokens)
-{
-    int i;
-
-    i = 0;
-    if (ntokens == 0)
-        return (0);
-    // 1. Pipe o redir all'inizio
-    if (types[0] == PIPE)
-        return (exit_shell(2, "syntax error near unexpected token `|'\n"), 0);
-    if (types[0] == REDIR_IN || types[0] == REDIR_OUT || types[0] == APPEND || types[0] == HEREDOC)
-    {
-        char msg[256];
-        snprintf(msg, sizeof(msg), "syntax error near unexpected token `%s'\n", tokens[0]);
-        exit_shell(2, msg);
-        return 0;
-    }
-
-    while (i < ntokens)
-    {
-        // 2. Pipe doppia o pipe senza comando
-        if (types[i] == PIPE)
-        {
-            if (i == ntokens - 1)
-            {
-                exit_shell(2, "syntax error near unexpected token `|'\n");
-                return 0;
-            }
-            if (types[i + 1] == PIPE)
-            {
-                exit_shell(2, "syntax error near unexpected token `|'\n");
-                return 0;
-            }
-        }
-
-        // 3. Redir senza argomento
-        if (types[i] == REDIR_IN || types[i] == REDIR_OUT || types[i] == APPEND || types[i] == HEREDOC)
-        {
-            if (i == ntokens - 1 || types[i + 1] != WORD)
-            {
-                char msg[256];
-                snprintf(msg, sizeof(msg), "syntax error near unexpected token `%s'\n", tokens[i]);
-                exit_shell(2, msg);
-                return 0;
-            }
-        }
-
-        i++;
-    }
-
-    return 1;
+	i = 0;
+	if (ntokens == 0)
+		return (0);
+	if (types[0] == PIPE)
+		return (exit_shell(2, "syntax error near unexpected token `|'\n"), 0);
+	if (types[0] == REDIR_IN || types[0] == REDIR_OUT || types[0] == APPEND
+		|| types[0] == HEREDOC)
+	{
+		snprintf(msg, sizeof(msg), "syntax error near unexpected token `%s'\n",
+			tokens[0]);
+		exit_shell(2, msg);
+		return (0);
+	}
+	while (i < ntokens)
+	{
+		if (types[i] == PIPE)
+		{
+			if (i == ntokens - 1)
+			{
+				exit_shell(2, "syntax error near unexpected token `|'\n");
+				return (0);
+			}
+			if (types[i + 1] == PIPE)
+			{
+				exit_shell(2, "syntax error near unexpected token `|'\n");
+				return (0);
+			}
+		}
+		if (types[i] == REDIR_IN || types[i] == REDIR_OUT || types[i] == APPEND
+			|| types[i] == HEREDOC)
+		{
+			if (i == ntokens - 1 || types[i + 1] != WORD)
+			{
+				snprintf(msg, sizeof(msg),
+					"syntax error near unexpected token `%s'\n", tokens[i]);
+				exit_shell(2, msg);
+				return (0);
+			}
+		}
+		i++;
+	}
+	return (1);
 }
 
 /*
@@ -160,29 +168,30 @@ int check_syntax(char **tokens, t_token_type *types, int ntokens)
  * - Puntatore a una `t_pipeline` allocata dinamicamente
  * - NULL in caso di errore (lexer o parser)
  */
-t_pipeline   *parse_line(char *line, char **env, t_pipeline *pipeline)
+t_pipeline	*parse_line(char *line, char **env, t_pipeline *pipeline)
 {
-    char **tokens = NULL;
-    t_token_type *types = NULL;
-    int ntokens;
-    
-    ntokens = lexer(line, &tokens, &types);
-    if (ntokens == 0 || !tokens || !tokens[0] || ntokens == -1 || !line || !check_syntax(tokens, types, ntokens)) 
-    {
-        free_matrix(tokens);
-        free(types);
-        return NULL;
-    }
-    pipeline = ft_calloc(1, sizeof(t_pipeline));
-    if (!pipeline)
-        return(free_pipeline(pipeline), NULL);
-    
-    pipeline = build_pipeline(tokens, types, ntokens, pipeline, env);
-    if (!pipeline)
-    {
-        g_exit_status = 2;
-        return (NULL);
-    }
-    return (pipeline);
-}
+	char			**tokens;
+	t_token_type	*types;
+	int				ntokens;
 
+	tokens = NULL;
+	types = NULL;
+	ntokens = lexer(line, &tokens, &types);
+	if (ntokens == 0 || !tokens || !tokens[0] || ntokens == -1 || !line
+		|| !check_syntax(tokens, types, ntokens))
+	{
+		free_matrix(tokens);
+		free(types);
+		return (NULL);
+	}
+	pipeline = ft_calloc(1, sizeof(t_pipeline));
+	if (!pipeline)
+		return (free_pipeline(pipeline), NULL);
+	pipeline = build_pipeline(tokens, types, ntokens, pipeline, env);
+	if (!pipeline)
+	{
+		g_exit_status = 2;
+		return (NULL);
+	}
+	return (pipeline);
+}
