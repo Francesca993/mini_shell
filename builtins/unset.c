@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:49:59 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/27 16:04:28 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 11:15:46 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,22 @@ void	unset_variable_2(char **my_env, const char *key)
 		return ;
 	while (my_env[i])
 	{
-		// Se trova una variabile che inizia con key + '='
-		if (ft_strncmp(my_env[i], key, key_len) == 0 &&
-			(my_env[i][key_len] == '=' || my_env[i][key_len] == '\0'))
+		if (ft_strncmp(my_env[i], key, key_len) == 0
+			&& (my_env[i][key_len] == '=' || my_env[i][key_len] == '\0'))
 		{
 			free(my_env[i]);
-			// Shift a sinistra tutti gli elementi successivi
 			while (my_env[i + 1])
 			{
 				my_env[i] = my_env[i + 1];
 				i++;
 			}
-			my_env[i] = NULL; // ultimo elemento deve diventare NULL
+			my_env[i] = NULL;
 			return ;
 		}
 		i++;
 	}
 }
+
 /*
 ** =====================
 ** FUNZIONE: unset_variable
@@ -86,9 +85,9 @@ void	unset_variable_2(char **my_env, const char *key)
 */
 int	unset_variable(char **my_env, char **args)
 {
-	// perchè arg[0] è unset e non una variabile
-	int i = 1;
+	int	i;
 
+	i = 1;
 	while (args[i])
 	{
 		unset_variable_2(my_env, args[i]);

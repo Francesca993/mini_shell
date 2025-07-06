@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:03:02 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/27 16:00:14 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 11:33:30 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static int	find_env_index(char **my_env, const char *key)
 	len = ft_strlen(key);
 	while (my_env[i])
 	{
-		if (ft_strncmp(my_env[i], key, len) == 0 &&
-			(my_env[i][len] == '=' || my_env[i][len] == '\0'))
+		if (ft_strncmp(my_env[i], key, len) == 0 && (my_env[i][len] == '='
+			|| my_env[i][len] == '\0'))
 			return (i);
 		i++;
 	}
@@ -75,17 +75,15 @@ int	is_valid_identifier(const char *str)
 	int	i;
 
 	i = 1;
-	// Primo carattere: deve essere una lettera o '_'
 	if (!str || (!ft_isalpha(str[0]) && str[0] != '_'))
 		return (0);
-	// Scorri il resto finché non trovi '=' o la fine
 	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (0); // carattere non valido
+			return (0);
 		i++;
 	}
-	return (1); // tutto valido
+	return (1);
 }
 
 /*
@@ -101,17 +99,17 @@ static char	**add_new_var(char **my_env, const char *entry)
 	i = 0;
 	while (my_env && my_env[len])
 		len++;
-	new_env = ft_calloc(len + 2, sizeof(char *)); // +1 per nuova, +1 per NULL
+	new_env = ft_calloc(len + 2, sizeof(char *));
 	if (!new_env)
-		return (my_env); // fallback se malloc fallisce
+		return (my_env);
 	while (i < len)
 	{
-		new_env[i] = my_env[i]; // riciclo i vecchi puntatori
+		new_env[i] = my_env[i];
 		i++;
 	}
 	new_env[len] = ft_strdup(entry);
 	new_env[len + 1] = NULL;
-	free(my_env); // libera solo il contenitore, non le stringhe
+	free(my_env);
 	return (new_env);
 }
 
@@ -124,7 +122,6 @@ char	*find_key(char *str)
 	char	*key;
 
 	equal = ft_strchr(str, '=');
-	// ricava il nome della variabile (prima di '=' se presente)
 	if (equal)
 		key = ft_substr(str, 0, equal - str);
 	else
@@ -158,8 +155,7 @@ int	export_variable(char ***my_envp, char **args)
 			key = ft_strdup(args[i]);
 		if (!is_valid_identifier(key))
 		{
-			fprintf(stderr, "export: `%s`: not a valid identifier\n",
-					args[i]);
+			fprintf(stderr, "export: `%s`: not a valid identifier\n", args[i]);
 			g_exit_status = 1;
 			free(key);
 			i++;
@@ -185,6 +181,6 @@ int	export_variable(char ***my_envp, char **args)
 		free(key);
 		i++;
 	}
-	*my_envp = my_env; // aggiorna il chiamante
+	*my_envp = my_env;
 	return (1);
 }

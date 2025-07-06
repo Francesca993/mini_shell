@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:03:41 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/30 08:49:35 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 13:46:01 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 void	update_env_value(char **my_env, char *new_path)
 {
-	int	i;
-	int	flag;
+	int		i;
+	int		flag;
+	char	*temp_path;
 
-	char *temp_path = ft_strjoin("PWD=", new_path); // "PWD=/path"
+	temp_path = ft_strjoin("PWD=", new_path);
 	flag = 0;
 	i = 0;
-	// if (!new_path)
-	//     return ;
 	while (my_env[i])
 	{
 		if (ft_strncmp(my_env[i], "PWD", 3) == 0 && my_env[i][3] == '=')
@@ -58,26 +57,14 @@ int	ft_cd(char **args, char **my_env)
 	{
 		path = getenv("HOME");
 		if (!path)
-		{
-			exit_shell(1, "cd: HOME not set\n");
-			return (1);
-		}
-		// exit_shell(1, "minishell: cd: missing argument\n");
-		// return (1);
+			return (exit_shell(1, "cd: HOME not set\n"), 1);
 	}
 	else if (args[2])
-	{
-		exit_shell(1, "cd: too many arguments\n");
-		return (1);
-	}
+		return (exit_shell(1, "cd: too many arguments\n"), 1);
 	else
-		path = args[1]; // path = argomento dell'utente
+		path = args[1];
 	if (chdir(path) != 0)
-	{
-		exit_shell(1, NULL);
-		// perror("");
-		return (1);
-	}
+		return (exit_shell(1, "cd: no such file or directory\n"), 1);
 	else
 	{
 		path = getcwd(NULL, 0);
