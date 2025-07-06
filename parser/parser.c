@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:27:42 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 10:35:49 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 13:45:15 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@
 int	check_syntax(char **tokens, t_token_type *types, int ntokens)
 {
 	int		i;
-	char	msg[256];
 	char	msg[256];
 
 	i = 0;

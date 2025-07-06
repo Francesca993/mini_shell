@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:03:41 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 10:55:35 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 13:46:01 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	update_env_value(char **my_env, char *new_path)
 	int		flag;
 	char	*temp_path;
 
-	*temp_path = ft_strjoin("PWD=", new_path);
+	temp_path = ft_strjoin("PWD=", new_path);
 	flag = 0;
 	i = 0;
 	while (my_env[i])
