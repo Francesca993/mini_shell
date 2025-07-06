@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 21:58:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/02 13:18:53 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/06 11:30:34 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ Comando: echo
 Deve supportare l'opzione -n, che sopprime il newline finale.
 Non sono richieste altre opzioni.
 Il comportamento deve essere coerente con Bash.
-Il comando echo in una shell serve per stampare una stringa di testo sullo 
+Il comando echo in una shell serve per stampare una stringa di testo sullo
 standard output (tipicamente il terminale).
-Per impostazione predefinita, echo aggiunge un ritorno a capo (\n) 
+Per impostazione predefinita, echo aggiunge un ritorno a capo (\n)
 alla fine del testo stampato.
 -> Opzione -n -> Serve a disattivare il newline finale.
 */
@@ -48,14 +48,13 @@ int	ft_echo(char **args)
 
 	newline = 1;
 	i = 1;
-	// Gestione dell'opzione -n (può essere ripetuta: -n -n -n)
 	while (args[i] && ft_strncmp(args[i], "-n", 2) == 0)
 	{
-		if ((newline = check_valid_no_new_line(args[i])) == 1)
+		newline = check_valid_no_new_line(args[i]);
+		if (newline == 1)
 			break ;
 		i++;
 	}
-	// Stampa tutti gli argomenti separati da spazio
 	while (args[i])
 	{
 		write(STDOUT_FILENO, args[i], strlen(args[i]));

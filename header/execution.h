@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 09:45:03 by francesca         #+#    #+#             */
-/*   Updated: 2025/06/30 14:55:31 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/06 11:21:52 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 // ==============================
 int		process_pipeline(t_pipeline *pipeline, char ***main_env);
 int		process_args(t_cmd *cmd);
-
 // ==============================
 // EXECUTE PIPELINE
 // ==============================
