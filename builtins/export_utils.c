@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 18:32:39 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 11:09:39 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 11:33:15 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,19 @@ static char	**sort_env_copy(char **env)
 {
 	char	**copy;
 	int		max_check;
+	int		i;
 
 	copy = copy_env(env);
 	if (!copy)
 		return (NULL);
 	sort_env(copy);
 	max_check = 100;
-	for (int i = 0; i < max_check; i++)
+	i = 0;
+	while (i < max_check)
 	{
 		if (copy[i] == NULL)
-		{
-			printf("✅ Fine array trovata a posizione %d\n", i);
 			break ;
-		}
+		i++;
 	}
 	return (copy);
 }

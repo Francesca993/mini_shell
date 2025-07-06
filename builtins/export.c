@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:03:02 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 11:11:53 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 11:33:30 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	find_env_index(char **my_env, const char *key)
 	while (my_env[i])
 	{
 		if (ft_strncmp(my_env[i], key, len) == 0 && (my_env[i][len] == '='
-				|| my_env[i][len] == '\0'))
+			|| my_env[i][len] == '\0'))
 			return (i);
 		i++;
 	}

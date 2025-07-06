@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 21:58:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 11:06:01 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 11:30:34 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	ft_echo(char **args)
 	i = 1;
 	while (args[i] && ft_strncmp(args[i], "-n", 2) == 0)
 	{
-		if ((newline = check_valid_no_new_line(args[i])) == 1)
+		newline = check_valid_no_new_line(args[i]);
+		if (newline == 1)
 			break ;
 		i++;
 	}
