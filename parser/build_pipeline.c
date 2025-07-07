@@ -6,12 +6,10 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 23:04:28 by francesca        ###   ########.fr       */
-/*   Updated: 2025/07/07 09:21:48 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/07 11:13:16 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/execution.h"
 #include "../header/minishell.h"
 
 /*
