@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 15:02:59 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 23:08:07 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int							lexer(char *line, char ***tokens_out,
 // LEXER UTILS
 // ==============================
 int							is_metachar(char c);
+int							ft_isspace(char c);
 int							count_token(const char *line);
 int							handle_redirection(const char *line, int i,
 								char **tokens, t_token_type *types, int *count);

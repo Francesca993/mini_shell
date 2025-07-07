@@ -6,12 +6,11 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 21:58:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 11:30:34 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/06 23:16:41 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
-
 /*
 Requisiti del subject
 Comando: echo
@@ -48,16 +47,15 @@ int	ft_echo(char **args)
 
 	newline = 1;
 	i = 1;
-	while (args[i] && ft_strncmp(args[i], "-n", 2) == 0)
+	while (args[i] && ft_strncmp(args[i], "-n", 2) == 0
+		&& check_valid_no_new_line(args[i]) == 0)
 	{
-		newline = check_valid_no_new_line(args[i]);
-		if (newline == 1)
-			break ;
+		newline = 0;
 		i++;
 	}
 	while (args[i])
 	{
-		write(STDOUT_FILENO, args[i], strlen(args[i]));
+		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
 		if (args[i + 1])
 			write(1, " ", 1);
 		i++;
