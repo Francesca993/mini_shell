@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:33:23 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/07 09:14:37 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/07 10:57:23 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,11 @@ static int	compute_expanded_length(const char *str, char **env)
 {
 	int		len;
 	char	*var_name;
+	int i;
+	int  var_len;
 
-	len = 0, i = 0, var_len;
+	i = 0;
+	len = 0;
 	while (str[i])
 	{
 		if (str[i] == '$' && str[i + 1] &&
