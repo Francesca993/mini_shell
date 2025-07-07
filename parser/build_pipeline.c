@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   build_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
 /*   Updated: 2025/07/06 23:04:28 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/07 09:21:48 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +100,8 @@ static int	count_args_for_cmds(t_token_type *types, int start, int n_tokens)
 			count++;
 		}
 		else if ((types[i] == REDIR_IN || types[i] == REDIR_OUT
-				|| types[i] == APPEND || types[i] == HEREDOC) && i
-			+ 1 < n_tokens)
+					|| types[i] == APPEND || types[i] == HEREDOC) && i
+				+ 1 < n_tokens)
 		{
 			i++;
 		}
@@ -156,20 +157,20 @@ void	populate_comands(t_pipeline *pipeline)
 			if (pipeline->types[i] == WORD)
 				cmd->args[arg_idx++] = ft_strdup(pipeline->tokens[i]);
 			else if (pipeline->types[i] == REDIR_IN && i
-				+ 1 < pipeline->n_tokens)
+					+ 1 < pipeline->n_tokens)
 				cmd->infile = ft_strdup(pipeline->tokens[++i]),
-					cmd->redir_in = 1;
+				cmd->redir_in = 1;
 			else if (pipeline->types[i] == REDIR_OUT && i
-				+ 1 < pipeline->n_tokens)
+					+ 1 < pipeline->n_tokens)
 				cmd->outfile = ft_strdup(pipeline->tokens[++i]),
-					cmd->redir_out = 1;
+				cmd->redir_out = 1;
 			else if (pipeline->types[i] == APPEND && i + 1 < pipeline->n_tokens)
 				cmd->outfile = ft_strdup(pipeline->tokens[++i]),
-					cmd->append = 1;
+				cmd->append = 1;
 			else if (pipeline->types[i] == HEREDOC && i
-				+ 1 < pipeline->n_tokens)
+					+ 1 < pipeline->n_tokens)
 				cmd->infile = ft_strdup(pipeline->tokens[++i]),
-					cmd->heredoc = 1;
+				cmd->heredoc = 1;
 			i++;
 		}
 		cmd->args[arg_idx] = NULL;

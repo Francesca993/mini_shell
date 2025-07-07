@@ -3,10 +3,11 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
+#    By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
 #    Updated: 2025/07/06 23:05:09 by francesca        ###   ########.fr        #
+#    Updated: 2025/07/07 08:11:15 by skayed           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +52,7 @@ SRC =	main.c \
 		execution/args_processing.c \
 		execution/exec_pipeline.c \
 		execution/exec_utils.c \
+		execution/exec_utils2.c \
 		builtins/exit.c \
 		builtins/signal.c \
 		builtins/builtins.c \

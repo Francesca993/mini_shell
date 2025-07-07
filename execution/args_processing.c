@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_processing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmontini <fmontini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:20:58 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/04 13:28:01 by fmontini         ###   ########.fr       */
+/*   Updated: 2025/07/07 07:18:34 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static int	process_single_cmd(t_pipeline *pipeline, char ***main_env)
 		*main_env = pipeline->my_env;
 	return (exit);
 }
+
 int	process_pipeline(t_pipeline *pipeline, char ***main_env)
 {
 	int	j;
