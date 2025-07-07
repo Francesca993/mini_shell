@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 09:45:03 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/07 08:43:02 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/07 08:51:38 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	try_execute_builtin(t_cmd *cmd, char ***env);
 void	exec_with_env_path(t_cmd *cmd, char **env);
 int		fork_and_exec(t_pipeline *pipeline, int i, int **pipes, pid_t *pids);
 void	wait_all(pid_t *pids, int n_cmds);
+void	close_pipes(int **pipes, int n_pipes);
 
 #endif

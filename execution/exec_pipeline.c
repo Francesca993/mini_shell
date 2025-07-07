@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:22:22 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/07 08:39:49 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/07 08:51:27 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	**create_pipes(int n_cmds)
 	return (pipes);
 }
 
-static void	close_pipes(int **pipes, int n_pipes)
+void	close_pipes(int **pipes, int n_pipes)
 {
 	int	i;
 
@@ -48,7 +48,6 @@ static void	close_pipes(int **pipes, int n_pipes)
 
 static void	execute_cmd(t_pipeline *pipeline, int i, int **pipes)
 {
-	char	*path;
 	int		j;
 	t_cmd	*cmd;
 
@@ -66,6 +65,20 @@ static void	execute_cmd(t_pipeline *pipeline, int i, int **pipes)
 	}
 	else
 		exec_with_env_path(cmd, pipeline->my_env);
+}
+
+int	fork_and_exec(t_pipeline *pipeline, int i, int **pipes, pid_t *pids)
+{
+	pids[i] = fork();
+	if (pids[i] < 0)
+		return (perror("Pipe failed"), -1);
+	if (pids[i] == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		execute_cmd(pipeline, i, pipes);
+	}
+	return (0);
 }
 
 void	execute_pipeline(t_pipeline *pipeline)

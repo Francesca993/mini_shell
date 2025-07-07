@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 08:01:34 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/07 08:40:03 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/07 08:51:02 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,6 @@ void	exec_with_env_path(t_cmd *cmd, char **env)
 	perror("execve");
 	free(path);
 	exit(1);
-}
-
-int	fork_and_exec(t_pipeline *pipeline, int i, int **pipes, pid_t *pids)
-{
-	pids[i] = fork();
-	if (pids[i] < 0)
-		return (perror("Pipe failed"), -1);
-	if (pids[i] == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		execute_cmd(pipeline, i, pipes);
-	}
-	return (0);
 }
 
 void	wait_all(pid_t *pids, int n_cmds)

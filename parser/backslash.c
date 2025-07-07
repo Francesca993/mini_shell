@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backslash.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 20:50:39 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/06 10:50:57 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/07 09:16:25 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,11 @@ char	*handle_backslash_outside_quotes(const char *str)
 	size_t	count;
 
 	i = 0;
+	j = 0;
 	len = ft_strlen(str);
 	res = ft_calloc((len + 1), sizeof(char));
 	if (!res)
 		return (NULL);
-	i = 0;
-	j = 0;
 	while (str[i])
 	{
 		if (str[i] == '\\')
