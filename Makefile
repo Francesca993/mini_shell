@@ -3,11 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+         #
+#    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/07/06 23:05:09 by francesca        ###   ########.fr        #
-#    Updated: 2025/07/07 08:11:15 by skayed           ###   ########.fr        #
+#    Updated: 2025/07/07 11:23:18 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +42,7 @@ SRC =	main.c \
 		parser/parser.c \
 		parser/check_syntax.c \
 		parser/build_pipeline.c \
+		parser/populate_commands.c \
 		parser/utils.c \
 		parser/quote_handling.c \
 		parser/quote_handling_2.c \

@@ -3,11 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:21:25 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 23:04:28 by francesca        ###   ########.fr       */
-/*   Updated: 2025/07/07 09:21:48 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/07 12:12:29 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +44,22 @@ static int	count_cmds(char **tokens)
  * 1. Conta quanti comandi ci sono (basato sulle pipe).
  * 2. Alloca la struttura `t_pipeline` e l'array di comandi `t_cmd**`.
  * 3. Assegna token, tipi, e dimensioni totali alla pipeline.
-
-	* 4. Chiama `populate_comands()` per popolare ogni `t_cmd` all'interno della pipeline.
+ * 4. Chiama `populate_comands()` per popolare ogni `t_cmd` all'interno 
+ * della pipeline.
  *
  * Ritorna:
  * - Puntatore alla `t_pipeline` allocata e popolata.
  * - NULL in caso di errore di allocazione.
  */
 t_pipeline	*build_pipeline(char **tokens, t_token_type *types, int num_tokens,
-		t_pipeline *pipeline, char **env)
+		char **env)
 {
-	int	num_cmds;
+	t_pipeline	*pipeline;
+	int			num_cmds;
 
+	pipeline = ft_calloc(1, sizeof(t_pipeline));
+	if (!pipeline)
+		return (NULL);
 	num_cmds = count_cmds(tokens);
 	pipeline->cmds = ft_calloc(num_cmds + 1, sizeof(t_cmd *));
 	pipeline->types = types;
@@ -86,7 +89,7 @@ t_pipeline	*build_pipeline(char **tokens, t_token_type *types, int num_tokens,
  * Ritorna:
  * - Numero di argomenti (WORD) per il comando corrente.
  */
-static int	count_args_for_cmds(t_token_type *types, int start, int n_tokens)
+int	count_args_for_cmds(t_token_type *types, int start, int n_tokens)
 {
 	int	count;
 	int	i;
@@ -100,8 +103,8 @@ static int	count_args_for_cmds(t_token_type *types, int start, int n_tokens)
 			count++;
 		}
 		else if ((types[i] == REDIR_IN || types[i] == REDIR_OUT
-					|| types[i] == APPEND || types[i] == HEREDOC) && i
-				+ 1 < n_tokens)
+				|| types[i] == APPEND || types[i] == HEREDOC) && i
+			+ 1 < n_tokens)
 		{
 			i++;
 		}
@@ -110,103 +113,29 @@ static int	count_args_for_cmds(t_token_type *types, int start, int n_tokens)
 	return (count);
 }
 
-/*
- * Popola l'array di comandi `pipeline->cmds` analizzando token e tipi.
- *
- * Per ogni comando:
- * - Conta i WORD per allocare `cmd->args`.
- * - Alloca e riempie la struttura `t_cmd`:
- *   - `args[]`: solo token di tipo WORD (duplicati con `ft_strdup`).
- *   - Redirezioni:
- *     - <    → `infile`, `redir_in`
- *     - >    → `outfile`, `redir_out`
- *     - >>   → `outfile`, `append`
- *     - <<   → `infile`, `heredoc`
- * - Se è presente una PIPE,
-	imposta `cmd->pipe = 1` e passa al prossimo comando.
- *
- * Nota: termina se termina l'array di token.
- */
 void	populate_comands(t_pipeline *pipeline)
 {
 	int		i;
 	int		cmd_idx;
 	int		n_args;
 	t_cmd	*cmd;
-	int		arg_idx;
-	int		error;
 
 	i = 0;
 	cmd_idx = 0;
 	while (i < pipeline->n_tokens)
 	{
 		n_args = count_args_for_cmds(pipeline->types, i, pipeline->n_tokens);
-		cmd = ft_calloc(1, sizeof(t_cmd));
+		cmd = allocate_cmd(pipeline, n_args);
 		if (!cmd)
 			return ;
-		cmd->args = ft_calloc(n_args + 1, sizeof(char *));
-		if (!cmd->args)
-		{
-			free(cmd);
+		if (fill_cmds(pipeline, cmd, &i))
 			return ;
-		}
-		cmd->pipeline = pipeline;
-		arg_idx = 0;
-		while (i < pipeline->n_tokens && pipeline->types[i] != PIPE)
-		{
-			if (pipeline->types[i] == WORD)
-				cmd->args[arg_idx++] = ft_strdup(pipeline->tokens[i]);
-			else if (pipeline->types[i] == REDIR_IN && i
-					+ 1 < pipeline->n_tokens)
-				cmd->infile = ft_strdup(pipeline->tokens[++i]),
-				cmd->redir_in = 1;
-			else if (pipeline->types[i] == REDIR_OUT && i
-					+ 1 < pipeline->n_tokens)
-				cmd->outfile = ft_strdup(pipeline->tokens[++i]),
-				cmd->redir_out = 1;
-			else if (pipeline->types[i] == APPEND && i + 1 < pipeline->n_tokens)
-				cmd->outfile = ft_strdup(pipeline->tokens[++i]),
-				cmd->append = 1;
-			else if (pipeline->types[i] == HEREDOC && i
-					+ 1 < pipeline->n_tokens)
-				cmd->infile = ft_strdup(pipeline->tokens[++i]),
-				cmd->heredoc = 1;
-			i++;
-		}
-		cmd->args[arg_idx] = NULL;
-		cmd->fd_in = -1;
-		cmd->fd_out = -1;
-		error = 0;
-		if (cmd->redir_in && cmd->infile)
-		{
-			if (setup_redir_in(cmd) == -1)
-				error = 1;
-		}
-		if (cmd->redir_out && cmd->outfile)
-		{
-			if (setup_redir_out(cmd) == -1)
-				error = 1;
-		}
-		if (cmd->append && cmd->outfile)
-		{
-			if (setup_redir_append(cmd) == -1)
-				error = 1;
-		}
-		if (cmd->heredoc && cmd->infile)
-		{
-			if (setup_heredoc(cmd, cmd->infile) == -1)
-				error = 1;
-		}
-		if (error)
+		if (setup_redirections(cmd))
 		{
 			free_pipeline(pipeline);
 			return ;
 		}
-		if (i < pipeline->n_tokens && pipeline->types[i] == PIPE)
-		{
-			cmd->pipe = 1;
-			i++;
-		}
+		handle_pipe(pipeline, cmd, &i);
 		pipeline->cmds[cmd_idx++] = cmd;
 	}
 	find_quotes(pipeline);

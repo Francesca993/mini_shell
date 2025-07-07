@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:38:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 13:43:35 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/07 11:44:28 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <sys/stat.h>
+# include <sys/types.h>
 # include <dirent.h>
 # include <string.h>
 # include <termios.h>

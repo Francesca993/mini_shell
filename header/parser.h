@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 23:08:07 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/07 12:15:28 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,18 @@ int							check_syntax(char **tokens, t_token_type *types,
 // BUILD PIPELINE
 // ==============================
 t_pipeline					*build_pipeline(char **tokens, t_token_type *types,
-								int num_tokens, t_pipeline *pipeline,
-								char **env);
+								int num_tokens, char **env);
 void						free_pipeline(t_pipeline *pipeline);
 void						populate_comands(t_pipeline *pipeline);
 char						*strip_outer_quotes(const char *str);
+int							count_args_for_cmds(t_token_type *types,
+								int start, int n_tokens);
+void	handle_pipe(t_pipeline *pipeline, t_cmd *cmd, int *i);
+int	setup_redirections(t_cmd *cmd);
+int	fill_cmds(t_pipeline *pipeline, t_cmd *cmd, int *i);
+void	handle_command_redirection(t_pipeline *p, t_cmd *cmd, int *i);
+t_cmd	*allocate_cmd(t_pipeline *pipeline, int n_args);
+
 
 // ==============================
 // PARSER

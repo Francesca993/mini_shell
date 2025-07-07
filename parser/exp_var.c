@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:33:23 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/07 10:57:23 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/07 11:46:34 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ static int	get_env_value_len(const char *var_name, char **env)
 	char	*tmp;
 	int		len;
 
-	int i, len;
+	int i;
+	
 	if (!var_name || !env)
 		return (0);
 	if (ft_strlen(var_name) == 0)
