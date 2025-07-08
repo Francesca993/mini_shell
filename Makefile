@@ -6,7 +6,7 @@
 #    By: francesca <francesca@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 12:20:24 by francesca         #+#    #+#              #
-#    Updated: 2025/07/07 11:23:18 by francesca        ###   ########.fr        #
+#    Updated: 2025/07/08 10:42:47 by francesca        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC =	main.c \
 		env/init_env.c \
 		parser/lexer_utils.c \
 		parser/lexer_utils_2.c \
+		parser/count_token.c \
 		parser/lexer.c \
 		parser/parser.c \
 		parser/check_syntax.c \

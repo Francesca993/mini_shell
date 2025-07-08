@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/07 12:15:28 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/08 09:50:08 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void						exit_shell(int code, const char *msg);
 void						free_matrix(char **data);
 int							check_syntax(char **tokens, t_token_type *types,
 								int ntokens);
+int							skip_spaces(const char *line, int i);
 
 // ==============================
 // BUILD PIPELINE

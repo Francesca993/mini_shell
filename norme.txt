@@ -1,15 +1,21 @@
+
 build_pipeline.c: OK!
 quote_handling_2.c: OK!
 populate_commands.c: OK!
 lexer.c: OK!
 redirection.c: OK!
-backslash.c: Error!
-Error: TOO_MANY_LINES       (line:  60, col:   1):      Function has more than 25 lines
-Error: TOO_MANY_LINES       (line:  94, col:   1):      Function has more than 25 lines
+backslash.c: OK!
 lexer_utils_2.c: OK!
 quote_handling.c: OK!
 check_syntax.c: OK!
 utils.c: OK!
 exp_var.c: Error!
+count_token.c: OK!
+backslash_2.c: OK!
+parser.c: OK!
+lexer_utils.c: Error!
+
+count_token.c: OK!
+backslash_2.c: OK!
 parser.c: OK!
 lexer_utils.c: Error!
