@@ -6,70 +6,11 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:14:07 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 23:02:19 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/08 09:49:02 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
-
-/*
- * Conta quanti token sono presenti nella linea di input.
- * I token includono:
- *   - parole (comandi, argomenti)
- *   - redirezioni (<, >, <<, >>)
- *   - pipe (|)
- *
- * Gestisce anche le quote:
- *   - quote singole e doppie vengono considerate parte del token
- *   - se una quote non viene chiusa,
-	il lexer si interrompe (resta in uno stato errato)
- *
- * Ritorna:
- * - Numero totale di token nella linea
- */
-int	count_token(const char *line)
-{
-	int	i;
-	int	count;
-	int	quote;
-
-	count = 0;
-	quote = 0;
-	i = 0;
-	while (line[i])
-	{
-		while (ft_isspace(line[i]))
-			i++;
-		if (!line[i])
-			break ;
-		if (line[i] == '|')
-		{
-			count++;
-			i++;
-		}
-		else if (line[i] == '<' || line[i] == '>')
-		{
-			i++;
-			if (line[i] == line[i - 1])
-				i++;
-			count++;
-		}
-		else
-		{
-			count++;
-			while (line[i] && (quote || (!is_metachar(line[i])
-						&& !ft_isspace(line[i]))))
-			{
-				if ((line[i] == '\'' || line[i] == '"') && !quote)
-					quote = line[i];
-				else if (line[i] == quote)
-					quote = 0;
-				i++;
-			}
-		}
-	}
-	return (count);
-}
 
 /*
  * Gestisce la creazione di un token di redirezione a partire da `line[i]`.
@@ -207,8 +148,7 @@ int	fill_tokens(char *line, char **tokens, t_token_type *types)
 	count = 0;
 	while (line[i])
 	{
-		while (ft_isspace(line[i]))
-			i++;
+		i = skip_spaces(line, i);
 		if (!line[i])
 			break ;
 		if (line[i] == '|')
@@ -228,3 +168,4 @@ int	fill_tokens(char *line, char **tokens, t_token_type *types)
 	}
 	return (count);
 }
+

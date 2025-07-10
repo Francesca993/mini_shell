@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 09:45:03 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/07 08:51:38 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/07 11:44:54 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 # include "parser.h"
+# include <sys/types.h>
 
 // ==============================
 // PROCESSING PIPELINE
