@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 17:22:22 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/07 08:51:27 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/07 11:46:56 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,8 @@ void	close_pipes(int **pipes, int n_pipes)
 
 static void	execute_cmd(t_pipeline *pipeline, int i, int **pipes)
 {
-	int		j;
 	t_cmd	*cmd;
 
-	j = 0;
 	cmd = pipeline->cmds[i];
 	setup_pipes(pipeline, i, pipes);
 	set_redirections(cmd);
