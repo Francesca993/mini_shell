@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 14:44:34 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 15:06:58 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/10 14:43:01 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,30 @@ static int	check_redir(char **tokens, t_token_type *types, int ntokens)
 	}
 	return (1);
 }
+static int check_curly_brace(char **tokens, t_token_type *types, int ntokens)
+{
+	int i;
+	char *tok;
+	
+	i = 0;
+	while (i < ntokens)
+	{
+		if (types[i] == WORD && tokens[i])
+		{
+			tok = tokens[i];
+			if (ft_strchr(tok, '{') && !ft_strchr(tok, '\''))
+			{
+				if (!ft_strchr(tok, '}'))
+				{
+					exit_shell(2, "syntax error near unexpected token `{`\n");
+					return (0);
+				}
+			}
+		}
+		i++;
+	}
+	return (1);
+}
 
 int	check_syntax(char **tokens, t_token_type *types, int ntokens)
 {
@@ -87,6 +111,8 @@ int	check_syntax(char **tokens, t_token_type *types, int ntokens)
 	if (!check_pipe_errors(types, ntokens))
 		return (0);
 	if (!check_redir(tokens, types, ntokens))
+		return (0);
+	if (!check_curly_brace(tokens, types, ntokens))
 		return (0);
 	return (1);
 }
