@@ -6,7 +6,7 @@
 /*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:54:15 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/08 09:50:08 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/08 10:45:09 by francesca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,15 @@ t_pipeline					*build_pipeline(char **tokens, t_token_type *types,
 void						free_pipeline(t_pipeline *pipeline);
 void						populate_comands(t_pipeline *pipeline);
 char						*strip_outer_quotes(const char *str);
-int							count_args_for_cmds(t_token_type *types,
-								int start, int n_tokens);
-void	handle_pipe(t_pipeline *pipeline, t_cmd *cmd, int *i);
-int	setup_redirections(t_cmd *cmd);
-int	fill_cmds(t_pipeline *pipeline, t_cmd *cmd, int *i);
-void	handle_command_redirection(t_pipeline *p, t_cmd *cmd, int *i);
-t_cmd	*allocate_cmd(t_pipeline *pipeline, int n_args);
-
+int							count_args_for_cmds(t_token_type *types, int start,
+								int n_tokens);
+void						handle_pipe(t_pipeline *pipeline, t_cmd *cmd,
+								int *i);
+int							setup_redirections(t_cmd *cmd);
+int							fill_cmds(t_pipeline *pipeline, t_cmd *cmd, int *i);
+void						handle_command_redirection(t_pipeline *p,
+								t_cmd *cmd, int *i);
+t_cmd						*allocate_cmd(t_pipeline *pipeline, int n_args);
 
 // ==============================
 // PARSER
