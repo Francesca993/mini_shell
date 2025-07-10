@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 14:44:34 by francesca         #+#    #+#             */
-/*   Updated: 2025/07/06 15:06:58 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/08 10:07:22 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,21 @@ static int	check_redir(char **tokens, t_token_type *types, int ntokens)
 	}
 	return (1);
 }
+int	check_brace_syntax(const char *str)
+{
+	size_t	len;
+
+	if (!str || str[0] != '$')
+		return (1);
+	len = ft_strlen(str);
+	if (str[len - 1] != '}')
+	{
+		exit_shell(2,"syntax error: missing closing brace\n");
+		return (0);
+	}
+	return (1);
+}
+
 
 int	check_syntax(char **tokens, t_token_type *types, int ntokens)
 {
@@ -87,6 +102,8 @@ int	check_syntax(char **tokens, t_token_type *types, int ntokens)
 	if (!check_pipe_errors(types, ntokens))
 		return (0);
 	if (!check_redir(tokens, types, ntokens))
+		return (0);
+	if (!check_brace_syntax(tokens[0]))
 		return (0);
 	return (1);
 }

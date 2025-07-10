@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francesca <francesca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:33:23 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/07 11:46:34 by francesca        ###   ########.fr       */
+/*   Updated: 2025/07/07 12:31:46 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,23 @@ char	*get_var_name(const char *str, int *len)
 		i = 2;
 		while (str[i] && str[i] != '}')
 			i++;
-		if (str[i] == '}')
+		if (str[i] != '}')
 		{
-			*len = i + 1;
-			return (ft_substr(str, 2, i - 2)); // nome tra { e }
+			*len = -1;
+			return (NULL);
 		}
-		// Parentesi non chiusa, tratta come $ normale
-		*len = 1;
-		return (ft_strdup(""));
+		*len = i + 1;
+		return (ft_substr(str, 2, i - 2));
 	}
-	// Caso $VAR, $?, $0
 	if (str[1] == '?' || str[1] == '0')
 	{
 		*len = 2;
-		return (ft_substr(str, 1, 1)); // estrae ? o 0
+		return (ft_substr(str, 1, 1));
 	}
-	// Caso normale: $VAR
 	i = 1;
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
-	if (i == 1) // Solo $ senza nome variabile
+	if (i == 1)
 	{
 		*len = 1;
 		return (ft_strdup("$"));
@@ -64,7 +61,6 @@ static char	*get_env_value(const char *var_name, char **env)
 		return (NULL);
 	if (ft_strlen(var_name) == 0)
 		return (ft_strdup(""));
-	// Gestione casi speciali
 	if (ft_strcmp(var_name, "?") == 0)
 		return (ft_strdup(ft_itoa(g_exit_status)));
 	if (ft_strcmp(var_name, "0") == 0)
@@ -82,7 +78,7 @@ static char	*get_env_value(const char *var_name, char **env)
 		}
 		i++;
 	}
-	return (ft_strdup("")); // Variabile non trovata
+	return (ft_strdup(""));
 }
 
 // Funzione per ottenere la lunghezza del valore di una variabile dall'ambiente
@@ -90,9 +86,8 @@ static int	get_env_value_len(const char *var_name, char **env)
 {
 	char	*tmp;
 	int		len;
+	int		i;
 
-	int i;
-	
 	if (!var_name || !env)
 		return (0);
 	if (ft_strlen(var_name) == 0)
@@ -116,7 +111,7 @@ static int	get_env_value_len(const char *var_name, char **env)
 			return (ft_strlen(env[i] + len + 1));
 		i++;
 	}
-	return (0); // Variabile non trovata
+	return (0);
 }
 
 // Funzione per calcolare la lunghezza della stringa espansa
@@ -124,11 +119,11 @@ static int	compute_expanded_length(const char *str, char **env)
 {
 	int		len;
 	char	*var_name;
-	int i;
-	int  var_len;
+	int		i;
+	int		var_len;
 
-	i = 0;
-	len = 0;
+	var_len = 0;
+	len = 0, i = 0;
 	while (str[i])
 	{
 		if (str[i] == '$' && str[i + 1] &&
@@ -232,7 +227,7 @@ void	expand_pipeline_variables(t_pipeline *pipeline)
 		i++;
 	}
 }
-
+/* 
 void	check_var(t_pipeline *pipeline)
 {
 	int		i;
@@ -260,4 +255,4 @@ void	check_var(t_pipeline *pipeline)
 		}
 		i++;
 	}
-}
+} */
