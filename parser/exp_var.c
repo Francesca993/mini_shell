@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:33:23 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/07 12:31:46 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/12 13:24:41 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,11 @@ char	*expand_variables(const char *str, char **env)
 				str[i + 1] == '_' || str[i + 1] == '$' || str[i + 1] == '{'))
 		{
 			var_name = get_var_name(str + i, &var_len);
+if (var_len == -1 || !var_name)
+{
+	free(result); // ⚠️ importantissimo, era stato allocato
+	return (NULL); // ⛔ errore di espansione → heredoc si interrompe
+}
 			var_value = get_env_value(var_name, env);
 			free(var_name);
 			if (var_value)
