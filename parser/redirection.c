@@ -6,7 +6,7 @@
 /*   By: skayed <skayed@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:06:07 by skayed            #+#    #+#             */
-/*   Updated: 2025/07/07 09:44:36 by skayed           ###   ########.fr       */
+/*   Updated: 2025/07/12 13:21:50 by skayed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@ static void	read_heredoc(t_cmd *cmd, int write_fd, char *delim, int exp)
 		if (exp)
 		{
 			tmp = expand_variables(line, cmd->pipeline->my_env);
+			if (!tmp)
+	{
+		write(2, "minishell: bad substitution\n", 28);
+		free(line);
+		close(write_fd);
+		exit(1); // blocca il figlio
+	}
 			write(write_fd, tmp, ft_strlen(tmp));
 			write(write_fd, "\n", 1);
 			free(tmp);
@@ -83,6 +90,7 @@ int	setup_heredoc(t_cmd *cmd, char *delimiter)
 	char	*new_del;
 	int		exp_var;
 	pid_t	pid;
+	int		status;
 
 	new_del = NULL;
 	new_del = strip_outer_quotes(delimiter);
@@ -100,6 +108,12 @@ int	setup_heredoc(t_cmd *cmd, char *delimiter)
 	}
 	free(new_del);
 	wait(NULL);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+{
+	close(pipe_fd[0]);
+	return (-1); // heredoc fallito, non continuare
+}
 	close(pipe_fd[1]);
 	cmd->fd_in = pipe_fd[0];
 	cmd->heredoc = 1;
